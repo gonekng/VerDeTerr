@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
 @SpringBootTest
-class VerDeTerrApplicationTests {
+class BoardApplicationTests {
 
 	@Autowired
 	private ApplicationContext context;
