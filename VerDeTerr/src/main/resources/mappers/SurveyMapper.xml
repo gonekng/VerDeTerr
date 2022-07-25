@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mapper.SurveyMapper">
+
+	<sql id="boardColumns">
+		  id
+		, userType
+		, answer
+	</sql>
+
+	<insert id="insertSurvey" parameterType="SurveyDTO">
+		INSERT INTO Mbti_ML (
+			<include refid="boardColumns" />
+		) VALUES (
+			  #{id}
+			, #{userType}
+			, #{answer}
+		)
+	</insert>
+
+	
+	<update id="updateSurvey" parameterType="SurveyDTO">
+		UPDATE Mbti_ML
+		SET
+			  update_time = NOW()
+			, userType = #{userType}
+			, answer = #{answer}
+		WHERE
+			id = #{id}
+	</update>
+
+
+</mapper>
