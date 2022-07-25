@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.board.mapper.BoardMapper">
+
+	<sql id="boardColumns">
+		  idx
+		, title
+		, content
+		, writer
+		, viewCnt
+		, noticeYn
+		, deleteYn
+		, insertTime
+		, updateTime
+		, deleteTime
+		, postType
+	</sql>
+
+	<insert id="insertBoard" parameterType="BoardDTO">
+		INSERT INTO post (
+			<include refid="boardColumns" />
+		) VALUES (
+			  #{idx}
+			, #{title}
+			, #{content}
+			, #{writer}
+			, 0
+			, IFNULL(#{noticeYn}, 0)
+			, 0
+			, NOW()
+			, NULL
+			, NULL
+			, #{postType}
+		)
+	</insert>
+
+	<select id="selectBoardDetail" parameterType="long" resultType="BoardDTO">
+		SELECT
+			<include refid="boardColumns" />
+		FROM
+			post
+		WHERE
+			deleteYn = 0
+		AND
+			idx = #{idx}
+	</select>
+
+	<update id="updateBoard" parameterType="BoardDTO">
+		UPDATE post
+		SET
+			  updateTime = NOW()
+			, title = #{title}
+			, content = #{content}
+			, writer = #{writer}
+			, noticeYn = IFNULL(#{noticeYn}, 0)
+		WHERE
+			idx = #{idx}
+	</update>
+
+	<update id="deleteBoard" parameterType="long">
+		UPDATE post
+		SET
+			  deleteYn = 1
+			, deleteTime = NOW()
+		WHERE
+			idx = #{idx}
+	</update>
+
+	<select id="selectBoardList" parameterType="BoardDTO" resultType="BoardDTO">
+		SELECT
+			<include refid="boardColumns" />
+		FROM
+			post
+		WHERE
+			deleteYn = 0
+			and postType = #{postType}
+		ORDER BY
+			noticeYn ASC,
+			idx DESC,
+			insertTime DESC
+	</select>
+
+	<select id="selectBoardTotalCount" parameterType="BoardDTO" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			post
+		WHERE
+			deleteYn = 0
+			and postType = #{postType}
+	</select>
+
+</mapper>
