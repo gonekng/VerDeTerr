@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.board.mapper.UserMapper">
+
+	<sql id="userColumns">
+		  id
+		, pw
+		, pwConfirm
+		, email
+		, nickname
+		, age
+		, gender
+		, userType
+		, managerYn
+		, regDate
+	</sql>
+
+	<insert id="insertUser" parameterType="UserDTO">
+		INSERT INTO member (
+			<include refid="userColumns" />
+		) VALUES (
+			  #{id}
+			, #{pw}
+			, #{pwConfirm}
+			, #{email}
+			, CONCAT(#{id}, #{userType})
+			, #{age}
+			, #{gender}
+			, #{userType}
+			, 0
+			, NOW()
+		)
+	</insert>
+
+	<select id="selectUserDetail" parameterType="String" resultType="UserDTO">
+		SELECT
+			<include refid="userColumns" />
+		FROM
+			member
+		WHERE
+			id = #{id}
+	</select>
+
+	<update id="updateUser" parameterType="UserDTO">
+		UPDATE member
+		SET
+			  pw = IFNULL(#{pw}, pw)
+			, pwConfirm = IFNULL(#{pwConfirm}, pwConfirm)
+			, nickname = CONCAT(id, IFNULL(#{userType}, userType))
+			, userType = IFNULL(#{userType}, userType)
+		WHERE
+			id = #{id}
+	</update>
+
+	<delete id="deleteUser" parameterType="String">
+		DELETE FROM member
+		WHERE
+			id = #{id}
+	</delete>
+
+</mapper>
