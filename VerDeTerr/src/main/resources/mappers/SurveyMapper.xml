@@ -4,8 +4,22 @@
 
 	<sql id="boardColumns">
 		  id
-		, userType
-		, answer
+		, answer1
+		, answer2
+		, answer3
+		, answer4
+		, answer5
+		, answer6
+		, answer7
+		, answer8
+		, answer9
+		, answer10
+		, answer11
+		, answer12
+		, answer13
+		, answer14
+		, answer15
+		, answer16
 	</sql>
 
 	<insert id="insertSurvey" parameterType="SurveyDTO">
@@ -13,8 +27,22 @@
 			<include refid="boardColumns" />
 		) VALUES (
 			  #{id}
-			, #{userType}
-			, #{answer}
+			, #{answer1}
+			, #{answer2}
+			, #{answer3}
+			, #{answer4}
+			, #{answer5}
+			, #{answer6}
+			, #{answer7}
+			, #{answer8}
+			, #{answer9}
+			, #{answer10}
+			, #{answer11}
+			, #{answer12}
+			, #{answer13}
+			, #{answer14}
+			, #{answer15}
+			, #{answer16}
 		)
 	</insert>
 
@@ -22,9 +50,23 @@
 	<update id="updateSurvey" parameterType="SurveyDTO">
 		UPDATE Mbti_ML
 		SET
-			  update_time = NOW()
-			, userType = #{userType}
-			, answer = #{answer}
+			answer1 = #{answer1}
+			, answer2 = #{answer2}
+			, answer3 = #{answer3}
+			, answer4 = #{answer4}
+			, answer5 = #{answer5}
+			, answer6 = #{answer6}
+			, answer7 = #{answer7}
+			, answer8 = #{answer8}
+			, answer9 = #{answer9}
+			, answer10 = #{answer10}
+			, answer11 = #{answer11}
+			, answer12 = #{answer12}
+			, answer13 = #{answer13}
+			, answer14 = #{answer14}
+			, answer15 = #{answer15}
+			, answer16 = #{answer16}
+			
 		WHERE
 			id = #{id}
 	</update>
