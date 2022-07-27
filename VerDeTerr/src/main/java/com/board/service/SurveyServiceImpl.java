@@ -1,9 +1,14 @@
 package com.board.service;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.board.domain.BoardDTO;
 import com.board.domain.SurveyDTO;
+import com.board.domain.SurveyOutputDTO;
 import com.board.mapper.SurveyMapper;
 
 
@@ -39,6 +44,23 @@ public class SurveyServiceImpl implements SurveyService {
 	public SurveyDTO getSurveyResult(String id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public SurveyOutputDTO getSurveyOuput(String id) {
+		// TODO Auto-generated method stub
+		return surveyMapper.selectSurveyOutput(id);
+	}
+	
+	@Override
+	public List<SurveyOutputDTO> getSurveyList() {
+		List<SurveyOutputDTO> surveyList = Collections.emptyList();
+
+		
+		surveyList = surveyMapper.selectSurveyList();
+		
+
+		return surveyList;
 	}
 	
 	

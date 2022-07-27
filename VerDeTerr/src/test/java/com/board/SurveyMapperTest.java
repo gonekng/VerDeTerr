@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.board.domain.SurveyDTO;
+import com.board.domain.SurveyOutputDTO;
 import com.board.mapper.SurveyMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @SpringBootTest
 class SurveyMapperTest {
@@ -18,12 +22,30 @@ class SurveyMapperTest {
 	public void testOfSurveyInsert() {
 		SurveyDTO params = new SurveyDTO();
 		params.setId("아이디");
-		params.setUserType("유저타입");
-		params.setAnswer("유저 정답");
+		params.setAnswer1("유저 정답");
 
 		int result = surveyMapper.insertSurvey(params);
 		System.out.println("결과는 " + result + "입니다.");
 	}
+	
+	@Test
+	public void testOfSurveyOutput() {
+	
+		SurveyOutputDTO survey = surveyMapper.selectSurveyOutput((String) "mj");
+		try {
+            String surveyJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(survey);
+
+			System.out.println("=========================");
+			System.out.println(surveyJson);
+			System.out.println("=========================");
+
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	
 //	@Test
 //	public void testOfUpdate() {

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.board.mapper.SurveyMapper">
 
-	<sql id="boardColumns">
+	<sql id="surveyInputColumns">
 		  id
 		, answer1
 		, answer2
@@ -24,7 +24,7 @@
 
 	<insert id="insertSurvey" parameterType="SurveyDTO">
 		INSERT INTO Mbti_ML (
-			<include refid="boardColumns" />
+			<include refid="surveyInputColumns" />
 		) VALUES (
 			  #{id}
 			, #{answer1}
@@ -70,6 +70,31 @@
 		WHERE
 			id = #{id}
 	</update>
+	
+	<sql id="surveyOutputColumns">
+		  id
+		, UserAnswer
+		, UserType
+	</sql>
+	
+	<select id="selectSurveyOutput" parameterType="String" resultType="SurveyOutputDTO">
+		SELECT
+			UserType
+		FROM
+			Mbti_ML_Output
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="selectSurveyList" parameterType="SurveyOutputDTO" resultType="SurveyOutputDTO">
+		SELECT
+			<include refid="surveyOutputColumns" />
+		FROM
+			Mbti_ML_Output
+		
+	</select>
+
+	
 
 
 </mapper>

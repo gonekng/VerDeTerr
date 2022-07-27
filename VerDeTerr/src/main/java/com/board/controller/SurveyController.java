@@ -1,5 +1,7 @@
 package com.board.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.domain.SurveyDTO;
+import com.board.domain.SurveyOutputDTO;
 import com.board.service.SurveyService;
 
 @Controller
@@ -24,7 +27,7 @@ public class SurveyController {
 		} else {
 			SurveyDTO survey = surveyService.getSurveyResult(id);
 			if (survey == null) {
-				return "redirect:/board/list.do";
+				return "redirect:/survey/list.do";
 			}
 			model.addAttribute("survey", survey);
 		}
@@ -32,11 +35,39 @@ public class SurveyController {
 		return "survey/surveylist";
 	}
 	
+//	@GetMapping(value="/survey/surveyresult.do")
+//	public String getSurveyOutput(@RequestParam(value = "id", required = false) String id, Model model) {
+//		if(id == null) {
+//			model.addAttribute("survey", new SurveyOutputDTO());
+//		} else {
+//			SurveyOutputDTO survey = surveyService.getSurveyOuput(id);
+//			if (survey == null) {
+//				return "redirect:/survey/surveylist.do";
+//			}
+//			model.addAttribute("id", id);
+//		}
+//		
+//		
+//		return "survey/surveyresult";
+//	}
+//	
+//	@GetMapping(value="/survey/surveyresult.do")
+//	public String getSurveyOutput(Model model) {
+//		String id = "mjmjmj";
+//		
+//		model.addAttribute("id", id);
+//		
+//		return "survey/surveyresult";
+//	}
+	
 	@GetMapping(value="/survey/surveyresult.do")
-	public String openSurvey() {
-		
+	public String getSurveyList(Model model) {
+		List<SurveyOutputDTO> surveyList = surveyService.getSurveyList();
+		model.addAttribute("surveyList", surveyList);
+
 		return "survey/surveyresult";
 	}
+
 	
 	@PostMapping(value = "/survey/surveyresult.do")
 	public String registerSurvey(final SurveyDTO params) {
@@ -60,5 +91,7 @@ public class SurveyController {
 		
 		return "redirect:/survey/surveyresult.do";
 	}
+	
+	
 	
 }
