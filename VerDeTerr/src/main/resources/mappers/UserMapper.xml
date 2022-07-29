@@ -4,59 +4,88 @@
 <mapper namespace="com.board.mapper.UserMapper">
 
 	<sql id="userColumns">
-		  id
+		id
 		, pw
-		, pwConfirm
+		, pwHint
 		, email
+		, userType
 		, nickname
 		, age
 		, gender
-		, userType
-		, managerYn
-		, regDate
+		,
+		managerYn
+		,
+		regDate
 	</sql>
 
 	<insert id="insertUser" parameterType="UserDTO">
 		INSERT INTO member (
-			<include refid="userColumns" />
+		<include refid="userColumns" />
 		) VALUES (
-			  #{id}
-			, #{pw}
-			, #{pwConfirm}
-			, #{email}
-			, CONCAT(#{id}, #{userType})
-			, #{age}
-			, #{gender}
-			, #{userType}
-			, 0
-			, NOW()
+		#{id}
+		, #{pw}
+		, #{pwHint}
+		, #{email}
+		, null
+		, CONCAT(#{id}, '_',
+		#{userType})
+		, #{age}
+		, #{gender}
+		, 0
+		, NOW()
 		)
 	</insert>
 
 	<select id="selectUserDetail" parameterType="String" resultType="UserDTO">
 		SELECT
-			<include refid="userColumns" />
+		<include refid="userColumns" />
 		FROM
-			member
+		member
 		WHERE
-			id = #{id}
+		id = #{id}
 	</select>
 
 	<update id="updateUser" parameterType="UserDTO">
-		UPDATE member
+		UPDATE Member
 		SET
-			  pw = IFNULL(#{pw}, pw)
-			, pwConfirm = IFNULL(#{pwConfirm}, pwConfirm)
-			, nickname = CONCAT(id, IFNULL(#{userType}, userType))
-			, userType = IFNULL(#{userType}, userType)
+		pw =
+		IFNULL(#{pw}, pw)
+		, pwHint = IFNULL(#{pwHint}, pwHint)
+		, userType =
+		(select userType
+		from Mbti_ML_Output
+		where TestDate = (select
+		MAX(TestDate)
+		from Mbti_ML_Output
+		where id = #{id}))
+		, nickname =
+		CONCAT(id, '_', userType)
 		WHERE
-			id = #{id}
+		id = #{id}
 	</update>
 
 	<delete id="deleteUser" parameterType="String">
 		DELETE FROM member
 		WHERE
-			id = #{id}
+		id
+		= #{id}
 	</delete>
+
+	<select id="selectUserHistory" parameterType="String" resultType="String">
+		select b.userType
+		from Member a, Mbti_ML_Output b
+		where a.ID = b.ID
+		and a.ID = #{id}
+		order by b.TestDate
+	</select>
+	
+	<select id="selectUserHistoryCount" parameterType="String" resultType="int">
+		SELECT
+		COUNT(b.userType)
+		from Member a, Mbti_ML_Output b
+		where a.ID = b.ID
+		and a.ID = #{id}
+		order by b.TestDate
+	</select>
 
 </mapper>
