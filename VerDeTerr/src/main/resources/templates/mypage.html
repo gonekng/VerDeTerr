@@ -1,13 +1,57 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title>마이페이지</title>
-	</head>
-	<body>
-		<h2>Welcome Spring Boot!</h2>
-		<span th:text="${i}">여기는 아이디입니다.</span><br>
-		<span th:text="${n}">여기는 닉네임입니다.</span><br>
-		<span th:text="${e}">여기는 이메일입니다.</span><br>
-	</body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="survey/layout/basic">
+
+<th:block layout:fragment="title">
+	<title>My page</title>
+</th:block>
+
+<th:block layout:fragment="content">
+	<h1 style="text-align: center; padding:40px;">✨My Page ✨</h1>
+	
+	<div style="text-align: center; padding:5px;">
+		아이디 : <span th:text="${i}">여기는 아이디입니다.</span>
+	</div>
+	<div style="text-align: center; padding:5px;">
+		닉네임 : <span th:text="${n}">여기는 닉네임입니다.</span>
+	</div>
+	<div style="text-align: center; padding:5px;">
+		이메일 : <span th:text="${e}">여기는 이메일입니다.</span>
+	</div>
+
+	<div class="table-responsive clearfix" style="padding:40px;">
+		<table class="table table-hover" style="margin-left:auto; margin-right:auto; text-align:center;">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>날짜</th>
+					<th>유형</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${not #lists.isEmpty( testList )}"
+					th:each="row : ${testList}">
+					<td scope="row" th:text="${row.idx}"></td>
+					<td class="text-left"><a
+						th:text="${#temporals.format( row.testdate, 'yyyy-MM-dd' )}"></a>
+					</td>
+					<td th:text="${row.usertype}"></td>
+				</tr>
+				<tr th:unless="${not #lists.isEmpty( testList )}">
+					<td colspan="5">조회된 결과가 없습니다.</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="btn_wrap text-center">
+		<a th:href="@{/mypage}"
+			class="btn btn-primary waves-effect waves-light">내가 쓴 글 보기</a> <a
+			th:href="@{/mypage}" class="btn btn-primary waves-effect waves-light">비밀번호
+			변경</a> <a th:href="@{/mypage}"
+			class="btn btn-primary waves-effect waves-light">회원 탈퇴</a>
+	</div>
+</th:block>
+
 </html>

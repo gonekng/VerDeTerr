@@ -39,4 +39,12 @@ public class UserDTO {
 	/** 가입일자 */
 	private LocalDateTime regDate;
 
+	@Override
+	public String toString() {
+		return "UserDTO [id=" + id + ", pw=" + pw + ", pwHint=" + pwHint + ", email=" + email + ", userType=" + userType
+				+ ", nickname=" + nickname + ", age=" + age + ", gender=" + gender + ", managerYn=" + managerYn
+				+ ", regDate=" + regDate + "]";
+	}
+
+	
 }

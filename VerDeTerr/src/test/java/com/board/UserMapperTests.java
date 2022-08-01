@@ -1,5 +1,6 @@
 package com.board;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.CollectionUtils;
 
+import com.board.domain.SurveyOutputDTO;
 import com.board.domain.UserDTO;
 import com.board.mapper.UserMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -114,12 +116,12 @@ class UserMapperTests {
 	public void testSelectHistory() {
 		int userHistoryCount = userMapper.selectUserHistoryCount("id10");
 		if (userHistoryCount > 0) {
-			List<String> testList = userMapper.selectUserHistory("id10");
+			List<SurveyOutputDTO> testList = userMapper.selectUserHistory("id10");
 			if (CollectionUtils.isEmpty(testList) == false) {
 				System.out.println("=========================");
 				System.out.println("id10님의 테스트 내역");
-				for (String test : testList) {
-					System.out.println(test);
+				for (SurveyOutputDTO test : testList) {
+					System.out.println(test.getTestdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " : " + test.getUsertype());
 				}
 				System.out.println("=========================");
 			}

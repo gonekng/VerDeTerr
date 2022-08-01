@@ -12,10 +12,16 @@
 		, nickname
 		, age
 		, gender
-		,
-		managerYn
-		,
-		regDate
+		, managerYn
+		, regDate
+	</sql>
+	
+	<sql id="surveyOutputColumns">
+		  idx
+		, ID
+		, TestDate
+		, UserAnswer
+		, UserType
 	</sql>
 
 	<insert id="insertUser" parameterType="UserDTO">
@@ -71,12 +77,11 @@
 		= #{id}
 	</delete>
 
-	<select id="selectUserHistory" parameterType="String" resultType="String">
-		select b.userType
-		from Member a, Mbti_ML_Output b
-		where a.ID = b.ID
-		and a.ID = #{id}
-		order by b.TestDate
+	<select id="selectUserHistory" parameterType="String" resultType="SurveyOutputDTO">
+		select <include refid="surveyOutputColumns" />
+		from Mbti_ML_Output
+		where ID = #{id}
+		order by TestDate
 	</select>
 	
 	<select id="selectUserHistoryCount" parameterType="String" resultType="int">
