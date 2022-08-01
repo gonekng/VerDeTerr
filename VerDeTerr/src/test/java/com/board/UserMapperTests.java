@@ -1,5 +1,6 @@
 package com.board;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.CollectionUtils;
 
+import com.board.domain.SurveyOutputDTO;
 import com.board.domain.UserDTO;
 import com.board.mapper.UserMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -50,6 +52,30 @@ class UserMapperTests {
 			e.printStackTrace();
 		}
 	}
+	
+    @Test
+    public void testOfUpdate() {
+        UserDTO params = new UserDTO();
+        params.setId("id11");
+        params.setPw("pw11");
+        params.setPwHint("confirm11");
+        int result = userMapper.updateUser(params);
+        if (result == 1) {
+            UserDTO user = userMapper.selectUserDetail("id11");
+            try {
+                // String boardJson = new ObjectMapper().writeValueAsString(board);
+                String userJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(user);
+
+                System.out.println("=========================");
+                System.out.println(userJson);
+                System.out.println("=========================");
+
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 	@Test
 	public void testOfDelete() {
@@ -111,14 +137,14 @@ class UserMapperTests {
 
 	@Test
 	public void testSelectHistory() {
-		int userHistoryCount = userMapper.selectUserHistoryCount("id10");
+		int userHistoryCount = userMapper.selectUserHistoryCount("id11");
 		if (userHistoryCount > 0) {
-			List<String> testList = userMapper.selectUserHistory("id10");
+			List<SurveyOutputDTO> testList = userMapper.selectUserHistory("id11");
 			if (CollectionUtils.isEmpty(testList) == false) {
 				System.out.println("=========================");
-				System.out.println("id10님의 테스트 내역");
-				for (String test : testList) {
-					System.out.println(test);
+				System.out.println("id11님의 테스트 내역");
+				for (SurveyOutputDTO test : testList) {
+					System.out.println(test.getTestdate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " : " + test.getUsertype());
 				}
 				System.out.println("=========================");
 			}

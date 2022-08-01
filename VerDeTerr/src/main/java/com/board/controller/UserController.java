@@ -1,11 +1,14 @@
 package com.board.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.board.domain.SurveyOutputDTO;
 import com.board.domain.UserDTO;
 import com.board.service.UserService;
 
@@ -46,26 +49,42 @@ public class UserController {
 			return "/login";
 
 		} else
-			model.addAttribute("info", params.getId());
-		return "/login_proc";
-	}
-
-	@GetMapping(value = "/main.do")
-	public String openMainpage(Model model) {
+			model.addAttribute("loginID", params.getId());
 		return "/main";
 	}
 
-	@GetMapping(value = "/mypage.do")
-	public String openMypage(Model model, String ID) {
-
-		UserDTO params = userService.getUserDetail(ID);
-		String myID = params.getId();
-		String myNickname = params.getNickname();
-		String myEmail = params.getEmail();
-
+	@GetMapping(value = "/main")
+	public String openMainpage(Model model) {
+		return "/main";
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+    @GetMapping(value = "/mypage")
+    public String openMypage(@RequestParam(name="id") String ID, Model model) {
+        
+        UserDTO params = new UserDTO();
+        String myID = "";
+        String myNickname = "";
+        String myEmail = "";
+        
+        if(ID!=null) {
+            params = userService.getUserDetail(ID);
+            myID = params.getId();
+            myNickname = params.getNickname();
+            myEmail = params.getEmail();
+        }
+        
 		model.addAttribute("i", myID);
 		model.addAttribute("n", myNickname);
 		model.addAttribute("e", myEmail);
+		
+        List<SurveyOutputDTO> testList = userService.getUserHistory(myID);
+        model.addAttribute("testList", testList);
 		return "/mypage";
 	}
 
