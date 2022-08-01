@@ -3,6 +3,7 @@
 
 <mapper namespace="com.board.mapper.UserMapper">
 
+<<<<<<< HEAD
    <sql id="userColumns">
       id
       , pw
@@ -23,6 +24,22 @@
       , UserAnswer
       , UserType
    </sql>
+=======
+	<sql id="userColumns">
+		id
+		, pw
+		, pwHint
+		, email
+		, userType
+		, nickname
+		, age
+		, gender
+		,
+		managerYn
+		,
+		regDate
+	</sql>
+>>>>>>> parent of 66a5053 (메인페이지, 마이페이지 구현 및 UserService, UserServiceImpl, UserController 추가)
 
    <insert id="insertUser" parameterType="UserDTO">
       INSERT INTO member (
@@ -77,6 +94,7 @@
       = #{id}
    </delete>
 
+<<<<<<< HEAD
    <select id="selectUserHistory" parameterType="String" resultType="SurveyOutputDTO">
       select <include refid="surveyOutputColumns" />
       from Mbti_ML_Output
@@ -92,5 +110,23 @@
       and a.ID = #{id}
       order by b.TestDate
    </select>
+=======
+	<select id="selectUserHistory" parameterType="String" resultType="String">
+		select b.userType
+		from Member a, Mbti_ML_Output b
+		where a.ID = b.ID
+		and a.ID = #{id}
+		order by b.TestDate
+	</select>
+	
+	<select id="selectUserHistoryCount" parameterType="String" resultType="int">
+		SELECT
+		COUNT(b.userType)
+		from Member a, Mbti_ML_Output b
+		where a.ID = b.ID
+		and a.ID = #{id}
+		order by b.TestDate
+	</select>
+>>>>>>> parent of 66a5053 (메인페이지, 마이페이지 구현 및 UserService, UserServiceImpl, UserController 추가)
 
 </mapper>

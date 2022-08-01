@@ -37,6 +37,7 @@ public class UserDTO {
 	/** 가입일자 */
 	private LocalDateTime regDate;
 
+<<<<<<< HEAD
 	public String getId() {
 		return id;
 	}
@@ -170,4 +171,6 @@ public class UserDTO {
 //		});
 //		return collectors;
 //	}
+=======
+>>>>>>> parent of 66a5053 (메인페이지, 마이페이지 구현 및 UserService, UserServiceImpl, UserController 추가)
 }

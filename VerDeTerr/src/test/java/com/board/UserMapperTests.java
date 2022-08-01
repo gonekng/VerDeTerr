@@ -1,10 +1,18 @@
 package com.board;
 
+<<<<<<< HEAD
+=======
+import java.util.List;
+
+>>>>>>> parent of 66a5053 (메인페이지, 마이페이지 구현 및 UserService, UserServiceImpl, UserController 추가)
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 66a5053 (메인페이지, 마이페이지 구현 및 UserService, UserServiceImpl, UserController 추가)
 import com.board.domain.UserDTO;
 import com.board.mapper.UserMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -95,6 +103,7 @@ class UserMapperTests {
 	}
 	
 	@Test
+<<<<<<< HEAD
 	public void testOfLogin() {
 		UserDTO result = userMapper.selectUserDetail("dhtmddms");
 		System.out.println(result);
@@ -104,6 +113,20 @@ class UserMapperTests {
 			System.out.println("로그인 성공입니다.");
 		}else {
 			System.out.println("로그인 실패입니다.");
+=======
+	public void testSelectHistory() {
+		int userHistoryCount = userMapper.selectUserHistoryCount("id10");
+		if (userHistoryCount > 0) {
+			List<String> testList = userMapper.selectUserHistory("id10");
+			if (CollectionUtils.isEmpty(testList) == false) {
+				System.out.println("=========================");
+				System.out.println("id10님의 테스트 내역");
+				for (String test : testList) {
+					System.out.println(test);
+				}
+				System.out.println("=========================");
+			}
+>>>>>>> parent of 66a5053 (메인페이지, 마이페이지 구현 및 UserService, UserServiceImpl, UserController 추가)
 		}
 		
 	}

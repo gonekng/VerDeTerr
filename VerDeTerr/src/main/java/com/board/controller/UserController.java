@@ -1,19 +1,27 @@
 package com.board.controller;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> parent of 66a5053 (메인페이지, 마이페이지 구현 및 UserService, UserServiceImpl, UserController 추가)
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+=======
+
+>>>>>>> parent of 66a5053 (메인페이지, 마이페이지 구현 및 UserService, UserServiceImpl, UserController 추가)
 import com.board.domain.UserDTO;
 import com.board.service.UserService;
 
 
 @Controller
+<<<<<<< HEAD
 public class UserController{
 	
 	@Autowired
@@ -63,3 +71,26 @@ public class UserController{
 
 	
 
+=======
+public class UserController {
+
+	@Autowired
+	private UserService userService;
+
+	@GetMapping(value = "/mypage.do")
+	public String openMypage(Model model, String ID) {
+		
+		UserDTO params = userService.getUserDetail(ID);
+		String myID = params.getId();
+		String myNickname = params.getNickname();
+		String myEmail = params.getEmail();
+
+		model.addAttribute("i", myID);
+		model.addAttribute("n", myNickname);
+		model.addAttribute("e", myEmail);
+		return "/mypage";
+		
+	}
+
+}
+>>>>>>> parent of 66a5053 (메인페이지, 마이페이지 구현 및 UserService, UserServiceImpl, UserController 추가)
