@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mapper.SurveyMapper">
+
+	<sql id="surveyInputColumns">
+		  id
+		, answer1
+		, answer2
+		, answer3
+		, answer4
+		, answer5
+		, answer6
+		, answer7
+		, answer8
+		, answer9
+		, answer10
+		, answer11
+		, answer12
+		, answer13
+		, answer14
+		, answer15
+		, answer16
+	</sql>
+
+	<insert id="insertSurvey" parameterType="SurveyDTO">
+		INSERT INTO Mbti_ML (
+			<include refid="surveyInputColumns" />
+		) VALUES (
+			  #{id}
+			, #{answer1}
+			, #{answer2}
+			, #{answer3}
+			, #{answer4}
+			, #{answer5}
+			, #{answer6}
+			, #{answer7}
+			, #{answer8}
+			, #{answer9}
+			, #{answer10}
+			, #{answer11}
+			, #{answer12}
+			, #{answer13}
+			, #{answer14}
+			, #{answer15}
+			, #{answer16}
+		)
+	</insert>
+
+	
+	<update id="updateSurvey" parameterType="SurveyDTO">
+		UPDATE Mbti_ML
+		SET
+			answer1 = #{answer1}
+			, answer2 = #{answer2}
+			, answer3 = #{answer3}
+			, answer4 = #{answer4}
+			, answer5 = #{answer5}
+			, answer6 = #{answer6}
+			, answer7 = #{answer7}
+			, answer8 = #{answer8}
+			, answer9 = #{answer9}
+			, answer10 = #{answer10}
+			, answer11 = #{answer11}
+			, answer12 = #{answer12}
+			, answer13 = #{answer13}
+			, answer14 = #{answer14}
+			, answer15 = #{answer15}
+			, answer16 = #{answer16}
+			
+		WHERE
+			id = #{id}
+	</update>
+	
+	<sql id="surveyOutputColumns">
+		  id
+		, UserAnswer
+		, UserType
+	</sql>
+	
+	<select id="selectSurveyOutput" parameterType="String" resultType="SurveyOutputDTO">
+		SELECT
+			UserType
+		FROM
+			Mbti_ML_Output
+		WHERE
+			id = #{id}
+	</select>
+	
+	<select id="selectSurveyList" parameterType="SurveyOutputDTO" resultType="SurveyOutputDTO">
+		SELECT
+			<include refid="surveyOutputColumns" />
+		FROM
+			Mbti_ML_Output
+		
+	</select>
+
+	
+
+
+</mapper>
