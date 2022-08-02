@@ -15,12 +15,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO loginCheck(String id, String pw) {
 		UserDTO loginMember = userMapper.selectUserDetail(id);
-		System.out.println(userMapper.selectUserDetail(id));
-		System.out.println(loginMember);
 		if (loginMember == null) {
 			return null;
 		} else if (!pw.equals(loginMember.getPw())) {
-			System.out.println(loginMember.toString());
 			return null;
 		} else {
 			return loginMember;
@@ -32,4 +29,25 @@ public class UserServiceImpl implements UserService {
 		return userMapper.selectUserDetail(ID);
 	}
 
+	@Override
+	public UserDTO findLoginId(String Email) {
+		UserDTO findUserEmail = userMapper.findId(Email);
+		if (findUserEmail==null) {
+			return null;
+		} else {
+			return findUserEmail;
+		}
+	}
+	
+	@Override
+	public UserDTO findLoginPw(String Id, String PwHint) {
+		UserDTO selectId = userMapper.selectUserDetail(Id);
+		if(selectId == null) {
+			return null;
+		} else if (!PwHint.equals(selectId.getPwHint())) {
+			return null;
+		} else {
+			return selectId;
+		}
+	}
 }

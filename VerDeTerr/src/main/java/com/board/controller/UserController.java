@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.domain.UserDTO;
@@ -19,16 +20,15 @@ public class UserController {
 	public String login() {
 		return "login";
 	}
-
-	@GetMapping("/access_denied")
-	public String accessDenied() {
-		return "access_denied";
+	
+	@GetMapping("/findId")
+	public String findId() {
+		return "findId";
 	}
-
-	@GetMapping("/user_access")
-	public String userAccess() {
-		System.out.println("user_access 컨트롤러 호출됨");
-		return "user_access";
+	
+	@GetMapping("findPw")
+	public String findPw() {
+		return "findPw";
 	}
 
 	/**
@@ -68,5 +68,41 @@ public class UserController {
 		model.addAttribute("e", myEmail);
 		return "/mypage";
 	}
-
+	
+	/**
+	 * 
+	 * @param email
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/findId_proc")
+	public String findUserId(@RequestParam(value="email", required=false) String Email, Model model) {
+		UserDTO params = userService.findLoginId(Email);
+		System.out.println(params);
+		if(params==null) {
+			model.addAttribute("msg","입력하신 이메일로 가입된 아이디가 없습니다.");
+			return "/findId";
+		}else
+			System.out.println("********************");
+			System.out.println(params.getId());
+			model.addAttribute("msg", "입력하신 이메일로 가입된 아이디는 "+ params.getId()+"입니다.");
+			return "/login";
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @param pwHint
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/findPw_proc")
+	public String findUserPw(@RequestParam(value="id") String Id, @RequestParam(value="pwHint", required=false) String PwHint, Model model) {
+		UserDTO params = userService.findLoginPw(Id, PwHint);
+		if(params==null) {
+			model.addAttribute("msg","정보를 잘못입력하셨습니다.");
+		} else 
+			model.addAttribute("msg",params.getId()+"님의 비밀번호는 "+params.getPw()+"입니다.");
+			return "/login";
+	}
 }
