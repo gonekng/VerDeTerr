@@ -39,6 +39,10 @@ public class UserServiceImpl implements UserService {
     public List<SurveyOutputDTO> getUserHistory(String ID) {
         return userMapper.selectUserHistory(ID);
     }
-    
+
+	@Override
+	public int updateUserDetail(UserDTO params) {
+		return userMapper.updateUser(params);
+	}
 
 }

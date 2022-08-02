@@ -11,13 +11,13 @@
 	<h1 style="text-align: center; padding: 40px;">✨My Page ✨</h1>
 
 	<div style="text-align: center; padding: 5px;">
-		아이디 : <span th:text="${i}">여기는 아이디입니다.</span>
+		아이디 : <span th:text="${id}">여기는 아이디입니다.</span>
 	</div>
 	<div style="text-align: center; padding: 5px;">
-		닉네임 : <span th:text="${n}">여기는 닉네임입니다.</span>
+		닉네임 : <span th:text="${nick}">여기는 닉네임입니다.</span>
 	</div>
 	<div style="text-align: center; padding: 5px;">
-		이메일 : <span th:text="${e}">여기는 이메일입니다.</span>
+		이메일 : <span th:text="${email}">여기는 이메일입니다.</span>
 	</div>
 
 	<div class="table-responsive clearfix" style="padding: 40px;">
@@ -47,10 +47,11 @@
 	</div>
 
 	<div class="btn_wrap text-center">
-		<a th:href="@{/mypage}"
-			class="btn btn-primary waves-effect waves-light">내가 쓴 글 보기</a> <a
-			th:href="@{/mypage}" class="btn btn-primary waves-effect waves-light">비밀번호
-			변경</a> <a th:href="@{/mypage}"
+		<a th:href="@{/mypage(id=${id})}"
+			class="btn btn-primary waves-effect waves-light">내가 쓴 글 보기</a>
+		<a th:href="@{/modify(id=${id})}"
+			class="btn btn-primary waves-effect waves-light">비밀번호 변경</a>
+		<a th:href="@{/mypage(id=${id})}"
 			class="btn btn-primary waves-effect waves-light">회원 탈퇴</a>
 	</div>
 </th:block>

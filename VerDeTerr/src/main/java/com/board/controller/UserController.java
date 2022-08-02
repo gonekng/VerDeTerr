@@ -45,7 +45,7 @@ public class UserController {
 	public String loginProcess(@RequestParam String id, @RequestParam String pw, Model model) {
 		UserDTO params = userService.loginCheck(id, pw);
 		if (params == null) {
-			model.addAttribute("msg", "아이디 혹은 비밀번호 오류");
+			model.addAttribute("msgLogin", "아이디 혹은 비밀번호 오류");
 			return "/login";
 
 		} else
@@ -79,13 +79,45 @@ public class UserController {
             myEmail = params.getEmail();
         }
         
-		model.addAttribute("i", myID);
-		model.addAttribute("n", myNickname);
-		model.addAttribute("e", myEmail);
+		model.addAttribute("id", myID);
+		model.addAttribute("nick", myNickname);
+		model.addAttribute("email", myEmail);
 		
         List<SurveyOutputDTO> testList = userService.getUserHistory(myID);
         model.addAttribute("testList", testList);
 		return "/mypage";
+	}
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
+	@GetMapping("/modify")
+	public String modify(@RequestParam(name="id", defaultValue="id10") String ID, Model model) {
+		model.addAttribute("id", ID);
+		return "modify";
+	}
+    
+	/**
+	 * 
+	 * @param id
+	 * @param pw
+	 * @param pw2
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/modify_proc")
+	public String modifyProcess(@RequestParam(name="id", defaultValue="id10") String ID, @RequestParam String pw, @RequestParam String pw2, Model model) {
+		UserDTO params = userService.getUserDetail(ID);
+		if (params.getPw().equals(pw)) {
+			model.addAttribute("id", params.getId());
+			model.addAttribute("msgModify", "현재 비밀번호가 틀렸습니다.");
+			return "/modify";
+			
+		} else
+			userService.updateUserDetail(params);
+			return "/main";
 	}
 
 }

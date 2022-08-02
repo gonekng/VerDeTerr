@@ -16,4 +16,6 @@ public interface UserService {
 	
     public List<SurveyOutputDTO> getUserHistory(String ID);
 
+	public int updateUserDetail(UserDTO params);
+
 }
