@@ -21,6 +21,9 @@ public class UserDTO {
 	/** 이메일 */
 	private String email;
 
+	/** 유형 */
+	private String userType;
+
 	/** 닉네임 */
 	private String nickname;
 
@@ -30,9 +33,6 @@ public class UserDTO {
 	/** 성별 */
 	private String gender;
 
-	/** 유형 */
-	private String userType;
-
 	/** 관리자여부 */
 	private boolean managerYn;
 
@@ -41,9 +41,11 @@ public class UserDTO {
 
 	@Override
 	public String toString() {
-		return "UserDTO [id=" + id + ", pw=" + pw + ", pwHint=" + pwHint + ", email=" + email + ", nickname=" + nickname
-				+ ", age=" + age + ", gender=" + gender + ", userType=" + userType + ", managerYn=" + managerYn
+		return "UserDTO [id=" + id + ", pw=" + pw + ", pwHint=" + pwHint + ", email=" + email + ", userType=" + userType
+				+ ", nickname=" + nickname + ", age=" + age + ", gender=" + gender + ", managerYn=" + managerYn
 				+ ", regDate=" + regDate + "]";
 	}
+
+
 
 }
