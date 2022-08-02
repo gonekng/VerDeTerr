@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.board.domain.SurveyOutputDTO;
 import com.board.domain.UserDTO;
 
 @Mapper
@@ -17,7 +18,7 @@ public interface UserMapper {
 
 	public int deleteUser(String id);
 
-	public List<String> selectUserHistory(String id);
+	public List<SurveyOutputDTO> selectUserHistory(String id);
 
 	public int selectUserHistoryCount(String id);
 	

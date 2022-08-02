@@ -1,8 +1,11 @@
 package com.board.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.board.domain.SurveyOutputDTO;
 import com.board.domain.UserDTO;
 import com.board.mapper.UserMapper;
 
@@ -27,6 +30,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO getUserDetail(String ID) {
 		return userMapper.selectUserDetail(ID);
+	}
+	
+    @Override
+    public List<SurveyOutputDTO> getUserHistory(String ID) {
+        return userMapper.selectUserHistory(ID);
+    }
+
+	@Override
+	public int updateUserDetail(UserDTO params) {
+		return userMapper.updateUser(params);
 	}
 
 	@Override
