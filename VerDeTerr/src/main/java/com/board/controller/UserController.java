@@ -2,6 +2,9 @@ package com.board.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.board.domain.SurveyOutputDTO;
 import com.board.domain.UserDTO;
 import com.board.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Controller
 public class UserController {
@@ -23,17 +29,6 @@ public class UserController {
 		return "login";
 	}
 
-	@GetMapping("/access_denied")
-	public String accessDenied() {
-		return "access_denied";
-	}
-
-	@GetMapping("/user_access")
-	public String userAccess() {
-		System.out.println("user_access 컨트롤러 호출됨");
-		return "user_access";
-	}
-
 	/**
 	 * 
 	 * @param id
@@ -42,82 +37,75 @@ public class UserController {
 	 * @return
 	 */
 	@GetMapping("/login_proc")
-	public String loginProcess(@RequestParam String id, @RequestParam String pw, Model model) {
+	public String loginProcess(HttpServletRequest request, @RequestParam String id, @RequestParam String pw, Model model) {
+		HttpSession session = request.getSession(true);
 		UserDTO params = userService.loginCheck(id, pw);
 		if (params == null) {
 			model.addAttribute("msgLogin", "아이디 혹은 비밀번호 오류");
-			return "/login";
+			return "login";
 
-		} else
-			model.addAttribute("loginID", params.getId());
-		return "/main";
+		} else {
+			session.setAttribute("id", params.getId());
+		}
+		return "main";
 	}
 
 	@GetMapping(value = "/main")
 	public String openMainpage(Model model) {
-		return "/main";
+		return "main";
 	}
 	
-	/**
-	 * 
-	 * @param id
-	 * @param model
-	 * @return
-	 */
     @GetMapping(value = "/mypage")
-    public String openMypage(@RequestParam(name="id") String ID, Model model) {
+    public String openMypage(HttpSession session, Model model) {
         
         UserDTO params = new UserDTO();
-        String myID = "";
+        String myID = (String) session.getAttribute("id");
         String myNickname = "";
         String myEmail = "";
         
-        if(ID!=null) {
-            params = userService.getUserDetail(ID);
-            myID = params.getId();
+        if(myID!=null) {
+            params = userService.getUserDetail(myID);
             myNickname = params.getNickname();
             myEmail = params.getEmail();
         }
         
-		model.addAttribute("id", myID);
 		model.addAttribute("nick", myNickname);
 		model.addAttribute("email", myEmail);
 		
         List<SurveyOutputDTO> testList = userService.getUserHistory(myID);
         model.addAttribute("testList", testList);
-		return "/mypage";
+		return "mypage";
 	}
     
-    /**
-     * 
-     * @param id
-     * @return
-     */
 	@GetMapping("/modify")
-	public String modify(@RequestParam(name="id", defaultValue="id10") String ID, Model model) {
-		model.addAttribute("id", ID);
+	public String modify(Model model) {
 		return "modify";
 	}
     
 	/**
 	 * 
-	 * @param id
 	 * @param pw
 	 * @param pw2
 	 * @param model
 	 * @return
 	 */
 	@GetMapping("/modify_proc")
-	public String modifyProcess(@RequestParam(name="id", defaultValue="id10") String ID, @RequestParam String pw, @RequestParam String pw2, Model model) {
-		UserDTO params = userService.getUserDetail(ID);
-		if (params.getPw().equals(pw)) {
-			model.addAttribute("id", params.getId());
-			model.addAttribute("msgModify", "현재 비밀번호가 틀렸습니다.");
-			return "/modify";
+	public String modifyProcess(HttpSession session, @RequestParam String pw, @RequestParam String pw2, Model model) {
+		UserDTO params = userService.getUserDetail((String)session.getAttribute("id"));
+		if (!params.getPw().equals(pw)) {
+			model.addAttribute("msgModify1", "현재 비밀번호가 틀렸습니다.");
+			return "modify";
 			
-		} else
+		} else if (pw.equals(pw2)) {
+			model.addAttribute("msgModify2", "현재 비밀번호와 같은 비밀번호로 변경할 수 없습니다.");
+			return "modify";
+		}
+		else {
+			params.setPw(pw2);
 			userService.updateUserDetail(params);
-			return "/main";
+			model.addAttribute("msgModify3", "비밀번호 변경이 완료되었습니다.");
+			return "main";
+		}
 	}
 
 }

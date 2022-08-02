@@ -11,7 +11,7 @@
 	<h1 style="text-align: center; padding: 40px;">✨My Page ✨</h1>
 
 	<div style="text-align: center; padding: 5px;">
-		아이디 : <span th:text="${id}">여기는 아이디입니다.</span>
+		아이디 : <span th:text="${session.id}">여기는 아이디입니다.</span>
 	</div>
 	<div style="text-align: center; padding: 5px;">
 		닉네임 : <span th:text="${nick}">여기는 닉네임입니다.</span>
@@ -47,11 +47,11 @@
 	</div>
 
 	<div class="btn_wrap text-center">
-		<a th:href="@{/mypage(id=${id})}"
+		<a th:href="@{/mypage(id=${session.id})}"
 			class="btn btn-primary waves-effect waves-light">내가 쓴 글 보기</a>
-		<a th:href="@{/modify(id=${id})}"
+		<a th:href="@{/modify(id=${session.id})}"
 			class="btn btn-primary waves-effect waves-light">비밀번호 변경</a>
-		<a th:href="@{/mypage(id=${id})}"
+		<a th:href="@{/mypage(id=${session.id})}"
 			class="btn btn-primary waves-effect waves-light">회원 탈퇴</a>
 	</div>
 </th:block>

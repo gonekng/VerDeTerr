@@ -9,17 +9,21 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
 	    $(document).ready(function() {
-	        let message = "[[${msgModify}]]";
-	        if (message != "") {
-	           alert(message);
-	        }else {
+	        let message1 = "[[${msgModify1}]]";
+	        let message2 = "[[${msgModify2}]]";
+	        if (message1 != "") {
+	           alert(message1);
+	        } else if (message2 != "") {
+		       alert(message2);	        	
+	        } else {
 	        }
 	    })
-	</script></head>
+	</script>
+</head>
 <body>
 <div class="container">
     <h1>비밀번호 변경</h1>
-    <form th:action="@{/modify_proc(id=${id})}" method="get">
+    <form th:action="@{/modify_proc(id=${session.id})}" method="get">
         <div class="form-group">
             <label th:for="password">현재 비밀번호</label>
             <input type="password" class="form-control" name="pw" placeholder="현재 비밀번호를 입력해주세요">
