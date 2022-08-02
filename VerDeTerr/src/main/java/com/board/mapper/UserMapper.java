@@ -21,5 +21,9 @@ public interface UserMapper {
 	public List<SurveyOutputDTO> selectUserHistory(String id);
 
 	public int selectUserHistoryCount(String id);
+	
+	public UserDTO findId(String email);
+	
+	public UserDTO findPw(String pwHint);
 
 }

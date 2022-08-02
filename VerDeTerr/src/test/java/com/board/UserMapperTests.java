@@ -149,6 +149,33 @@ class UserMapperTests {
 				System.out.println("=========================");
 			}
 		}
-
 	}
+	
+	@Test
+	public void testSelectEmail() {
+		UserDTO result = userMapper.findId("dhtmddms@gmail.com");
+		System.out.println("=========================");
+		if(result.getEmail()==null) {
+			System.out.println("가입되지 않은 이메일입니다.");
+		}else if(result.getEmail().equals("dhtmddms@gmail.com")){
+			System.out.println("가입된 아이디는" +result.getId()+"입니다.");
+		}else {
+			System.out.println("아이디를 찾을 수 없습니다.");
+		}
+	}
+	
+	
+	@Test
+	public void testSelectPwHint() {
+		UserDTO result = userMapper.findPw("안녕");
+		if(result.getPwHint()==null) {
+			System.out.println("비밀번호 힌트가 일치하지 않습니다.");
+		} else if(result.getPwHint().equals("안녕")) {
+			System.out.println("비밀번호는 "+result.getPw()+"입니다.");
+		} else {
+			System.out.println("비밀번호를 찾을 수 없습니다.");
+		}
+			
+	}
+	
 }

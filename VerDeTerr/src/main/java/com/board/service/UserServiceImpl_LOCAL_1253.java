@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService {
 		if (loginMember == null) {
 			return null;
 		} else if (!pw.equals(loginMember.getPw())) {
+			System.out.println(loginMember.toString());
 			return null;
 		} else {
 			return loginMember;
@@ -43,25 +44,4 @@ public class UserServiceImpl implements UserService {
 		return userMapper.updateUser(params);
 	}
 
-	@Override
-	public UserDTO findLoginId(String Email) {
-		UserDTO findUserEmail = userMapper.findId(Email);
-		if (findUserEmail==null) {
-			return null;
-		} else {
-			return findUserEmail;
-		}
-	}
-	
-	@Override
-	public UserDTO findLoginPw(String Id, String PwHint) {
-		UserDTO selectId = userMapper.selectUserDetail(Id);
-		if(selectId == null) {
-			return null;
-		} else if (!PwHint.equals(selectId.getPwHint())) {
-			return null;
-		} else {
-			return selectId;
-		}
-	}
 }
