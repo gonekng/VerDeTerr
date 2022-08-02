@@ -18,8 +18,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO loginCheck(String id, String pw) {
 		UserDTO loginMember = userMapper.selectUserDetail(id);
-		System.out.println(userMapper.selectUserDetail(id));
-		System.out.println(loginMember);
+
 		if (loginMember == null) {
 			return null;
 		} else if (!pw.equals(loginMember.getPw())) {
