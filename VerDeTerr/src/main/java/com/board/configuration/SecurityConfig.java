@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable() // post 방식으로 값을 전송할 때 token을 사용해야하는 보안 설정을 해제
-				.authorizeRequests().antMatchers("/login", "/signup","/main","/signup_proc","/login_proc","/mypage","/identify","/identify_proc","/survey/surveylist.do","survey/suveyresult.do","/board/list.do","/board/write.do","/board/register.do","/board/view.do","/board/delete.do")
+				.authorizeRequests().antMatchers("/login", "/signup","/main","/signup_proc","/login_proc","/mypage","/identify","/identify_proc")
 				.permitAll()
 				.anyRequest().authenticated().and()
 				.formLogin().loginPage("/login").permitAll();
