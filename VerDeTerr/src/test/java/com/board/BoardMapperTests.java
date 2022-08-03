@@ -114,24 +114,24 @@ class BoardMapperTests {
 		}
 	}
 	
-	@Test
-	public void testSelectList() {
-		BoardDTO params = new BoardDTO();
-		params.setPostType("관리자형");
-		int boardTotalCount = boardMapper.selectBoardTotalCount(params);
-		if (boardTotalCount > 0) {
-			List<BoardDTO> boardList = boardMapper.selectBoardList(params);
-			if (CollectionUtils.isEmpty(boardList) == false) {
-				for (BoardDTO board : boardList) {
-					System.out.println("=========================");
-					System.out.println(board.getTitle());
-					System.out.println(board.getPostType());
-					System.out.println(board.getContent());
-					System.out.println(board.getWriter());
-					System.out.println("=========================");
-				}
-			}
-		}
-	}
+//	@Test
+//	public void testSelectList() {
+//		BoardDTO params = new BoardDTO();
+//		params.setPostType("관리자형");
+//		int boardTotalCount = boardMapper.selectBoardTotalCount(params);
+//		if (boardTotalCount > 0) {
+//			List<BoardDTO> boardList = boardMapper.selectBoardList(params);
+//			if (CollectionUtils.isEmpty(boardList) == false) {
+//				for (BoardDTO board : boardList) {
+//					System.out.println("=========================");
+//					System.out.println(board.getTitle());
+//					System.out.println(board.getPostType());
+//					System.out.println(board.getContent());
+//					System.out.println(board.getWriter());
+//					System.out.println("=========================");
+//				}
+//			}
+//		}
+//	}
 
 }

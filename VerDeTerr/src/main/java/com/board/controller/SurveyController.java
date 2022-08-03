@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 //import org.python.core.io.BufferedReader;
 import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,23 +30,40 @@ public class SurveyController {
 	@Autowired
 	private SurveyService surveyService;
 	
+//	@GetMapping(value = "/survey/surveylist.do")
+//	public String openSurveyWrite(@RequestParam(value = "id", required = false) String id, Model model, HttpSession session) {
+//		String myID = (String) session.getAttribute("id");
+//		if(id == null){
+//			model.addAttribute("survey",  new SurveyDTO());
+//		} else {
+//			SurveyDTO survey = surveyService.getSurveyResult(id);
+//			System.out.println("survey:"+survey);
+//			if (survey == null) {
+//				return "redirect:/survey/surveylist.do";
+//			}
+//			model.addAttribute("survey", survey);
+//			
+//			
+//		}
+//		
+//		return "survey/surveylist";
+//	}
+	
 	@GetMapping(value = "/survey/surveylist.do")
-	public String openSurveyWrite(@RequestParam(value = "id", required = false) String id, Model model) {
-		if(id == null){
-			model.addAttribute("survey",  new SurveyDTO());
+	public String openSurveyWrite(Model model, HttpSession session) {
+		String myID = (String) session.getAttribute("id");
+		if(myID == null){
+			model.addAttribute("surveyError", "로그인 후 사용 가능합니다.");
+			return "redirect:/main";
 		} else {
-			SurveyDTO survey = surveyService.getSurveyResult(id);
+			SurveyDTO survey = surveyService.getSurveyResult(myID);
 			System.out.println("survey:"+survey);
-			if (survey == null) {
-				return "redirect:/survey/surveylist.do";
-			}
 			model.addAttribute("survey", survey);
-			
-			
+			return "survey/surveylist";
 		}
 		
-		return "survey/surveylist";
 	}
+	
 	
 //	@GetMapping(value = "/survey/surveylist.do")
 //	public String openSurveyWrite(Model model) {
@@ -113,21 +132,21 @@ public class SurveyController {
 			
 			
 //			String convertID = params.getId();
-//			System.out.println(convertID.getClass().getName());
-//			String z1= " "+convertID;
-//			String z2 = "src/main/python/test.bat".concat(z1);
-//			System.out.println(z2);
-//		    Process p = Runtime.getRuntime().exec(z2);
-//		    System.out.println("python finished");
-//		    
-////		    ProcessBuilder builder = new ProcessBuilder((List<String>) new InputStreamReader(p.getInputStream()));
-////	        builder.start();
-//		    
-//		    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-//		    String line = null;
-//		    
-//		    while ((line = br.readLine()) != null) {
-//		      System.out.println(line);}
+			System.out.println(convertID.getClass().getName());
+			String z1= " "+convertID;
+			String z2 = "src/main/python/test.bat".concat(z1);
+			System.out.println(z2);
+		    Process p = Runtime.getRuntime().exec(z2);
+		    System.out.println("python finished");
+		    
+//		    ProcessBuilder builder = new ProcessBuilder((List<String>) new InputStreamReader(p.getInputStream()));
+//	        builder.start();
+		    
+		    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		    String line = null;
+		    
+		    while ((line = br.readLine()) != null) {
+		      System.out.println(line);}
 			
 //		      ArrayList<String> list = new ArrayList<>();
 //		      list.add("python");
@@ -143,28 +162,45 @@ public class SurveyController {
 //		      while ( (line = reader.readLine()) != null) {
 //		        System.out.println(line);
 //		      }
-		 
-			String url = "http://127.0.0.1:5000/tospring";
-			String sb = "";
-			
-			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-			
 
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-
-			String line = null;
-
-			while ((line = br.readLine()) != null) {
-				sb = sb + line + "\n";
-			}
-			System.out.println("========br======" + sb.toString());
-			if (sb.toString().contains("ok")) {
-				System.out.println("test");
-				
-			}
-			br.close();
-
-			System.out.println("" + sb.toString());
+//			System.out.println(convertID.getClass().getName());
+//			String z1= " "+convertID;
+//			String z2 = "src/main/python/test.bat".concat(z1);
+//			String z2 = "src/main/python/test.bat";
+////			System.out.println(z2);
+//		    Process p = Runtime.getRuntime().exec(z2);
+//		    System.out.println("python finished");
+//		    
+////		    ProcessBuilder builder = new ProcessBuilder((List<String>) new InputStreamReader(p.getInputStream()));
+////	        builder.start();
+//		    
+//		    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//		    String line = null;
+//		    
+//		    while ((line = br.readLine()) != null) {
+//		      System.out.println(line);}
+//			
+//			String url = "http://127.0.0.1:5000/tospring";
+//			String sb = "";
+//			
+//			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+//			
+//
+//			BufferedReader br2 = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+//
+//			String line2 = null;
+//
+//			while ((line2 = br2.readLine()) != null) {
+//				sb = sb + line2 + "\n";
+//			}
+//			System.out.println("========br======" + sb.toString());
+//			if (sb.toString().contains("ok")) {
+//				System.out.println("test");
+//				
+//			}
+//			br.close();
+//
+//			System.out.println("" + sb.toString());
 			
 			
 			

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.board.mapper.BoardMapper">
-
+<!-- 게시판의 컬럼들 -->
 	<sql id="boardColumns">
-		idx
+		  idx
 		, title
 		, content
 		, writer
@@ -12,95 +12,108 @@
 		, noticeYn
 		, deleteYn
 		, insertTime
-		,
-		updateTime
+		, updateTime
 		, deleteTime
 		, postType
 	</sql>
-
-	<insert id="insertBoard" parameterType="BoardDTO">
+	
+	
+ 
+	<!-- BoardMapper 에 있는 interface 와 아이디로 매핑시켜준다
+ -->	<insert id="insertBoard" parameterType="BoardDTO">
 		INSERT INTO post (
-		<include refid="boardColumns" />
+			<include refid="boardColumns" />
 		) VALUES (
-		#{idx}
-		, #{title}
-		, #{content}
-		, #{writer}
-		, 0
-		, IFNULL(#{noticeYn}, 0)
-		, 0
-		, NOW()
-		, NULL
-		, NULL
-		, #{postType}
+			  #{idx}
+			, #{title}
+			, #{content}
+			, #{writer}
+			, 0
+			, IFNULL(#{noticeYn}, 0)
+			, 0
+			, NOW()
+			, NULL
+			, NULL
+			, #{postType}
 		)
 	</insert>
 
-	<select id="selectBoardDetail" parameterType="long"
-		resultType="BoardDTO">
+	<select id="selectBoardDetail" parameterType="long" resultType="BoardDTO">
 		SELECT
-		<include refid="boardColumns" />
+			<include refid="boardColumns" />
 		FROM
-		post
+			post
 		WHERE
-		deleteYn = 0
+			deleteYn = 0
 		AND
-		idx = #{idx}
+			idx = #{idx}
 	</select>
 
-	<update id="updateBoard" parameterType="BoardDTO">
+	<update id="updateBoard" parameterType="BoardDTO">  
 		UPDATE post
 		SET
-		updateTime = NOW()
-		, title = #{title}
-		, content = #{content}
-		, writer = #{writer}
-		, noticeYn = IFNULL(#{noticeYn}, 0)
+			  updateTime = NOW()
+			, title = #{title}
+			, content = #{content}
+			, writer = #{writer}
+			, noticeYn = IFNULL(#{noticeYn}, 0)  <!-- 공지글여부 -->
 		WHERE
-		idx = #{idx}
+			idx = #{idx}
 	</update>
-
-	<update id="deleteBoard" parameterType="long">
-		UPDATE post
-		SET
-		deleteYn = 1
-		, deleteTime = NOW()
-		WHERE
-		idx = #{idx}
-	</update>
-
+	
 	<update id="restore" parameterType="BoardDTO">
-		UPDATE post
-		SET
+	UPDATE post
+	SET
 		DeleteYn=false
-		WHERE
-		idx = #{idx}
+	WHERE
+			idx = #{idx}
+	
+	
 	</update>
 
-	<select id="selectBoardList" parameterType="BoardDTO"
-		resultType="BoardDTO">
-		SELECT
-		<include refid="boardColumns" />
-		FROM
-		post
+	<update id="deleteBoard" parameterType="BoardDTO" >
+		UPDATE post
+		SET
+			  DeleteYn = 1
+			, DeleteTime = NOW()
 		WHERE
-		deleteYn = 0
-		and postType = #{postType}
+			idx = #{idx}
+	</update>
+
+	<select id="selectBoardList" parameterType="BoardCriteria"  resultType="BoardDTO">
+		SELECT
+			<include refid="boardColumns" />
+		FROM
+			post
+		WHERE
+			deleteYn = 0
+			<!-- and postType = #{boardDTO.postType} posttype 으로 출력해주고 싶을때-->
 		ORDER BY
-		noticeYn ASC,
-		idx DESC,
-		insertTime DESC
+			noticeYn ASC,
+			idx DESC,
+			insertTime DESC
+		LIMIT
+			#{criteria.startPage},#{criteria.recordsPerPage}	
+		
+		
+		
+			
+	<!-- 마이바티스에서 #{파라미터}는 여러 멤버를 가진 객체의 경우 Getter에 해당됩니다. 
+	startPage 는 Criteria 클래스의 getStartPage 메서드의 리턴값을 의미하는데요, 
+	해당 메서드가 리턴하는 값은 (currentPageNo-1)*recordsPerPage 입니다. 
+	예를들어, 현재 페이지 번호(currentPageNo)를 3 으로, 페이지당 출력할 데이터의 개수(recordsPerPage)를 10으로
+	가정해보면 (3-1)*10=20 입니다. 
+	즉 Limit 20,10 으로 쿼리가 실행. -->
 	</select>
 
-	<select id="selectBoardTotalCount" parameterType="BoardDTO"
-		resultType="int">
+	<select id="selectBoardTotalCount" parameterType="BoardCriteria" resultType="int">
 		SELECT
-		COUNT(*)
+			COUNT(*)
 		FROM
-		post
+			post
 		WHERE
-		deleteYn = 0
-		and postType = #{postType}
+			deleteYn = 0
+		    <!-- and postType = #{boardDTO.postType}  Post_type 별로 출력 해주고 싶을때 --> 
 	</select>
 
 </mapper>
