@@ -1,2 +1,2 @@
 source venv/Scripts/activate
-python src/main/python/flasktest.py
+python src/main/python/test2.py %1

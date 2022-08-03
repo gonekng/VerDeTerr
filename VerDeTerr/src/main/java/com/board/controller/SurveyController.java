@@ -113,21 +113,21 @@ public class SurveyController {
 			
 			
 //			String convertID = params.getId();
-//			System.out.println(convertID.getClass().getName());
-//			String z1= " "+convertID;
-//			String z2 = "src/main/python/test.bat".concat(z1);
-//			System.out.println(z2);
-//		    Process p = Runtime.getRuntime().exec(z2);
-//		    System.out.println("python finished");
-//		    
-////		    ProcessBuilder builder = new ProcessBuilder((List<String>) new InputStreamReader(p.getInputStream()));
-////	        builder.start();
-//		    
-//		    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-//		    String line = null;
-//		    
-//		    while ((line = br.readLine()) != null) {
-//		      System.out.println(line);}
+			System.out.println(convertID.getClass().getName());
+			String z1= " "+convertID;
+			String z2 = "src/main/python/test.bat".concat(z1);
+			System.out.println(z2);
+		    Process p = Runtime.getRuntime().exec(z2);
+		    System.out.println("python finished");
+		    
+//		    ProcessBuilder builder = new ProcessBuilder((List<String>) new InputStreamReader(p.getInputStream()));
+//	        builder.start();
+		    
+		    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		    String line = null;
+		    
+		    while ((line = br.readLine()) != null) {
+		      System.out.println(line);}
 			
 //		      ArrayList<String> list = new ArrayList<>();
 //		      list.add("python");
@@ -147,41 +147,41 @@ public class SurveyController {
 //			System.out.println(convertID.getClass().getName());
 //			String z1= " "+convertID;
 //			String z2 = "src/main/python/test.bat".concat(z1);
-			String z2 = "src/main/python/test.bat";
-//			System.out.println(z2);
-		    Process p = Runtime.getRuntime().exec(z2);
-		    System.out.println("python finished");
-		    
-//		    ProcessBuilder builder = new ProcessBuilder((List<String>) new InputStreamReader(p.getInputStream()));
-//	        builder.start();
-		    
-		    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		    String line = null;
-		    
-		    while ((line = br.readLine()) != null) {
-		      System.out.println(line);}
-			
-			String url = "http://127.0.0.1:5000/tospring";
-			String sb = "";
-			
-			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-			
-
-			BufferedReader br2 = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-
-			String line2 = null;
-
-			while ((line2 = br2.readLine()) != null) {
-				sb = sb + line2 + "\n";
-			}
-			System.out.println("========br======" + sb.toString());
-			if (sb.toString().contains("ok")) {
-				System.out.println("test");
-				
-			}
-			br.close();
-
-			System.out.println("" + sb.toString());
+//			String z2 = "src/main/python/test.bat";
+////			System.out.println(z2);
+//		    Process p = Runtime.getRuntime().exec(z2);
+//		    System.out.println("python finished");
+//		    
+////		    ProcessBuilder builder = new ProcessBuilder((List<String>) new InputStreamReader(p.getInputStream()));
+////	        builder.start();
+//		    
+//		    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//		    String line = null;
+//		    
+//		    while ((line = br.readLine()) != null) {
+//		      System.out.println(line);}
+//			
+//			String url = "http://127.0.0.1:5000/tospring";
+//			String sb = "";
+//			
+//			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+//			
+//
+//			BufferedReader br2 = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+//
+//			String line2 = null;
+//
+//			while ((line2 = br2.readLine()) != null) {
+//				sb = sb + line2 + "\n";
+//			}
+//			System.out.println("========br======" + sb.toString());
+//			if (sb.toString().contains("ok")) {
+//				System.out.println("test");
+//				
+//			}
+//			br.close();
+//
+//			System.out.println("" + sb.toString());
 			
 			
 			

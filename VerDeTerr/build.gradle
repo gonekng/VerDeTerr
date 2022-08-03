@@ -25,23 +25,31 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' /* Thymeleaf Layout */
+	
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16' /* Log4JDBC */
+	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//{
+	//	exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	//}
 	implementation 'javax.servlet:jstl'
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
-<<<<<<< HEAD
+// <<<<<<< HEAD
 	// https://mvnrepository.com/artifact/org.python/jython
 	implementation group: 'org.python', name: 'jython', version: '2.7.2'
 	
-=======
+//=======
 	implementation 'org.springframework.session:spring-session-core'
->>>>>>> 87739b876b662da299d7b1b998881155d5a458a6
+// >>>>>>> 87739b876b662da299d7b1b998881155d5a458a6
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
