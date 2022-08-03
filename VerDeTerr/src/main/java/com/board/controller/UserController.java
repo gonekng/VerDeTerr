@@ -52,7 +52,7 @@ public class UserController {
 		UserDTO user = userService.loginCheck(params.getId(), params.getPw());
 		if (user == null) {
 			model.addAttribute("msgLogin", "아이디 혹은 비밀번호 오류");
-			return "login";
+			return "redirect:/login";
 
 		} else {
 			session.setAttribute("id", user.getId());
