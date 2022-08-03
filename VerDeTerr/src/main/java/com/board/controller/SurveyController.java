@@ -1,8 +1,11 @@
 package com.board.controller;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 //import org.python.core.io.BufferedReader;
@@ -98,6 +101,15 @@ public class SurveyController {
 				System.out.println("정답등록실패");
 			}
 			System.out.println(params.getId());
+			String convertID = params.getId();
+			
+//			PythonInterpreter intPre = new PythonInterpreter();
+//			
+//			intPre.execfile("src/main/test.py");
+//			intPre.exec("print('test')");
+//			
+			
+			
 			
 			
 //			String convertID = params.getId();
@@ -117,21 +129,49 @@ public class SurveyController {
 //		    while ((line = br.readLine()) != null) {
 //		      System.out.println(line);}
 			
-		      ArrayList<String> list = new ArrayList<>();
-		      list.add("python");
-		      String convertID = params.getId();
-		      String z1= convertID;
-		      list.add("src/main/python/test2.py");
-		      list.add(z1);
-		      ProcessBuilder pb = new ProcessBuilder(list);
-		      Process p = pb.start();
-		      BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		      BufferedReader readerError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-		      String line = null;
-		      while ( (line = reader.readLine()) != null) {
-		        System.out.println(line);
-		      }
+//		      ArrayList<String> list = new ArrayList<>();
+//		      list.add("python");
+//		      String convertID = params.getId();
+//		      String z1= convertID;
+//		      list.add("src/main/python/test2.py");
+//		      list.add(z1);
+//		      ProcessBuilder pb = new ProcessBuilder(list);
+//		      Process p = pb.start();
+//		      BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+//		      BufferedReader readerError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+//		      String line = null;
+//		      while ( (line = reader.readLine()) != null) {
+//		        System.out.println(line);
+//		      }
 		 
+			String url = "http://127.0.0.1:5000/tospring";
+			String sb = "";
+			
+			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+			
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+
+			String line = null;
+
+			while ((line = br.readLine()) != null) {
+				sb = sb + line + "\n";
+			}
+			System.out.println("========br======" + sb.toString());
+			if (sb.toString().contains("ok")) {
+				System.out.println("test");
+				
+			}
+			br.close();
+
+			System.out.println("" + sb.toString());
+			
+			
+			
+			
+			
+			
+			
 			
 		} catch (DataAccessException e) {
 			e.printStackTrace();
@@ -140,7 +180,8 @@ public class SurveyController {
 		}  catch (Exception e) {
 			// TODO => 시스템에 문제가 발생하였다는 메시지를 전달
 			e.printStackTrace();
-			System.out.println("시스템 문제 발생");}
+			System.out.println("시스템 문제 발생");
+		} 
 		
 		return "redirect:/survey/surveyresult.do";
 	}
