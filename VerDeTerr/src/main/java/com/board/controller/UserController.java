@@ -27,6 +27,14 @@ public class UserController {
 	public String login() {
 		return "login";
 	}
+	
+	@PostMapping("/logout")
+	public String logoutProcess(HttpSession session, Model model) {
+		System.out.println("1111");
+		model.addAttribute("msgLogout", "로그아웃되었습니다.");
+		session.removeAttribute("id");
+		return "main";
+	}
 
 	@GetMapping("/findId")
 	public String findId() {
@@ -49,16 +57,18 @@ public class UserController {
 	@PostMapping("/login_proc")
 	public String loginProcess(HttpServletRequest request, UserDTO params, Model model) {
 		HttpSession session = request.getSession(true);
-		System.out.println(params.getId() + ", " + params.getPw());
-		UserDTO user = userService.loginCheck(params.getId(), params.getPw());
+		String myID = params.getId();
+		String myPW = params.getPw();
+		UserDTO user = userService.loginCheck(myID, myPW);
 		if (user == null) {
-			model.addAttribute("msgLogin", "아이디 혹은 비밀번호 오류");
-			return "redirect:/login";
+			model.addAttribute("msgLoginError", "아이디 혹은 비밀번호 오류");
+			return "main";
 
 		} else {
-			session.setAttribute("id", user.getId());
+			model.addAttribute("msgLoginSuccess", "로그인되었습니다. " + myID + "님, 환영합니다!");
+			session.setAttribute("id", myID);
 		}
-		return "redirect:/main";
+		return "main";
 	}
 
 	@GetMapping(value = "/main")
