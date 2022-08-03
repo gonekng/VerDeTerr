@@ -25,11 +25,9 @@ public class SignUpController {
 
 	@PostMapping("/signup_proc")
 	public String signUpProcess(UserDTO params,  Model model) {
-		
-		System.out.println(params);
-		System.out.println("11111");
+		System.out.println("컨트롤러에 넘어온 파람스 : "+params);
 		int result = signUpService.signUp(params);
-		System.out.println("2222222");
+		
 		if (result == 1) {
 			return "main";
 		} else {
