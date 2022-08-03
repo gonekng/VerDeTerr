@@ -14,8 +14,15 @@
 		, gender
 		,
 		managerYn
-		,
-		regDate
+		, regDate
+	</sql>
+
+	<sql id="surveyOutputColumns">
+		idx
+		, ID
+		, TestDate
+		, UserAnswer
+		, UserType
 	</sql>
 
 	<insert id="insertUser" parameterType="UserDTO">
@@ -36,7 +43,8 @@
 		)
 	</insert>
 
-	<select id="selectUserDetail" parameterType="String" resultType="UserDTO">
+	<select id="selectUserDetail" parameterType="String"
+		resultType="UserDTO">
 		SELECT
 		<include refid="userColumns" />
 		FROM
@@ -71,15 +79,17 @@
 		= #{id}
 	</delete>
 
-	<select id="selectUserHistory" parameterType="String" resultType="String">
-		select b.userType
-		from Member a, Mbti_ML_Output b
-		where a.ID = b.ID
-		and a.ID = #{id}
-		order by b.TestDate
+	<select id="selectUserHistory" parameterType="String"
+		resultType="SurveyOutputDTO">
+		select
+		<include refid="surveyOutputColumns" />
+		from Mbti_ML_Output
+		where ID = #{id}
+		order by TestDate
 	</select>
-	
-	<select id="selectUserHistoryCount" parameterType="String" resultType="int">
+
+	<select id="selectUserHistoryCount" parameterType="String"
+		resultType="int">
 		SELECT
 		COUNT(b.userType)
 		from Member a, Mbti_ML_Output b
@@ -88,4 +98,18 @@
 		order by b.TestDate
 	</select>
 
+	<select id= "findId" resultType="UserDTO">
+		select 
+		<include refid="userColumns" />
+		from Member
+		where Email=#{email} 
+	</select>
+
+	<select id= "findPw" resultType="UserDTO">
+		select 
+		<include refid="userColumns" />
+		from Member
+		where PwHint=#{pwHint} 
+	</select>
+	
 </mapper>

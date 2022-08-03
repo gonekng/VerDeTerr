@@ -155,6 +155,16 @@ public class SurveyDTO {
 	
 	
 
+	public void setUserType(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setAnswer(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 	
 
