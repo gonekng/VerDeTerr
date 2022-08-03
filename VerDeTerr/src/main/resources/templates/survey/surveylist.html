@@ -7,8 +7,7 @@
 	<th:block layout:fragment="content">
 		<div class="card-content">
         <!-- form-->
-	        <form class="form-horizontal" th:action="@{/survey/surveyresult.do}" method="post" th:object="${survey}" onsubmit="return registerSurvey(this);">
-										        <!-- Masthead-->
+       										<!-- Masthead-->
 										        <header class="masthead">
 										            <div class="container px-4 px-lg-5 h-100">
 										                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
@@ -26,6 +25,10 @@
 										                </div>
 										            </div>
 										        </header>
+        
+	        
+        	<form class="form-horizontal" th:action="@{/survey/surveyresult.do}" method="post" th:object="${survey}" onsubmit="return registerSurvey(this);">
+										        
 										        <!-- question-->
 										        <section class="page-section bg-dark text-white" id="question1">
 										            <div class="container px-4 px-lg-5">
