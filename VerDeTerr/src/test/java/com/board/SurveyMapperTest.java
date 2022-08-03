@@ -23,6 +23,21 @@ class SurveyMapperTest {
 		SurveyDTO params = new SurveyDTO();
 		params.setId("아이디");
 		params.setAnswer1("유저 정답");
+		params.setAnswer2("유저 정답");
+		params.setAnswer3("유저 정답");
+		params.setAnswer4("유저 정답");
+		params.setAnswer5("유저 정답");
+		params.setAnswer6("유저 정답");
+		params.setAnswer7("유저 정답");
+		params.setAnswer8("유저 정답");
+		params.setAnswer9("유저 정답");
+		params.setAnswer10("유저 정답");
+		params.setAnswer11("유저 정답");
+		params.setAnswer12("유저 정답");
+		params.setAnswer13("유저 정답");
+		params.setAnswer14("유저 정답");
+		params.setAnswer15("유저 정답");
+		params.setAnswer16("유저 정답");
 
 		int result = surveyMapper.insertSurvey(params);
 		System.out.println("결과는 " + result + "입니다.");

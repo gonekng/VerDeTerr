@@ -23,17 +23,16 @@ public class SurveyServiceImpl implements SurveyService {
 		System.out.println("ServiceImpl 시작");
 		int queryResult = 0;
 		System.out.println("ServiceImpl queryResult 받아옴");
-		if (params.getId() != null) {
+		if (params.getId() == null) {
+			System.out.println("ServiceImpl getID가 null인 경우");
+			queryResult = 0;
+			
+		} else {
+			//멤버 테이블 만들어지면 거기서 데이터 유효검사 한 후에 업데이트 쿼리 실행하기
 			System.out.println("ServiceImpl getID가 null이 아닌경우");
 			System.out.println("ServiceImpl Mapper 실행전: "+params);
 			queryResult = surveyMapper.insertSurvey(params);
 			System.out.println("ServiceImpl Mapper 실행후");
-			
-		} else {
-			//멤버 테이블 만들어지면 거기서 데이터 유효검사 한 후에 업데이트 쿼리 실행하기
-			System.out.println("ServiceImpl getID가 null인경우");
-			queryResult = surveyMapper.insertSurvey(params);
-//			queryResult = surveyMapper.updateSurvey(params);
 
 		}
 
