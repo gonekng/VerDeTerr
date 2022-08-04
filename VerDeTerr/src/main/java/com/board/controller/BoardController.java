@@ -34,7 +34,7 @@ public class BoardController extends UiUtils {
 			// 전송된 경우에는 getBoardDetail 메서드의 실행결과 ,즉 게시글 정보를 포함하고 있는 객체를 전달
 			// 만약 getBoardDetail 메서드의 실행결과가 null 이면, 게시글 리스트 페이지로 리다이렉트 합니다.
 			BoardDTO dao1 = new BoardDTO();// dao1 이라는 새로운 인스턴스를 생성
-			dao1.setWriter("MBTI_버즈우주형");//그 BoardDTO 에 닮겨있는 writer 에 dao1을 통해 writer를 지정
+			dao1.setWriter("MBTI_버쯔리즈");//그 BoardDTO 에 닮겨있는 writer 에 dao1을 통해 writer를 지정
 			System.out.println(dao1.getWriter());
 			model.addAttribute("board",dao1); // "board" 라는 key 에 dao1의 value를 입력
 
@@ -103,6 +103,7 @@ public class BoardController extends UiUtils {
 			// TODO => 없는 게시글이거나, 이미 삭제된 게시글이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
 			return "redirect:/board/list.do";
 		}
+		System.out.println("board.idx:"+board.getIdx());
 		model.addAttribute("board", board);
 
 		return "board/view";
@@ -110,6 +111,7 @@ public class BoardController extends UiUtils {
 	
 	@PostMapping(value = "/board/delete.do")
 	public String deleteBoard(@RequestParam(value = "idx", required = false) Long idx, Model model) {
+		System.out.println("여기로 들어오나요?");
 		if (idx == null) {
 			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list.do", Method.GET, null, model);
 		}
