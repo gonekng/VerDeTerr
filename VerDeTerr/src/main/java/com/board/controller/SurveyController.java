@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 //import org.python.core.io.BufferedReader;
 import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,23 +30,40 @@ public class SurveyController {
 	@Autowired
 	private SurveyService surveyService;
 	
+//	@GetMapping(value = "/survey/surveylist.do")
+//	public String openSurveyWrite(@RequestParam(value = "id", required = false) String id, Model model, HttpSession session) {
+//		String myID = (String) session.getAttribute("id");
+//		if(id == null){
+//			model.addAttribute("survey",  new SurveyDTO());
+//		} else {
+//			SurveyDTO survey = surveyService.getSurveyResult(id);
+//			System.out.println("survey:"+survey);
+//			if (survey == null) {
+//				return "redirect:/survey/surveylist.do";
+//			}
+//			model.addAttribute("survey", survey);
+//			
+//			
+//		}
+//		
+//		return "survey/surveylist";
+//	}
+	
 	@GetMapping(value = "/survey/surveylist.do")
-	public String openSurveyWrite(@RequestParam(value = "id", required = false) String id, Model model) {
-		if(id == null){
-			model.addAttribute("survey",  new SurveyDTO());
+	public String openSurveyWrite(Model model, HttpSession session) {
+		String myID = (String) session.getAttribute("id");
+		if(myID == null){
+			model.addAttribute("surveyError", "로그인 후 사용 가능합니다.");
+			return "redirect:/main";
 		} else {
-			SurveyDTO survey = surveyService.getSurveyResult(id);
+			SurveyDTO survey = surveyService.getSurveyResult(myID);
 			System.out.println("survey:"+survey);
-			if (survey == null) {
-				return "redirect:/survey/surveylist.do";
-			}
 			model.addAttribute("survey", survey);
-			
-			
+			return "survey/surveylist";
 		}
 		
-		return "survey/surveylist";
 	}
+	
 	
 //	@GetMapping(value = "/survey/surveylist.do")
 //	public String openSurveyWrite(Model model) {

@@ -1,10 +1,8 @@
 package com.board.configuration;
 
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,7 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable() // post 방식으로 값을 전송할 때 token을 사용해야하는 보안 설정을 해제
-				.authorizeRequests().antMatchers("/login", "/signup","/main","/signup_proc","/login_proc","/mypage","/identify","/identify_proc")
+
+		.authorizeRequests().antMatchers("/login", "/logout", "/signup","/main","/signup_proc","/login_proc","/mypage","/identify","/identify_proc", "/css/**", "/img/**", "/js/**" , "/survey/surveylist.do","survey/suveyresult.do","/board/list.do","/board/write.do","/board/register.do","/board/view.do","/board/delete.do")
 				.permitAll()
 				.anyRequest().authenticated().and()
 				.formLogin().loginPage("/login").permitAll();
@@ -34,10 +33,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				
 	}
 	
-	//static 파일 권한 허용 설정
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-	    web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-	}
+	/*
+	 * //static 파일 권한 허용 설정
+	 * 
+	 * @Override public void configure(WebSecurity web) throws Exception {
+	 * web.ignoring().requestMatchers(PathRequest.toStaticResources().
+	 * atCommonLocations()); }
+	 */
 
 }

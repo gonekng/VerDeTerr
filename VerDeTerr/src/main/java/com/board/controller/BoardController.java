@@ -2,6 +2,8 @@ package com.board.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -49,13 +51,25 @@ public class BoardController extends UiUtils {
 	}  
 	
 	@PostMapping(value = "/board/register.do")
-	public String registerBoard(final BoardDTO params,Model model) {
+	public String registerBoard(HttpSession session, final BoardDTO params,Model model) {
+		System.out.println("boardcontroller 입성");
 		try {
+			
 			boolean isRegistered = boardService.registerBoard(params);
+			String myWriter = (String) session.getAttribute("id"); //session의 key가 id인 value를 갖고 와서 string 형변환
+			System.out.println("boardcontroller"+myWriter);
+			model.addAttribute("writer", myWriter);
+			
+			System.out.println("isregistered true"+isRegistered);
 			if (isRegistered == false) {
+				System.out.println("isregistered false"+isRegistered);
 				return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list.do", Method.GET, null, model);
 			}
+			
+			
+			
 		} catch (DataAccessException e) {
+			
 			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list.do", Method.GET, null, model);
 
 		} catch (Exception e) {

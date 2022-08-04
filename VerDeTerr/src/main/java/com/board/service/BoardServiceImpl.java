@@ -22,12 +22,15 @@ public class BoardServiceImpl implements BoardService {
 	public boolean registerBoard(BoardDTO params) {
 		int queryResult = 0;
 		
+		System.out.println("idx not null"+params.getIdx());
 		
 		if (params.getIdx() == null) {
 			
+			System.out.println("idx null"+params.getIdx());
+			System.out.println("serviceImpl"+params.getWriter());
 			System.out.println("여기까지 들어옵?");
-			memberDTO member=new memberDTO();
-			member.setNickname("버즈우주선형");
+//			memberDTO member=new memberDTO();
+//			member.setNickname("버즈우주선형");
 			
 			queryResult = boardMapper.insertBoard(params);
 			System.out.println(queryResult);
