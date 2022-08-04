@@ -20,7 +20,7 @@ class SurveyMapperTest {
 
 	@Test
 	public void testOfSurveyInsert() {
-		SurveyDTO params = new SurveyDTO();
+		SurveyDTO params = new SurveyDTO(null);
 		params.setId("아이디");
 		params.setAnswer1("유저 정답");
 		params.setAnswer2("유저 정답");
