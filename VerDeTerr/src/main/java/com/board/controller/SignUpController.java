@@ -29,6 +29,7 @@ public class SignUpController {
 		int result = signUpService.signUp(params);
 		
 		if (result == 1) {
+			model.addAttribute("msgMod", "회원가입되었습니다. 환영합니다.");
 			return "main";
 		} else {
 			model.addAttribute("msg", "회원가입 오류");
