@@ -15,7 +15,8 @@ public class UiUtils {
 	public String showMessageWithRedirect(@RequestParam(value = "message", required = false) String message,
 										  @RequestParam(value = "redirectUri", required = false) String redirectUri,
 										  @RequestParam(value = "method", required = false) Method method,
-										  @RequestParam(value = "params", required = false) Map<String, Object> params, Model model) {
+										  @RequestParam(value = "params", required = false) Map<String, Object> params,
+										  Model model) {
  // model.addAttribute 는 백단에 있는 데이터를 화면에 보낼때,  담아놓는 객체에 추가해주는것을 의미한다. 
 		model.addAttribute("message", message);
 		model.addAttribute("redirectUri", redirectUri);
