@@ -12,8 +12,7 @@
 		, nickname
 		, age
 		, gender
-		,
-		managerYn
+		, managerYn
 		, regDate
 	</sql>
 

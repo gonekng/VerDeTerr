@@ -2,6 +2,7 @@ package com.board.service;
 
 import java.util.List;
 
+import com.board.domain.BoardCriteria;
 import com.board.domain.BoardDTO;
 
 public interface BoardService {
