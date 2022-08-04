@@ -33,9 +33,9 @@
 		)
 	</insert>
 
-	<select id="selectUser" parameterType="String" resultType="UserDTO">
+	<select id="selectUser" parameterType="String" resultType="int">
 		SELECT 
-		<include refid="userColumns" />
+		count(*)
 		FROM
 		member
 		WHERE

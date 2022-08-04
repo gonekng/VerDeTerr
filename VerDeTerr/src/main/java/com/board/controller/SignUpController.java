@@ -43,4 +43,27 @@ public class SignUpController {
 		}
 		return "main";
 	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/checkId")
+	public String checkId(HttpServletRequest request, String id, Model model) {
+		HttpSession session = request.getSession(true);
+		System.out.println(id+"아이디 넘어옴.");
+		int result = signUpService.checkId(id);
+		if(result==0) {
+			System.out.println("중복된 아이디 없음");
+			model.addAttribute("msgCheckId","사용 가능합니다.");
+		}else {
+			System.out.println("중복된 아이디 있음");
+			model.addAttribute("msgCheckId","이미 사용중입니다.");
+		} return"checkId";
+	}
+	
 }
+	
+

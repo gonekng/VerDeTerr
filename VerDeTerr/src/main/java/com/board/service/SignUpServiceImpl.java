@@ -1,6 +1,5 @@
 package com.board.service;
 
-import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -8,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.board.domain.UserDTO;
 import com.board.mapper.SignUpMapper;
+import com.board.mapper.UserMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,14 +21,15 @@ public class SignUpServiceImpl implements SignUpService {
 
 	@Autowired
 	public SignUpMapper signUpMapper;
+	UserMapper userMapper;
 
 	@Override
 	public int signUp(UserDTO params) {
-		UserDTO userId = signUpMapper.selectUser(params.getId());
+		int userId = signUpMapper.selectUser(params.getId());
 		String userPw = params.getPw();
 		if (userPw.length() >= 6 || userPw.length() < 20) {
 			System.out.println("비번적절");
-			if (userId == null) {
+			if (userId == 0) {
 				// controller에서 받아온 pw를 암호화
 				String encodedPassword = passwordEncoder.encode(params.getPw());
 				// 암호화된 pw로 pw를 세팅
@@ -45,15 +46,20 @@ public class SignUpServiceImpl implements SignUpService {
 	}
 
 	@Override
-	public String checkId(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public int checkId(String id) {
+		int result = signUpMapper.selectUser(id);
+		if(result==0) {
+			System.out.println("중복된 아이디 없음");
+			return 0;
+		}else {
+			System.out.println("중복된 아이디 있음");
+			return result;
+		}
+		
 	}
 
 	@Override
-	public int delete(UserDTO params) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delete(String id) {
+		return userMapper.deleteUser(id);
 	}
-
 }
