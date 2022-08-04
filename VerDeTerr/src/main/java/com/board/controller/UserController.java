@@ -1,6 +1,7 @@
 package com.board.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.domain.SurveyOutputDTO;
@@ -139,9 +141,9 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/modify_proc")
-	public String modifyProcess(HttpSession session, @RequestParam String pw, @RequestParam String pw2, Model model) {
-		UserDTO params = userService.getUserDetail((String)session.getAttribute("id"));
-		if (!params.getPw().equals(pw)) {
+	public String modifyProcess(HttpSession session, String pw, String pw2, Model model) {
+		UserDTO user = userService.getUserDetail((String)session.getAttribute("id"));
+		if (!passwordEncoder.matches(pw,user.getPw())) {
 			model.addAttribute("msgMod", "현재 비밀번호가 틀렸습니다.");
 			return "modify";
 			
@@ -150,47 +152,38 @@ public class UserController {
 			return "modify";
 		}
 		else {
-			params.setPw(pw2);
-			userService.updateUserDetail(params);
+			user.setPw(passwordEncoder.encode(pw2));
+			userService.updateUserDetail(user);
 			model.addAttribute("msgMod", "비밀번호 변경이 완료되었습니다.");
 			return "main";
 		}
 	}
 	
-	/**
-	 * 
-	 * @param email
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("/findId_proc")
-	public String findUserId(@RequestParam(value="email", required=false) String Email, Model model) {
-		UserDTO params = userService.findLoginId(Email);
+	@PostMapping("/findId_proc")
+	public String findUserId(String email, Model model) {
+		System.out.println(email);
+		UserDTO params = userService.findLoginId(email);
 		System.out.println(params);
 		if(params==null) {
-			model.addAttribute("msg","입력하신 이메일로 가입된 아이디가 없습니다.");
+			model.addAttribute("msgFindID","입력하신 이메일로 가입된 아이디가 없습니다.");
 			return "/findId";
-		}else
+		} else {
 			System.out.println("********************");
 			System.out.println(params.getId());
-			model.addAttribute("msg", "입력하신 이메일로 가입된 아이디는 "+ params.getId()+"입니다.");
+			model.addAttribute("msgFindID", "입력하신 이메일로 가입된 아이디는 "+ params.getId()+"입니다.");
 			return "/login";
+		}
 	}
 	
-	/**
-	 * 
-	 * @param id
-	 * @param pwHint
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("/findPw_proc")
-	public String findUserPw(@RequestParam(value="id") String Id, @RequestParam(value="pwHint", required=false) String PwHint, Model model) {
-		UserDTO params = userService.findLoginPw(Id, PwHint);
+	@PostMapping("/findPw_proc")
+	public String findUserPw(String id, String pwHint, Model model) {
+		UserDTO params = userService.findLoginPw(id, pwHint);
 		if(params==null) {
-			model.addAttribute("msg","정보를 잘못입력하셨습니다.");
-		} else 
-			model.addAttribute("msg",params.getId()+"님의 비밀번호는 "+params.getPw()+"입니다.");
+			model.addAttribute("msgFindPW","아이디 또는 비밀번호 힌트를 잘못 입력하셨습니다.");
+			return "/findPw";
+		} else {
+			model.addAttribute("msgFindPW",params.getId()+"님의 비밀번호는 "+passwordEncoder.upgradeEncoding(params.getPw())+"입니다.");
 			return "/login";
+		}
 	}
 }

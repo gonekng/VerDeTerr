@@ -52,14 +52,9 @@ public class SurveyServiceImpl implements SurveyService {
 	}
 	
 	@Override
-	public List<SurveyOutputDTO> getSurveyList() {
-		List<SurveyOutputDTO> surveyList = Collections.emptyList();
-
+	public SurveyOutputDTO getSurveyList(String id) {
 		
-		surveyList = surveyMapper.selectSurveyList();
-		
-
-		return surveyList;
+		return surveyMapper.selectSurveyList(id);
 	}
 	
 	

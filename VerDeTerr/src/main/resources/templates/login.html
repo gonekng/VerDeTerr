@@ -13,9 +13,13 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
 		$(document).ready(function() {
-			let message = "[[${msgLogin}]]";
-			if (message != "") {
-				alert(message);
+			let msgFindID = "[[${msgFindID}]]";
+			let msgFindPW = "[[${msgFindPW}]]";
+			if (msgFindPW != "") {
+				alert(msgFindPW);
+			} 
+			if (msgFindID != "") {
+				alert(msgFindID);
 			} else {
 			}
 		})
