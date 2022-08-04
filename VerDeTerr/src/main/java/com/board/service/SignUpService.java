@@ -10,4 +10,8 @@ public interface SignUpService {
 
 	public int signUp(UserDTO params);
 	
+	public String checkId(String id);
+	
+	public int delete(UserDTO params);
+	
 }
