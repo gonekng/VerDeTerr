@@ -8,9 +8,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
 	$(document).ready(function() {
-		let message = "[[${msg}]]";
-		if (message != "") {
-			alert(message);
+		let msgFindID = "[[${msgFindID}]]";
+		if (msgFindID != "") {
+			alert(msgFindID);
 		} else {
 		}
 	})
@@ -19,12 +19,13 @@
 <body>
 	<div class="container">
 		<h1>아이디찾기</h1>
-		<form th:action="@{/findId_proc(email=${email})}" method="get">
+		<form th:action="@{/findId_proc}" method="post">
 			<div class="form-group">
 				<label th:for="useremail">이메일</label> <input type="text" name="email"
 					class="form-control" placeholder="이메일을 입력해주세요">
 			</div>
 			<button type="submit" class="btn btn-primary">아이디 찾기</button>
+		</form>
 	</div>
 </body>
 </html>

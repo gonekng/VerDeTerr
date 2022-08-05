@@ -1,393 +1,413 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="survey/layout/basic">
-	<th:block layout:fragment="title">
-		<title>The page is a survey page</title>
-	</th:block>
-	
-	<th:block layout:fragment="content">
-		<div class="card-content">
-        <!-- form-->
-       										<!-- Masthead-->
-										        <header class="masthead">
-										            <div class="container px-4 px-lg-5 h-100">
-										                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
-										                    <div class="col-lg-8 align-self-end">
-										                        <h1 class="text-white font-weight-bold">미래의 내 직업 찾기</h1>
-										                        <hr class="divider" />
-										                    </div>
-										                    <div class="col-lg-8 align-self-baseline">
-										                        
-										                        <p class="text-white-75 mb-5">사용하실 ID를 입력해주세요</p>
-										                        <input class="text-black-75 mb-5" th:field="*{id}"/>
-										                        <br>
-										                        <a class="btn btn-primary btn-xl" href="#question1">Test하러 가기</a>
-										                    </div>
-										                </div>
-										            </div>
-										        </header>
-        
-	        
-        	<form class="form-horizontal" th:action="@{/survey/surveyresult.do}" method="post" th:object="${survey}" onsubmit="return registerSurvey(this);">
-										        
-										        <!-- question-->
-										        <section class="page-section bg-dark text-white" id="question1">
-										            <div class="container px-4 px-lg-5">
-										                <div class="row gx-4 gx-lg-5 justify-content-center">
-										                    <div class="col-lg-8 text-center">
-										                        <h2 class="text-white mt-0">1</h2>
-										                        <hr class="divider divider-light" />
-										                        <p class="text-white-75 mb-4">Are you more impressed by:</p>
-										                        <input type="radio" id="Principles" value="Principles" th:field="*{answer1}"/>
-										                        <label class="btn btn-light btn-xl" for="Principles" >Principles</label>
-										                        <br>
-										                        <br>
-										                        <input type="radio" id="Emotions" value="Emotions" th:field="*{answer1}" />
-										                        <label class="btn btn-light btn-xl" for="Emotions">Emotions</label>
-										                       
-										                        
-										                    </div>
-										                </div>
-										            </div>
-										        </section>
-										
-										         <section class="page-section bg-primary" id="question2">
-										            <div class="container px-4 px-lg-5">
-										                <div class="row gx-4 gx-lg-5 justify-content-center">
-										                    <div class="col-lg-8 text-center">
-										                        <h2 class="text-black mt-0">2</h2>
-										                        <hr class="divider divider-light" />
-										                        <p class="text-black-75 mb-4">Do you tend to choose:</p>
-										                        <input type="radio" id="Rather carefully" value="Rather carefully" th:field="*{answer2}"/>
-										                        <label class="btn btn-light btn-xl" for="Rather carefully" >Rather carefully</label>
-										                        <br>
-										                        <br>
-										                        <input type="radio" id="Somewhat impulsively" value="Somewhat impulsively" th:field="*{answer2}"/>
-										                        <label class="btn btn-light btn-xl" for="Somewhat impulsively" >Somewhat impulsively</label>
-										                        
-										                        
-										                    </div>
-										                </div>
-										            </div>
-										        </section>
-										        <section class="page-section bg-dark text-white" id="question3">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-white mt-0">3</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-white-75 mb-4">Are you more interested in:</p>
-												                <input type="radio" id="What is actual" value="What is actual" th:field="*{answer3}"/>
-										                        <label class="btn btn-light btn-xl" for="What is actual" >What is actual</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="What is possible" value="What is possible" th:field="*{answer3}"/>
-										                        <label class="btn btn-light btn-xl" for="What is possible" >What is possible</label>
-												              
-												            </div>
-												        </div>
-												    </div>
-												</section>
-									        	
-									        	<section class="page-section bg-primary" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-black mt-0">4</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-black-75 mb-4">Does it bother you more having things:</p>
-												                
-												                <input type="radio" id="Incomplete" value="Incomplete" th:field="*{answer4}"/>
-										                        <label class="btn btn-light btn-xl" for="Incomplete" >Incomplete</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="Completed" value="Completed" th:field="*{answer4}"/>
-										                        <label class="btn btn-light btn-xl" for="Completed" >Completed</label>
-												            </div>
-												        </div>
-												    </div>
-												</section>
-												
-												    <section class="page-section bg-dark text-white" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-white mt-0">5</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-white-75 mb-4">In your social groups do you:</p>
-												                
-												                <input type="radio" id="Keep abreast of other's happenings" value="Keep abreast of other's happenings" th:field="*{answer5}"/>
-										                        <label class="btn btn-light btn-xl" for="Keep abreast of other's happenings" >Keep abreast of other's happenings</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="Get behind on the news" value="Get behind on the news" th:field="*{answer5}"/>
-										                        <label class="btn btn-light btn-xl" for="Get behind on the news" >Get behind on the news</label>
-										                        
-										                  
-												            </div>
-												        </div>
-												    </div>
-												</section>
-												
-												 <section class="page-section bg-primary" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-black mt-0">6</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-black-75 mb-4">Are you more comfortable in making:</p>
-												                 <input type="radio" id="Logical judgments" value="Logical judgments" th:field="*{answer6}"/>
-										                        <label class="btn btn-light btn-xl" for="Logical judgments" >Logical judgments</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="Value judgments" value="Value judgments" th:field="*{answer6}"/>
-										                        <label class="btn btn-light btn-xl" for="Value judgments" >Value judgments</label>
-												                
-												             
-												            </div>
-												        </div>
-												    </div>
-												</section>
-												
-												<section class="page-section bg-dark text-white" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-white mt-0">7</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-white-75 mb-4">Are visionaries:</p>
-												                
-												                <input type="radio" id="somewhat annoying" value="somewhat annoying" th:field="*{answer7}"/>
-										                        <label class="btn btn-light btn-xl" for="somewhat annoying" >somewhat annoying</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="rather fascinating" value="rather fascinating" th:field="*{answer7}"/>
-										                        <label class="btn btn-light btn-xl" for="rather fascinating" >rather fascinating</label>
-												                
-												                
-												            </div>
-												        </div>
-												    </div>
-												</section>
-												
-												<section class="page-section bg-primary" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-black mt-0">8</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-black-75 mb-4">In company do you:</p>
-												                
-												                <input type="radio" id="initiate conversation" value="initiate conversation" th:field="*{answer8}"/>
-										                        <label class="btn btn-light btn-xl" for="initiate conversation" >initiate conversation</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="wait to be approached" value="wait to be approached" th:field="*{answer8}"/>
-										                        <label class="btn btn-light btn-xl" for="wait to be approached" >wait to be approached</label>
-												                
-												                
-												            </div>
-												        </div>
-												    </div>
-												</section>
-												
-												        <section class="page-section bg-dark text-white" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-white mt-0">9</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-white-75 mb-4">Are you more:</p>
-												                
-												                <input type="radio" id="firm than gentle" value="firm than gentle" th:field="*{answer9}"/>
-										                        <label class="btn btn-light btn-xl" for="firm than gentle" >firm than gentle</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="gentle than firm" value="gentle than firm" th:field="*{answer9}"/>
-										                        <label class="btn btn-light btn-xl" for="gentle than firm" >gentle than firm</label>
-												                
-												            </div>
-												        </div>
-												    </div>
-												</section>
-												
-												 <section class="page-section bg-primary" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-black mt-0">10</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-black-75 mb-4">Do you put more value on:</p>
-												                
-												                
-												                
-												                <input type="radio" id="infinite" value="infinite" th:field="*{answer10}"/>
-										                        <label class="btn btn-light btn-xl" for="infinite" >infinite</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="open-minded" value="open-minded" th:field="*{answer10}"/>
-										                        <label class="btn btn-light btn-xl" for="open-minded" >open-minded</label>
-												                
-												                
-												                
-												            </div>
-												        </div>
-												    </div>
-												</section>
-												
-												<section class="page-section bg-dark text-white" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-white mt-0">11</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-white-75 mb-4">Do you prefer:</p>
-												                
-												                <input type="radio" id="many friends with brief contact" value="many friends with brief contact" th:field="*{answer11}"/>
-										                        <label class="btn btn-light btn-xl" for="many friends with brief contact" >many friends with brief contact</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="a few friends with more lengthy contact" value="a few friends with more lengthy contact" th:field="*{answer11}"/>
-										                        <label class="btn btn-light btn-xl" for="a few friends with more lengthy contact" >a few friends with more lengthy contact</label>
-										                        
-												                
-												               
-												            </div>
-												        </div>
-												    </div>
-												</section>
-												
-												<section class="page-section bg-primary" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-black mt-0">12</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-black-75 mb-4">Are you more interested in:</p>
-												                
-												                
-												                <input type="radio" id="production and distribution" value="production and distribution" th:field="*{answer12}"/>
-										                        <label class="btn btn-light btn-xl" for="production and distribution" >production and distribution</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="design and research" value="design and research" th:field="*{answer12}"/>
-										                        <label class="btn btn-light btn-xl" for="design and research" >design and research</label>
-												                
-												                
-												            </div>
-												        </div>
-												    </div>
-												</section>
-												
-												
-												
-												        <section class="page-section bg-dark text-white" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-white mt-0">13</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-white-75 mb-4">Is it preferable mostly to:</p>
-												                
-												                <input type="radio" id="make sure things are arranged" value="make sure things are arranged" th:field="*{answer13}"/>
-										                        <label class="btn btn-light btn-xl" for="make sure things are arranged" >make sure things are arranged</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="just let things happen" value="just let things happen" th:field="*{answer13}"/>
-										                        <label class="btn btn-light btn-xl" for="just let things happen" >just let things happen</label>
-										                        
-										                       
-												            </div>
-												        </div>
-												    </div>
-												</section>
-												
-												 <section class="page-section bg-primary" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-black mt-0">14</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-black-75 mb-4">When the phone rings do you:</p>
-												                
-												                <input type="radio" id="hasten to get to it first" value="hasten to get to it first" th:field="*{answer14}"/>
-										                        <label class="btn btn-light btn-xl" for="hasten to get to it first" >hasten to get to it first</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="hope someone else will answer" value="hope someone else will answer" th:field="*{answer14}"/>
-										                        <label class="btn btn-light btn-xl" for="hope someone else will answer" >hope someone else will answer</label>
-										                        
-												            </div>
-												        </div>
-												    </div>
-												</section>
-												
-												<section class="page-section bg-dark text-white" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-white mt-0">15</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-white-75 mb-4">Which seems the greater error:</p>
-												                
-												                											                
-												                <input type="radio" id="to be too passionate" value="to be too passionate" th:field="*{answer15}"/>
-										                        <label class="btn btn-light btn-xl" for="to be too passionate" >to be too passionate</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="to be too objective" value="to be too objective" th:field="*{answer15}"/>
-										                        <label class="btn btn-light btn-xl" for="to be too objective" >to be too objective</label>
-												                
-												                
-												            </div>
-												        </div>
-												    </div>
-												</section>
-												
-												<section class="page-section bg-primary" id="question">
-												    <div class="container px-4 px-lg-5">
-												        <div class="row gx-4 gx-lg-5 justify-content-center">
-												            <div class="col-lg-8 text-center">
-												                <h2 class="text-black mt-0">16</h2>
-												                <hr class="divider divider-light" />
-												                <p class="text-black-75 mb-4">In writings do you prefer:</p>
-												                
-												                       											                
-												                <input type="radio" id="the more literal" value="the more literal" th:field="*{answer16}"/>
-										                        <label class="btn btn-light btn-xl" for="the more literal" >the more literal</label>
-												                <br>
-												                <br>
-												                <input type="radio" id="the more figurative" value="the more figurative" th:field="*{answer16}"/>
-										                        <label class="btn btn-light btn-xl" for="the more figurative" >the more figurative</label>
-										                        
-										                        
-												                
-												            </div>
-												        </div>
-												    </div>
-												</section>
-																					        	
-									        	
-									        	
-									        	
-									        	
-									        	
-									        	
-									         	<!-- Call to action_origin-->
-										       <section class="page-section bg-dark text-white" id="result">
-										            <div class="container px-4 px-lg-5 text-center">
-										                <h2 class="mb-4">결과 확인하기!</h2>
-										                <button type="submit" class="btn btn-light btn-xl">RESULT</button>
-										            </div>
-										        </section>
-										        
-	        </form>
-        
-		</div>		
-		<!-- /.card-content -->
-	</th:block>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="survey/layout/basic">
+<th:block layout:fragment="title">
+	<title>The page is a survey page</title>
+</th:block>
 
-	<th:block layout:fragment="script">
-		<script th:inline="javascript">
+<th:block layout:fragment="content">
+	<div class="card-content">
+		<!-- form-->
+		<!-- Masthead-->
+		<header class="masthead">
+			<div class="container px-4 px-lg-5 h-100">
+				<div
+					class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+					<div class="col-lg-8 align-self-end">
+						<h1 class="text-white font-weight-bold">미래의 내 직업 찾기</h1>
+						<hr class="divider" />
+					</div>
+					<div class="col-lg-8 align-self-baseline">
+
+						<p class="text-white-75 mb-5">사용하실 ID를 입력해주세요</p>
+						<input class="text-black-75 mb-5" th:field="*{id}" /> <br> <a
+							class="btn btn-primary btn-xl" href="#question1">Test하러 가기</a>
+					</div>
+				</div>
+			</div>
+		</header>
+
+
+		<form class="form-horizontal" th:action="@{/survey/surveyresult.do}"
+			method="post" th:object="${survey}"
+			onsubmit="return registerSurvey(this);">
+
+			<!-- question-->
+			<section class="page-section bg-dark text-white" id="question1">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-white mt-0">1</h2>
+							<hr class="divider divider-light" />
+							<p class="text-white-75 mb-4">Are you more impressed by:</p>
+							<input type="radio" id="Principles" value="Principles"
+								th:field="*{answer1}" /> <label class="btn btn-light btn-xl"
+								for="Principles">Principles</label> <br> <br> <input
+								type="radio" id="Emotions" value="Emotions"
+								th:field="*{answer1}" /> <label class="btn btn-light btn-xl"
+								for="Emotions">Emotions</label>
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-primary" id="question2">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-black mt-0">2</h2>
+							<hr class="divider divider-light" />
+							<p class="text-black-75 mb-4">Do you tend to choose:</p>
+							<input type="radio" id="Rather carefully"
+								value="Rather carefully" th:field="*{answer2}" /> <label
+								class="btn btn-light btn-xl" for="Rather carefully">Rather
+								carefully</label> <br> <br> <input type="radio"
+								id="Somewhat impulsively" value="Somewhat impulsively"
+								th:field="*{answer2}" /> <label class="btn btn-light btn-xl"
+								for="Somewhat impulsively">Somewhat impulsively</label>
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="page-section bg-dark text-white" id="question3">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-white mt-0">3</h2>
+							<hr class="divider divider-light" />
+							<p class="text-white-75 mb-4">Are you more interested in:</p>
+							<input type="radio" id="What is actual" value="What is actual"
+								th:field="*{answer3}" /> <label class="btn btn-light btn-xl"
+								for="What is actual">What is actual</label> <br> <br>
+							<input type="radio" id="What is possible"
+								value="What is possible" th:field="*{answer3}" /> <label
+								class="btn btn-light btn-xl" for="What is possible">What
+								is possible</label>
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-primary" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-black mt-0">4</h2>
+							<hr class="divider divider-light" />
+							<p class="text-black-75 mb-4">Does it bother you more having
+								things:</p>
+
+							<input type="radio" id="Incomplete" value="Incomplete"
+								th:field="*{answer4}" /> <label class="btn btn-light btn-xl"
+								for="Incomplete">Incomplete</label> <br> <br> <input
+								type="radio" id="Completed" value="Completed"
+								th:field="*{answer4}" /> <label class="btn btn-light btn-xl"
+								for="Completed">Completed</label>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-dark text-white" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-white mt-0">5</h2>
+							<hr class="divider divider-light" />
+							<p class="text-white-75 mb-4">In your social groups do you:</p>
+
+							<input type="radio" id="Keep abreast of other's happenings"
+								value="Keep abreast of other's happenings" th:field="*{answer5}" />
+							<label class="btn btn-light btn-xl"
+								for="Keep abreast of other's happenings">Keep abreast
+								of other's happenings</label> <br> <br> <input type="radio"
+								id="Get behind on the news" value="Get behind on the news"
+								th:field="*{answer5}" /> <label class="btn btn-light btn-xl"
+								for="Get behind on the news">Get behind on the news</label>
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-primary" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-black mt-0">6</h2>
+							<hr class="divider divider-light" />
+							<p class="text-black-75 mb-4">Are you more comfortable in
+								making:</p>
+							<input type="radio" id="Logical judgments"
+								value="Logical judgments" th:field="*{answer6}" /> <label
+								class="btn btn-light btn-xl" for="Logical judgments">Logical
+								judgments</label> <br> <br> <input type="radio"
+								id="Value judgments" value="Value judgments"
+								th:field="*{answer6}" /> <label class="btn btn-light btn-xl"
+								for="Value judgments">Value judgments</label>
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-dark text-white" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-white mt-0">7</h2>
+							<hr class="divider divider-light" />
+							<p class="text-white-75 mb-4">Are visionaries:</p>
+
+							<input type="radio" id="somewhat annoying"
+								value="somewhat annoying" th:field="*{answer7}" /> <label
+								class="btn btn-light btn-xl" for="somewhat annoying">somewhat
+								annoying</label> <br> <br> <input type="radio"
+								id="rather fascinating" value="rather fascinating"
+								th:field="*{answer7}" /> <label class="btn btn-light btn-xl"
+								for="rather fascinating">rather fascinating</label>
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-primary" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-black mt-0">8</h2>
+							<hr class="divider divider-light" />
+							<p class="text-black-75 mb-4">In company do you:</p>
+
+							<input type="radio" id="initiate conversation"
+								value="initiate conversation" th:field="*{answer8}" /> <label
+								class="btn btn-light btn-xl" for="initiate conversation">initiate
+								conversation</label> <br> <br> <input type="radio"
+								id="wait to be approached" value="wait to be approached"
+								th:field="*{answer8}" /> <label class="btn btn-light btn-xl"
+								for="wait to be approached">wait to be approached</label>
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-dark text-white" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-white mt-0">9</h2>
+							<hr class="divider divider-light" />
+							<p class="text-white-75 mb-4">Are you more:</p>
+
+							<input type="radio" id="firm than gentle"
+								value="firm than gentle" th:field="*{answer9}" /> <label
+								class="btn btn-light btn-xl" for="firm than gentle">firm
+								than gentle</label> <br> <br> <input type="radio"
+								id="gentle than firm" value="gentle than firm"
+								th:field="*{answer9}" /> <label class="btn btn-light btn-xl"
+								for="gentle than firm">gentle than firm</label>
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-primary" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-black mt-0">10</h2>
+							<hr class="divider divider-light" />
+							<p class="text-black-75 mb-4">Do you put more value on:</p>
+
+
+
+							<input type="radio" id="infinite" value="infinite"
+								th:field="*{answer10}" /> <label class="btn btn-light btn-xl"
+								for="infinite">infinite</label> <br> <br> <input
+								type="radio" id="open-minded" value="open-minded"
+								th:field="*{answer10}" /> <label class="btn btn-light btn-xl"
+								for="open-minded">open-minded</label>
+
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-dark text-white" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-white mt-0">11</h2>
+							<hr class="divider divider-light" />
+							<p class="text-white-75 mb-4">Do you prefer:</p>
+
+							<input type="radio" id="many friends with brief contact"
+								value="many friends with brief contact" th:field="*{answer11}" />
+							<label class="btn btn-light btn-xl"
+								for="many friends with brief contact">many friends with
+								brief contact</label> <br> <br> <input type="radio"
+								id="a few friends with more lengthy contact"
+								value="a few friends with more lengthy contact"
+								th:field="*{answer11}" /> <label class="btn btn-light btn-xl"
+								for="a few friends with more lengthy contact">a few
+								friends with more lengthy contact</label>
+
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-primary" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-black mt-0">12</h2>
+							<hr class="divider divider-light" />
+							<p class="text-black-75 mb-4">Are you more interested in:</p>
+
+
+							<input type="radio" id="production and distribution"
+								value="production and distribution" th:field="*{answer12}" /> <label
+								class="btn btn-light btn-xl" for="production and distribution">production
+								and distribution</label> <br> <br> <input type="radio"
+								id="design and research" value="design and research"
+								th:field="*{answer12}" /> <label class="btn btn-light btn-xl"
+								for="design and research">design and research</label>
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+
+
+			<section class="page-section bg-dark text-white" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-white mt-0">13</h2>
+							<hr class="divider divider-light" />
+							<p class="text-white-75 mb-4">Is it preferable mostly to:</p>
+
+							<input type="radio" id="make sure things are arranged"
+								value="make sure things are arranged" th:field="*{answer13}" />
+							<label class="btn btn-light btn-xl"
+								for="make sure things are arranged">make sure things
+								are arranged</label> <br> <br> <input type="radio"
+								id="just let things happen" value="just let things happen"
+								th:field="*{answer13}" /> <label class="btn btn-light btn-xl"
+								for="just let things happen">just let things happen</label>
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-primary" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-black mt-0">14</h2>
+							<hr class="divider divider-light" />
+							<p class="text-black-75 mb-4">When the phone rings do you:</p>
+
+							<input type="radio" id="hasten to get to it first"
+								value="hasten to get to it first" th:field="*{answer14}" /> <label
+								class="btn btn-light btn-xl" for="hasten to get to it first">hasten
+								to get to it first</label> <br> <br> <input type="radio"
+								id="hope someone else will answer"
+								value="hope someone else will answer" th:field="*{answer14}" />
+							<label class="btn btn-light btn-xl"
+								for="hope someone else will answer">hope someone else
+								will answer</label>
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-dark text-white" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-white mt-0">15</h2>
+							<hr class="divider divider-light" />
+							<p class="text-white-75 mb-4">Which seems the greater error:</p>
+
+
+							<input type="radio" id="to be too passionate"
+								value="to be too passionate" th:field="*{answer15}" /> <label
+								class="btn btn-light btn-xl" for="to be too passionate">to
+								be too passionate</label> <br> <br> <input type="radio"
+								id="to be too objective" value="to be too objective"
+								th:field="*{answer15}" /> <label class="btn btn-light btn-xl"
+								for="to be too objective">to be too objective</label>
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="page-section bg-primary" id="question">
+				<div class="container px-4 px-lg-5">
+					<div class="row gx-4 gx-lg-5 justify-content-center">
+						<div class="col-lg-8 text-center">
+							<h2 class="text-black mt-0">16</h2>
+							<hr class="divider divider-light" />
+							<p class="text-black-75 mb-4">In writings do you prefer:</p>
+
+
+							<input type="radio" id="the more literal"
+								value="the more literal" th:field="*{answer16}" /> <label
+								class="btn btn-light btn-xl" for="the more literal">the
+								more literal</label> <br> <br> <input type="radio"
+								id="the more figurative" value="the more figurative"
+								th:field="*{answer16}" /> <label class="btn btn-light btn-xl"
+								for="the more figurative">the more figurative</label>
+
+
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Call to action_origin-->
+			<section class="page-section bg-dark text-white" id="result">
+				<div class="container px-4 px-lg-5 text-center">
+					<h2 class="mb-4">결과 확인하기!</h2>
+					<button type="submit" class="btn btn-light btn-xl">RESULT</button>
+				</div>
+			</section>
+
+		</form>
+
+	</div>
+	<!-- /.card-content -->
+</th:block>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
 			/*<![CDATA[*/
 
 			function registerSurvey(form) {
@@ -405,6 +425,6 @@
 
 			/*]]>*/
 		</script>
-	</th:block>
-	
+</th:block>
+
 </html>

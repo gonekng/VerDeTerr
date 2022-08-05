@@ -163,17 +163,18 @@ public class UserController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/findId_proc")
-	public String findUserId(@RequestParam(value="email", required=false) String Email, Model model) {
-		UserDTO params = userService.findLoginId(Email);
+	@PostMapping("/findId_proc")
+	public String findUserId(String email, Model model) {
+		UserDTO params = userService.findLoginId(email);
+		System.out.println("================================");
 		System.out.println(params);
 		if(params==null) {
-			model.addAttribute("msg","입력하신 이메일로 가입된 아이디가 없습니다.");
+			model.addAttribute("msgFindID","입력하신 이메일로 가입된 아이디가 없습니다.");
 			return "/findId";
 		}else
 			System.out.println("********************");
 			System.out.println(params.getId());
-			model.addAttribute("msg", "입력하신 이메일로 가입된 아이디는 "+ params.getId()+"입니다.");
+			model.addAttribute("msgFindID", "입력하신 이메일로 가입된 아이디는 "+ params.getId()+"입니다.");
 			return "/login";
 	}
 	
@@ -184,13 +185,13 @@ public class UserController {
 	 * @param model
 	 * @return
 	 */
-	@GetMapping("/findPw_proc")
-	public String findUserPw(@RequestParam(value="id") String Id, @RequestParam(value="pwHint", required=false) String PwHint, Model model) {
-		UserDTO params = userService.findLoginPw(Id, PwHint);
+	@PostMapping("/findPw_proc")
+	public String findUserPw(String id, String pwHint, Model model) {
+		UserDTO params = userService.findLoginPw(id, pwHint);
 		if(params==null) {
-			model.addAttribute("msg","정보를 잘못입력하셨습니다.");
+			model.addAttribute("msgFindPW","정보를 잘못입력하셨습니다.");
 		} else 
-			model.addAttribute("msg",params.getId()+"님의 비밀번호는 "+params.getPw()+"입니다.");
+			model.addAttribute("msgFindPW",params.getId()+"님의 비밀번호는 "+ params.getPw()+"입니다.");
 			return "/login";
 	}
 }
