@@ -155,6 +155,26 @@ public class SurveyDTO {
 	
 	
 
+	public SurveyDTO(String id) {
+		super();
+		this.id = id;
+		this.answer1 = "";
+		this.answer2 = "";
+		this.answer3 = "";
+		this.answer4 = "";
+		this.answer5 = "";
+		this.answer6 = "";
+		this.answer7 = "";
+		this.answer8 = "";
+		this.answer9 = "";
+		this.answer10 = "";
+		this.answer11 = "";
+		this.answer12 = "";
+		this.answer13 = "";
+		this.answer14 = "";
+		this.answer15 = "";
+		this.answer16 = "";
+	}
 	public void setUserType(String string) {
 		// TODO Auto-generated method stub
 		

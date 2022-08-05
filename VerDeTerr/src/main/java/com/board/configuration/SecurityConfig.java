@@ -26,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 				.authorizeRequests()
 				.antMatchers("/login", "/logout", "/signup", "/main", "/signup_proc", "/login_proc", "/mypage",
+<<<<<<< HEAD
 						"/identify", "/identify_proc", "/findId", "/findPw", "/findId_proc", "/findPw_proc", "/css/**",
 						"/assets/**", "/js/**", "/survey/**", "/board/list.do",
 						"/board/write.do", "/board/register.do", "/board/view.do", "/board/delete.do")
@@ -38,6 +39,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 
+=======
+						"/identify", "/identify_proc", "/**", "/css/**", "/img/**", "/js/**","/scripts/**","/plugin/**","/survey/surveylist.do",
+						"survey/suveyresult.do","redirect:/survey/surveyresult.do", "/board/list.do", "/board/write.do", "/board/register.do",
+						"/board/view.do", "/board/delete.do")
+				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll();
+
+	}
+
+>>>>>>> d88569dba81f6428a1cd3729d2fc350cdcf36289
 	/*
 	 * // static 파일 권한 허용 설정
 	 * 

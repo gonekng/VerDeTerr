@@ -10,49 +10,47 @@
 <body>
 	<div class="container">
 		<h1>회원가입</h1>
-		<form th:action="@{signup_proc}" method="post">
+		<form th:action="@{signup_proc}" method="post" name="signup">
 				<div class="form-group" style="margin-top: 10px;">
-					<label th:for="username">아이디</label> <input type="text" id=id
-						name="id" class="form-control" placeholder="아이디 입력해주세요">
+					<label th:for="username">아이디</label>
+					<input type="text" id=id name="id" class="form-control" placeholder="아이디 입력해주세요">
+					<span id="check3"></span><br>
+					<input type="button" onclick="check_id();" value="아이디중복확인">
 				</div>
-				
 				<div class="form-group" style="margin-top: 10px;">
-					<label th:for="password">비밀번호</label> <input type="password" id=pw1
-						onchange="check_pw()" class="form-control" name="pw"
+					<label th:for="password">비밀번호</label> 
+					<input type="password" id=pw1 onchange="check_pw()" class="form-control" name="pw"
 						placeholder="비밀번호 입력해주세요">
-					<div id="check1" style="color:gray; font-size:12px; margin-bottom: 10px;">※ 비밀번호는 6글자 이상,
-						20글자 이하만 이용 가능합니다.</div>
-					<label th:for="password">비밀번호확인</label> <input type="password"
-						id=pw2 onchange="check_pw()" class="form-control"
-						placeholder="비밀번호 입력해주세요"> <span id="check2"></span>
+					<div id="check1" style="color:gray; font-size:12px; margin-bottom: 10px;">
+					※ 비밀번호는 6글자 이상, 20글자 이하만 이용 가능합니다.</div>
+					<label th:for="password">비밀번호확인</label> 
+					<input type="password" id=pw2 onchange="check_pw()" class="form-control"placeholder="비밀번호 입력해주세요">
+						<span id="check2"></span>
 				</div>
-				
 				<div class="form-group" style="margin-top: 10px;">
 					<label th:for="password">비밀번호힌트</label> <input type="text"
 						class="form-control" name="pwHint" placeholder="나의 보물 1호는?">
 				</div>
 				
 				<div class="form-group" style="margin-top: 10px;">
-					<label th:for="email">Email</label> <input type="email"
-						class="form-control" name="email"
-						placeholder="example@example.com">
+					<label th:for="email">Email</label>
+					<input type="email" class="form-control" name="email" placeholder="example@example.com">
 				</div>
 				
 				<div class="form-group" style="margin-top: 10px;">
-					<label th:for="age">나이</label> <input type="text"
-						class="form-control" name="age" placeholder="나이 입력해주세요">
+					<label th:for="age">나이</label> 
+					<input type="text" class="form-control" name="age" placeholder="나이 입력해주세요">
 				</div>
 				
 				<div class="form-group" style="margin-top: 10px;">
-					<label th:for="gender">성별</label> <input type="radio"
-						class="form-control" name="gender" value="남자" checked />남자 <input
-						type="radio" class="form-control" name="gender" value="여자" checked />여자
+					<label th:for="gender">성별</label> 
+					<input type="radio" class="form-control" name="gender" value="남자" checked />남자 
+					<input type="radio" class="form-control" name="gender" value="여자" checked />여자
 				</div>
 				
 				<div class="btn_wrap text-center" style="margin-top: 20px;">
 					<button type="submit" class="btn btn-primary">회원가입</button>
-					<button type="button" class="btn btn-secondary"
-						onClick="location.href='login'">취소하기</button>
+					<button type="button" class="btn btn-secondary" onClick="location.href='login'">취소하기</button>
 				</div>
 			</form>
 		<br />
@@ -86,6 +84,20 @@
 				}
 			}
 		}
+		function check_id(){
+		/* 	let win = window.open("/checkId.html", "PopupWin", "width=400,height=500");
+		} */
+		a= document.getElementById('id').value;
+        len_id = document.getElementById('id').length;
+        
+        if(a==null || a==""){
+        	document.getElementById('check3').innerHTML = ' 아이디를 입력해주세요.';
+			document.getElementById('check3').style.color = 'red';
+           signup.id.focus();
+           return;
+        }
+        window.open("/checkId", "아이디중복확인", "width=500, height=200, left=700, top=300");
+        }
 	</script>
 </body>
 </html>

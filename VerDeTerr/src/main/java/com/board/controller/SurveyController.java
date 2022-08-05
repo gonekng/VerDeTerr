@@ -2,9 +2,12 @@ package com.board.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+<<<<<<< HEAD
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+=======
+>>>>>>> d88569dba81f6428a1cd3729d2fc350cdcf36289
 
 import javax.servlet.http.HttpSession;
 
@@ -16,17 +19,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.domain.SurveyDTO;
 import com.board.domain.SurveyOutputDTO;
+import com.board.domain.UserDTO;
 import com.board.service.SurveyService;
+import com.board.service.UserService;
 
 @Controller
 public class SurveyController {
 	
 	@Autowired
 	private SurveyService surveyService;
+	
+	@Autowired
+	private UserService userService;
 	
 //	@GetMapping(value = "/survey/surveylist.do")
 //	public String openSurveyWrite(@RequestParam(value = "id", required = false) String id, Model model, HttpSession session) {
@@ -51,11 +58,15 @@ public class SurveyController {
 	public String openSurveyWrite(Model model, HttpSession session) {
 		String myID = (String) session.getAttribute("id");
 		if(myID == null){
+			System.out.println("???");
 			model.addAttribute("surveyError", "로그인 후 사용 가능합니다.");
 			return "redirect:/main";
 		} else {
 			SurveyDTO survey = surveyService.getSurveyResult(myID);
-			System.out.println("survey:"+survey);
+			System.out.println("survey : "+survey);
+			if(survey == null) {
+				survey = new SurveyDTO(myID);
+			}
 			model.addAttribute("survey", survey);
 			return "survey/surveylist";
 		}
@@ -95,10 +106,14 @@ public class SurveyController {
 //	}
 	
 	@GetMapping(value="/survey/surveyresult.do")
-	public String getSurveyList(Model model) {
+	public String getSurveyList(Model model, HttpSession session) {
 		
-		List<SurveyOutputDTO> surveyList = surveyService.getSurveyList();
+		String myID = (String)session.getAttribute("id");
+		SurveyOutputDTO surveyList = surveyService.getSurveyList(myID);
+		System.out.println("!!!!!!!!!!" + surveyList);
 		model.addAttribute("surveyList", surveyList);
+		UserDTO user = userService.getUserDetail(myID);
+		userService.updateUserDetail(user);
 
 		return "survey/surveyresult";
 	}
@@ -107,7 +122,7 @@ public class SurveyController {
 
 	@PostMapping(value = "/survey/surveyresult.do")
 	public String registerSurvey(final SurveyDTO params, Model model) {
-		
+
 		try {
 			System.out.println("Controller surveyresult 시작");
 			boolean isRegistered = surveyService.registerSurvey(params);
@@ -199,13 +214,7 @@ public class SurveyController {
 //			br.close();
 //
 //			System.out.println("" + sb.toString());
-			
-			
-			
-			
-			
-			
-			
+
 			
 		} catch (DataAccessException e) {
 			e.printStackTrace();

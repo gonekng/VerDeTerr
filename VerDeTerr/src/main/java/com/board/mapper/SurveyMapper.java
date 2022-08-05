@@ -16,6 +16,6 @@ public interface SurveyMapper {
 	
 	public SurveyOutputDTO selectSurveyOutput(String id);
 	
-	public List<SurveyOutputDTO> selectSurveyList();
+	public SurveyOutputDTO selectSurveyList(String id);
 	
 }

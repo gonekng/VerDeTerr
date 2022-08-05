@@ -75,7 +75,9 @@
 	</update>
 	
 	<sql id="surveyOutputColumns">
-		  id
+		  idx
+		, id
+		, TestDate
 		, UserAnswer
 		, UserType
 	</sql>
@@ -89,11 +91,15 @@
 			id = #{id}
 	</select>
 	
-	<select id="selectSurveyList" parameterType="SurveyOutputDTO" resultType="SurveyOutputDTO">
+	<select id="selectSurveyList" parameterType="String" resultType="SurveyOutputDTO">
 		SELECT
 			<include refid="surveyOutputColumns" />
 		FROM
-			Mbti_ML_Output
+			Mbti_ML_output
+		WHERE
+			id = #{id}
+		ORDER BY TestDate
+		DESC limit 1
 		
 	</select>
 

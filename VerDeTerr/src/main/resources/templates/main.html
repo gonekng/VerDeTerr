@@ -35,6 +35,8 @@
 	        let msgSignupError = "[[${msgSignupError}]]";
 	        let msgLogout = "[[${msgLogout}]]";
 	        let msgMod = "[[${msgMod}]]";
+	        let surveyError = "[[${surveyError}]]";
+	        
 	        if (msgLoginSuccess != "") {
 	           alert(msgLoginSuccess);
 	        }
@@ -55,6 +57,9 @@
 	        if (msgMod != "") {
 	           alert(msgMod);
 	        }
+	        if (surveyError != "") {
+		           alert(surveyError);
+		        }
 	    })
 	</script>
 </head>
@@ -200,7 +205,7 @@
 		</div>
 	</section>
 	<!-- Signup-->
-	<div class="page-section" id="signup">
+	<section class="page-section" id="signup">
 		<div
 			class="container px-4 px-lg-5 h-100 align-items-center justify-content-center">
 			<h1 style="text-align: center;">Sign Up</h1>
@@ -277,7 +282,7 @@
 			}
 		}
 	</script>
-	</div>
+	</section>
 
 	<!-- Footer-->
 	<footer class="bg-light py-5">
