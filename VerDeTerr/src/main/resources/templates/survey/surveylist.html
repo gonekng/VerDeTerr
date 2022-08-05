@@ -9,7 +9,12 @@
 <th:block layout:fragment="content">
 	<div class="card-content">
 		<!-- form-->
-		<!-- Masthead-->
+		
+
+
+		<form class="form-horizontal" th:action="@{/survey/surveyresult.do}"
+			method="post" th:object="${survey}">
+			<!-- Masthead-->
 		<header class="masthead">
 			<div class="container px-4 px-lg-5 h-100">
 				<div
@@ -18,22 +23,20 @@
 						<h1 class="text-white font-weight-bold">미래의 내 직업 찾기</h1>
 						<hr class="divider" />
 					</div>
+					<div class="container px-4 px-lg-5">
+						<input type="text" th:field="*{id}" id="id" value="${session.id}">
+					</div>
 					<div class="col-lg-8 align-self-baseline">
-
+						
+						
 						<br> <a class="btn btn-primary btn-xl" href="#question1">Test하러
 							가기</a>
 					</div>
 				</div>
 			</div>
 		</header>
-
-
-		<form class="form-horizontal" th:action="@{/survey/surveyresult.do}"
-			method="post" th:object="${survey}">
-
-			<div class="container px-4 px-lg-5">
-			<input type="text" th:field="*{id}" id="id" value="${session.id}">
-			</div>
+		
+			
 			<!-- question-->
 			<section class="page-section bg-dark text-white" id="question1">
 				<div class="container px-4 px-lg-5">
@@ -41,12 +44,12 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-white mt-0">1</h2>
 							<hr class="divider divider-light" />
-							<p class="text-white-75 mb-4">Are you more impressed by:</p>
+							<p class="text-white-75 mb-4">어떤 것에 더 중점을 두고 생각하나요?</p>
 							<input type="radio" id="Principles" value="Principles" th:field="*{answer1}" />
-							<label class="btn btn-light btn-xl" for="Principles">Principles</label>
+							<label class="btn btn-light btn-xl" for="Principles">원칙</label>
 							<br> <br>
 							<input	type="radio" id="Emotions" value="Emotions"	th:field="*{answer1}" />
-						    <label class="btn btn-light btn-xl"	for="Emotions">Emotions</label>
+						    <label class="btn btn-light btn-xl"	for="Emotions">감정</label>
 
 
 						</div>
@@ -60,14 +63,13 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-black mt-0">2</h2>
 							<hr class="divider divider-light" />
-							<p class="text-black-75 mb-4">Do you tend to choose:</p>
+							<p class="text-black-75 mb-4">선택은 어떻게 이루어 지나요?</p>
 							<input type="radio" id="Rather carefully"
 								value="Rather carefully" th:field="*{answer2}" /> <label
-								class="btn btn-light btn-xl" for="Rather carefully">Rather
-								carefully</label> <br> <br> <input type="radio"
+								class="btn btn-light btn-xl" for="Rather carefully">조금 조심스럽게</label> <br> <br> <input type="radio"
 								id="Somewhat impulsively" value="Somewhat impulsively"
 								th:field="*{answer2}" /> <label class="btn btn-light btn-xl"
-								for="Somewhat impulsively">Somewhat impulsively</label>
+								for="Somewhat impulsively">조금 충동적으로</label>
 
 
 						</div>
@@ -80,14 +82,13 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-white mt-0">3</h2>
 							<hr class="divider divider-light" />
-							<p class="text-white-75 mb-4">Are you more interested in:</p>
+							<p class="text-white-75 mb-4">더 흥미롭게 생각하는 것은 무엇인가요?</p>
 							<input type="radio" id="What is actual" value="What is actual"
 								th:field="*{answer3}" /> <label class="btn btn-light btn-xl"
-								for="What is actual">What is actual</label> <br> <br>
+								for="What is actual">실재하는 것</label> <br> <br>
 							<input type="radio" id="What is possible"
 								value="What is possible" th:field="*{answer3}" /> <label
-								class="btn btn-light btn-xl" for="What is possible">What
-								is possible</label>
+								class="btn btn-light btn-xl" for="What is possible">앞으로 가능한 것</label>
 
 						</div>
 					</div>
@@ -100,15 +101,14 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-black mt-0">4</h2>
 							<hr class="divider divider-light" />
-							<p class="text-black-75 mb-4">Does it bother you more having
-								things:</p>
+							<p class="text-black-75 mb-4">무엇이 더 신경 쓰이나요?</p>
 
 							<input type="radio" id="Incomplete" value="Incomplete"
 								th:field="*{answer4}" /> <label class="btn btn-light btn-xl"
-								for="Incomplete">Incomplete</label> <br> <br> <input
+								for="Incomplete">조금 부족하지만 미완성인 것</label> <br> <br> <input
 								type="radio" id="Completed" value="Completed"
 								th:field="*{answer4}" /> <label class="btn btn-light btn-xl"
-								for="Completed">Completed</label>
+								for="Completed">조금 부족하지만 완성인 것</label>
 						</div>
 					</div>
 				</div>
@@ -120,16 +120,15 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-white mt-0">5</h2>
 							<hr class="divider divider-light" />
-							<p class="text-white-75 mb-4">In your social groups do you:</p>
+							<p class="text-white-75 mb-4">사회적으로 어떤 그룹에 속하나요?</p>
 
 							<input type="radio" id="Keep abreast of other's happenings"
 								value="Keep abreast of other's happenings" th:field="*{answer5}" />
 							<label class="btn btn-light btn-xl"
-								for="Keep abreast of other's happenings">Keep abreast of
-								other's happenings</label> <br> <br> <input type="radio"
+								for="Keep abreast of other's happenings">앞장서서 무언가를 주도하는 그룹</label> <br> <br> <input type="radio"
 								id="Get behind on the news" value="Get behind on the news"
 								th:field="*{answer5}" /> <label class="btn btn-light btn-xl"
-								for="Get behind on the news">Get behind on the news</label>
+								for="Get behind on the news">완성된 걸 뒤따라 가는 그룹</label>
 
 
 						</div>
@@ -143,15 +142,13 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-black mt-0">6</h2>
 							<hr class="divider divider-light" />
-							<p class="text-black-75 mb-4">Are you more comfortable in
-								making:</p>
+							<p class="text-black-75 mb-4">어떤 판단을 주로 하시나요?</p>
 							<input type="radio" id="Logical judgments"
 								value="Logical judgments" th:field="*{answer6}" /> <label
-								class="btn btn-light btn-xl" for="Logical judgments">Logical
-								judgments</label> <br> <br> <input type="radio"
+								class="btn btn-light btn-xl" for="Logical judgments">논리적인 판단</label> <br> <br> <input type="radio"
 								id="Value judgments" value="Value judgments"
 								th:field="*{answer6}" /> <label class="btn btn-light btn-xl"
-								for="Value judgments">Value judgments</label>
+								for="Value judgments">가치 판단</label>
 
 
 						</div>
@@ -165,15 +162,14 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-white mt-0">7</h2>
 							<hr class="divider divider-light" />
-							<p class="text-white-75 mb-4">Are visionaries:</p>
+							<p class="text-white-75 mb-4">앞에 나서는 사람들을 어떻게 생각하시나요?</p>
 
 							<input type="radio" id="somewhat annoying"
 								value="somewhat annoying" th:field="*{answer7}" /> <label
-								class="btn btn-light btn-xl" for="somewhat annoying">somewhat
-								annoying</label> <br> <br> <input type="radio"
+								class="btn btn-light btn-xl" for="somewhat annoying">조금 성가신다.</label> <br> <br> <input type="radio"
 								id="rather fascinating" value="rather fascinating"
 								th:field="*{answer7}" /> <label class="btn btn-light btn-xl"
-								for="rather fascinating">rather fascinating</label>
+								for="rather fascinating">오히려 매력적이다.</label>
 
 
 						</div>
@@ -187,15 +183,14 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-black mt-0">8</h2>
 							<hr class="divider divider-light" />
-							<p class="text-black-75 mb-4">In company do you:</p>
+							<p class="text-black-75 mb-4">회사에서 당신은</p>
 
 							<input type="radio" id="initiate conversation"
 								value="initiate conversation" th:field="*{answer8}" /> <label
-								class="btn btn-light btn-xl" for="initiate conversation">initiate
-								conversation</label> <br> <br> <input type="radio"
+								class="btn btn-light btn-xl" for="initiate conversation">대화를 주로 시작한다.</label> <br> <br> <input type="radio"
 								id="wait to be approached" value="wait to be approached"
 								th:field="*{answer8}" /> <label class="btn btn-light btn-xl"
-								for="wait to be approached">wait to be approached</label>
+								for="wait to be approached">누가 나에게 다가오기까지 기다린다.</label>
 
 
 						</div>
@@ -209,15 +204,14 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-white mt-0">9</h2>
 							<hr class="divider divider-light" />
-							<p class="text-white-75 mb-4">Are you more:</p>
+							<p class="text-white-75 mb-4">당신은 좀더 </p>
 
 							<input type="radio" id="firm than gentle"
 								value="firm than gentle" th:field="*{answer9}" /> <label
-								class="btn btn-light btn-xl" for="firm than gentle">firm
-								than gentle</label> <br> <br> <input type="radio"
+								class="btn btn-light btn-xl" for="firm than gentle">조금 엄격하다.</label> <br> <br> <input type="radio"
 								id="gentle than firm" value="gentle than firm"
 								th:field="*{answer9}" /> <label class="btn btn-light btn-xl"
-								for="gentle than firm">gentle than firm</label>
+								for="gentle than firm">조금 부드럽다.</label>
 
 						</div>
 					</div>
@@ -230,16 +224,16 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-black mt-0">10</h2>
 							<hr class="divider divider-light" />
-							<p class="text-black-75 mb-4">Do you put more value on:</p>
+							<p class="text-black-75 mb-4">당신은 무엇을 더 중요하게 생각합니까?</p>
 
 
 
 							<input type="radio" id="infinite" value="infinite"
 								th:field="*{answer10}" /> <label class="btn btn-light btn-xl"
-								for="infinite">infinite</label> <br> <br> <input
+								for="infinite">무한함</label> <br> <br> <input
 								type="radio" id="open-minded" value="open-minded"
 								th:field="*{answer10}" /> <label class="btn btn-light btn-xl"
-								for="open-minded">open-minded</label>
+								for="open-minded">개방성</label>
 
 
 
@@ -254,18 +248,16 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-white mt-0">11</h2>
 							<hr class="divider divider-light" />
-							<p class="text-white-75 mb-4">Do you prefer:</p>
+							<p class="text-white-75 mb-4">인간관계에서 어떤것을 선호하시나요?</p>
 
 							<input type="radio" id="many friends with brief contact"
 								value="many friends with brief contact" th:field="*{answer11}" />
 							<label class="btn btn-light btn-xl"
-								for="many friends with brief contact">many friends with
-								brief contact</label> <br> <br> <input type="radio"
+								for="many friends with brief contact">많은 사람들과 가벼운 연락</label> <br> <br> <input type="radio"
 								id="a few friends with more lengthy contact"
 								value="a few friends with more lengthy contact"
 								th:field="*{answer11}" /> <label class="btn btn-light btn-xl"
-								for="a few friends with more lengthy contact">a few
-								friends with more lengthy contact</label>
+								for="a few friends with more lengthy contact">적은 사람들과 오래하는 연락</label>
 
 
 
@@ -280,16 +272,15 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-black mt-0">12</h2>
 							<hr class="divider divider-light" />
-							<p class="text-black-75 mb-4">Are you more interested in:</p>
+							<p class="text-black-75 mb-4">어떤것에 더 관심이 있으신가요?</p>
 
 
 							<input type="radio" id="production and distribution"
 								value="production and distribution" th:field="*{answer12}" /> <label
-								class="btn btn-light btn-xl" for="production and distribution">production
-								and distribution</label> <br> <br> <input type="radio"
+								class="btn btn-light btn-xl" for="production and distribution">생산과 유통</label> <br> <br> <input type="radio"
 								id="design and research" value="design and research"
 								th:field="*{answer12}" /> <label class="btn btn-light btn-xl"
-								for="design and research">design and research</label>
+								for="design and research">디자인과 연구</label>
 
 
 						</div>
@@ -305,16 +296,15 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-white mt-0">13</h2>
 							<hr class="divider divider-light" />
-							<p class="text-white-75 mb-4">Is it preferable mostly to:</p>
+							<p class="text-white-75 mb-4">어떤 일이 더 흥미롭나요?</p>
 
 							<input type="radio" id="make sure things are arranged"
 								value="make sure things are arranged" th:field="*{answer13}" />
 							<label class="btn btn-light btn-xl"
-								for="make sure things are arranged">make sure things are
-								arranged</label> <br> <br> <input type="radio"
+								for="make sure things are arranged">일이 잘 처리 되도록 하는 것</label> <br> <br> <input type="radio"
 								id="just let things happen" value="just let things happen"
 								th:field="*{answer13}" /> <label class="btn btn-light btn-xl"
-								for="just let things happen">just let things happen</label>
+								for="just let things happen">일이 일어나게 놔두는 것</label>
 
 
 						</div>
@@ -328,17 +318,15 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-black mt-0">14</h2>
 							<hr class="divider divider-light" />
-							<p class="text-black-75 mb-4">When the phone rings do you:</p>
+							<p class="text-black-75 mb-4">누군가의 전화가 울릴 때</p>
 
 							<input type="radio" id="hasten to get to it first"
 								value="hasten to get to it first" th:field="*{answer14}" /> <label
-								class="btn btn-light btn-xl" for="hasten to get to it first">hasten
-								to get to it first</label> <br> <br> <input type="radio"
+								class="btn btn-light btn-xl" for="hasten to get to it first">빨리 받으려고 애쓴다.</label> <br> <br> <input type="radio"
 								id="hope someone else will answer"
 								value="hope someone else will answer" th:field="*{answer14}" />
 							<label class="btn btn-light btn-xl"
-								for="hope someone else will answer">hope someone else
-								will answer</label>
+								for="hope someone else will answer">누군가가 받을때 까지 기다린다.</label>
 
 						</div>
 					</div>
@@ -351,16 +339,15 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-white mt-0">15</h2>
 							<hr class="divider divider-light" />
-							<p class="text-white-75 mb-4">Which seems the greater error:</p>
+							<p class="text-white-75 mb-4">어떤 게 더 큰 문제 인가요?</p>
 
 
 							<input type="radio" id="to be too passionate"
 								value="to be too passionate" th:field="*{answer15}" /> <label
-								class="btn btn-light btn-xl" for="to be too passionate">to
-								be too passionate</label> <br> <br> <input type="radio"
+								class="btn btn-light btn-xl" for="to be too passionate">너무나도 열정적인 것</label> <br> <br> <input type="radio"
 								id="to be too objective" value="to be too objective"
 								th:field="*{answer15}" /> <label class="btn btn-light btn-xl"
-								for="to be too objective">to be too objective</label>
+								for="to be too objective">너무나도 객관적인 것</label>
 
 
 						</div>
@@ -374,16 +361,15 @@
 						<div class="col-lg-8 text-center">
 							<h2 class="text-black mt-0">16</h2>
 							<hr class="divider divider-light" />
-							<p class="text-black-75 mb-4">In writings do you prefer:</p>
+							<p class="text-black-75 mb-4">글을 쓸때 당신은</p>
 
 
 							<input type="radio" id="the more literal"
 								value="the more literal" th:field="*{answer16}" /> <label
-								class="btn btn-light btn-xl" for="the more literal">the
-								more literal</label> <br> <br> <input type="radio"
+								class="btn btn-light btn-xl" for="the more literal">문자 그대로를 선호한다.</label> <br> <br> <input type="radio"
 								id="the more figurative" value="the more figurative"
 								th:field="*{answer16}" /> <label class="btn btn-light btn-xl"
-								for="the more figurative">the more figurative</label>
+								for="the more figurative">비유적인 문구들을 사용한다.</label>
 
 
 
@@ -407,12 +393,29 @@
 			</section>
 
 		</form>
+ 		<!-- <py-env>
+			- pandas
+		</py-env>
+ 		<py-script>
+			import pandas as pd
+	 
+			data = [1, 3, 5, 7, 9]
+			s = pd.Series(data)
+				
+			print(s)
+			a=5
+			b=10
+			print(a+b)
+			
+		</py-script> -->
+		<!-- <py-script src="src/main/python/python_file.py"> </py-script> -->
 
 	</div>
 	<!-- /.card-content -->
 </th:block>
 
 <th:block layout:fragment="script">
+
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 

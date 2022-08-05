@@ -131,43 +131,9 @@ public class SurveyController {
 			System.out.println(params.getId());
 			String convertID = params.getId();
 			
-			String url = "http://127.0.0.1:5007/hello";
-			String sb = "";
-		
-			
-			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+			System.out.println("register controller");
 			
 
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-
-			String line = null;
-
-			while ((line = br.readLine()) != null) {
-				sb = sb + line + "\n";
-				
-			}
-			System.out.println(sb);
-			System.out.println("========br======" + sb.toString());
-			if (sb.toString().contains("ok")) {
-				System.out.println("test");
-				System.out.println("userid");
-				
-			}
-			br.close();
-
-			System.out.println("" + sb.toString());
-			
-//			Process p = Runtime.getRuntime().exec("src/main/python/test.bat");
-//			
-//			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-//		    String line = null;
-//		    
-//		    while ((line = br.readLine()) != null) {
-//		      System.out.println(line);
-//		    }
-
-
-			
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			System.out.println("데이터베이스 처리과정 문제");
