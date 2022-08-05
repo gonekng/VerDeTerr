@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.domain.UserDTO;
 import com.board.service.SignUpService;
@@ -44,16 +45,15 @@ public class SignUpController {
 		return "main";
 	}
 	
-	/**
-	 * 
-	 * @param id
-	 * @param model
-	 * @return
-	 */
+	
 	@GetMapping("/checkId")
-	public String checkId(HttpServletRequest request, String id, Model model) {
-		HttpSession session = request.getSession(true);
-		System.out.println(id+"아이디 넘어옴.");
+	public String checkId(){
+		return "checkId";
+	}
+	
+	@GetMapping("/checkId_proc")
+	public String checkIdProcess(@RequestParam String id, Model model) {
+		model.addAttribute("idInput", id);
 		int result = signUpService.checkId(id);
 		if(result==0) {
 			System.out.println("중복된 아이디 없음");

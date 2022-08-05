@@ -28,11 +28,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		System.out.println("이거 컨피그 씀?");
 		http.csrf().disable() // post 방식으로 값을 전송할 때 token을 사용해야하는 보안 설정을 해제
 		.authorizeRequests()
-		.antMatchers("/login", "/logout", "/signup", "/mypage", "/identify", "/identify_proc", "/modify", "/modify_proc", "/main","/signup_proc","/login_proc", "/findId", "/findPw", "/findId_proc", "/findPw_proc", "/css/**", "/img/**", "/js/**" , "/scripts/**","/plugin/**", "/survey/surveylist.do", "/survey/surveyresult.do", "redirect:/survey/surveyresult.do", "/board/list.do","/board/write.do","/board/register.do","/board/view.do","/board/delete.do")
+		.antMatchers("/login", "/logout", "/checkId", "/checkId_proc", "/signup", "/mypage", "/identify", "/identify_proc", "/modify", "/modify_proc", "/main","/signup_proc","/login_proc", "/findId", "/findPw", "/findId_proc", "/findPw_proc", "/css/**", "/img/**", "/js/**" , "/scripts/**","/plugin/**", "/survey/surveylist.do", "/survey/surveyresult.do", "redirect:/survey/surveyresult.do", "/board/list.do","/board/write.do","/board/register.do","/board/view.do","/board/delete.do")
 				.permitAll()
 				.anyRequest().authenticated().and()
 				.formLogin().loginPage("/login").permitAll();
-	}
+	} 
 
 	/*
 	 * //static 파일 권한 허용 설정

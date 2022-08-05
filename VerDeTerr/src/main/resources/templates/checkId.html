@@ -9,23 +9,33 @@
 <body>
 	<div>
 		<h1>아이디 중복확인</h1>
-		<form th:action="@{checkId}" method="get">
+		<form th:action="@{/checkId_proc}" method="get">
 				<div class="form-group" style="margin-top: 10px;">
 					<label th:for="username">아이디</label> 
-					<input type="text" id=id name="id" class="form-control" placeholder="아이디 입력해주세요">
+					<input type="text" id="id" name="id" th:value="${idInput}" class="form-control" placeholder="아이디 입력해주세요">
 					<input type="submit" value="중복확인">
-					<button type="button" action="window.close()" value="window.close()">취소하기</button>
+					<button type="button" onclick="checkClose()">취소하기</button>
 				</div>
 		</form>
 	</div>
 	<script>
 		$(document).ready(function() {
+			let idInput = "[[${idInput}]]";
+			if(idInput == null || idInput === ""){
+				document.getElementById("id").value = opener.document.getElementById("id").value;
+			} else {
+				document.getElementById("id").value = idInput;
+			}
 			let message = "[[${msgCheckId}]]";
 			if (message != "") {
 				alert(message);
 			} else {
 			}
 		})
+		function checkClose(){
+			opener.document.getElementById("id").value = document.getElementById("id").value;
+			window.close();
+		}
 	</script>
 </body>
 </html>
