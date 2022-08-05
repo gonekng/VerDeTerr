@@ -14,7 +14,7 @@
 					<label th:for="username">아이디</label> 
 					<input type="text" id="id" name="id" th:value="${idInput}" class="form-control" placeholder="아이디 입력해주세요">
 					<input type="submit" value="중복확인">
-					<button type="button" onclick="checkClose()">취소하기</button>
+					<button type="button" onclick="checkClose()">창 닫기</button>
 				</div>
 		</form>
 	</div>
@@ -23,6 +23,10 @@
 			let idInput = "[[${idInput}]]";
 			if(idInput == null || idInput === ""){
 				document.getElementById("id").value = opener.document.getElementById("id").value;
+				// 자식창에서 부모창의 값 가져오기 : 자식창 id = opener.부모창 id;
+				// document.getElementById("cInput").value = opener.document.getElementById("pInput").value;
+				// 부모창에서 자식창으로 값 전달하기 : openWin.자식창id = 부모창 id;
+				// openWin.document.getElementById("cInput").value = document.getElementById("pInput").value;
 			} else {
 				document.getElementById("id").value = idInput;
 			}
@@ -34,6 +38,9 @@
 		})
 		function checkClose(){
 			opener.document.getElementById("id").value = document.getElementById("id").value;
+			// 자식창에서 부모창으로 값 전달하기 : 오프너.부모창 id = 자식창 id;
+			// opener.document.getElementById("pInput").value = document.getElementById("cInput").value
+			opener.document.getElementById("checkid").value = true;
 			window.close();
 		}
 	</script>
