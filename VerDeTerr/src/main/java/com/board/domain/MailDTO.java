@@ -8,7 +8,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MailDTO {
-    public String getAddress() {
+
+	@Override
+	public String toString() {
+		return "MailDTO [address=" + address + ", title=" + title + ", message=" + message + ", str=" + str + "]";
+	}
+	private String address;
+    private String title;
+    private String message;
+    private String str;
+	public String getAddress() {
 		return address;
 	}
 	public void setAddress(String address) {
@@ -32,12 +41,6 @@ public class MailDTO {
 	public void setStr(String str) {
 		this.str = str;
 	}
-	@Override
-	public String toString() {
-		return "MailDTO [address=" + address + ", title=" + title + ", message=" + message + ", str=" + str + "]";
-	}
-	private String address;
-    private String title;
-    private String message;
-    private String str;
+    
+    
 }

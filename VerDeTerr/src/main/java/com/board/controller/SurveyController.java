@@ -2,8 +2,6 @@ package com.board.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import javax.servlet.http.HttpSession;
 
@@ -116,38 +114,52 @@ public class SurveyController {
 	
 	 private static PythonInterpreter intPre;
 
-	@PostMapping(value = "/survey/surveyresult.do")
-	public String registerSurvey(final SurveyDTO params, Model model) {
-		
-		try {
-			System.out.println("Controller surveyresult 시작");
-			boolean isRegistered = surveyService.registerSurvey(params);
-			System.out.println("Controller isRegistered 받아옴");
-			System.out.println("Controller isRegistered params: "+ params);
-			if (isRegistered == false) {
-				// TODO => 등록에 실패하였다는 메시지를 전달
-				System.out.println("정답등록실패");
-			}
-			System.out.println(params.getId());
-			String convertID = params.getId();
-			
-			System.out.println("register controller");
-			
+		@PostMapping(value = "/survey/surveyresult.do")
+		public String registerSurvey(final SurveyDTO params, Model model) {
 
-		} catch (DataAccessException e) {
-			e.printStackTrace();
-			System.out.println("데이터베이스 처리과정 문제");
+			try {
+				System.out.println("Controller surveyresult 시작");
+				boolean isRegistered = surveyService.registerSurvey(params);
+				System.out.println("Controller isRegistered 받아옴");
+				System.out.println("Controller isRegistered params: "+ params);
+				if (isRegistered == false) {
+					System.out.println("정답등록실패");
+				}
+				System.out.println(params.getId());
+				String convertID = params.getId();
+				
+				System.setProperty("python.import.site", "false");
+				PythonInterpreter intPre = new PythonInterpreter();
+				
+//				intPre.execfile("src/main/python/text.py");
+//				intPre.exec("print('test')");
+				
+				System.out.println(convertID.getClass().getName());
+				
+				String t = "src/main/python/python_batch.bat".concat(" "+convertID);
+				
+			    Process p = Runtime.getRuntime().exec(t);
+			    System.out.println("python finished");
+			    
+			    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			    String line = null;
+			    
+			    while ((line = br.readLine()) != null) {
+			      System.out.println(line);}
 
-		}  catch (Exception e) {
-			// TODO => 시스템에 문제가 발생하였다는 메시지를 전달
-			e.printStackTrace();
-			System.out.println("시스템 문제 발생");
-		} 
-		
-		return "redirect:/survey/surveyresult.do";
-	}
-	
-	
+			    intPre.close();
+			} catch (DataAccessException e) {
+				e.printStackTrace();
+				System.out.println("데이터베이스 처리과정 문제");
+
+			}  catch (Exception e) {
+				// TODO => 시스템에 문제가 발생하였다는 메시지를 전달
+				e.printStackTrace();
+				System.out.println("시스템 문제 발생");
+			} 
+			
+			return "redirect:/survey/surveyresult.do";
+		}
 	
 	
 }
