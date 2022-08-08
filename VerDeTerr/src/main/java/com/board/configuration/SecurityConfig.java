@@ -25,29 +25,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable() // post 방식으로 값을 전송할 때 token을 사용해야하는 보안 설정을 해제
 
 				.authorizeRequests()
-				.antMatchers("/login", "/logout", "/signup", "/main", "/signup_proc", "/login_proc", "/mypage",
-<<<<<<< HEAD
-						"/identify", "/identify_proc", "/findId", "/findPw", "/findId_proc", "/findPw_proc", "/css/**",
-						"/assets/**", "/js/**", "/survey/**", "/board/list.do",
+				.antMatchers("/main",
+						"/signup", "/signup_proc", "/checkId", "/checkId_proc",
+						"/login", "/login_proc", "/logout",
+						"/findId", "/findPw", "/findId_proc", "/findPw_proc",
+						"/identify", "/identify_proc", "/mypage",
+						"/modify", "/modify_proc",
+						"/css/**", "/assets/**", "/js/**" , "/scripts/**", "/plugin/**",
+						"/survey/surveylist.do", "/survey/surveyresult.do", "redirect:/survey/surveyresult.do",
+						"/board/list.do", "/board/write.do", "/board/register.do", "/board/view.do", "/board/delete.do",
 						"/board/write.do", "/board/register.do", "/board/view.do", "/board/delete.do")
-				.permitAll().anyRequest().authenticated()
-				.and()
-				.formLogin().loginPage("/login").permitAll()
-				.and()
+				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll().and()
 				.logout().logoutUrl("/logout").logoutSuccessUrl("/main").permitAll();
 
 	}
 
-
-=======
-						"/identify", "/identify_proc", "/**", "/css/**", "/img/**", "/js/**","/scripts/**","/plugin/**","/survey/surveylist.do",
-						"survey/suveyresult.do","redirect:/survey/surveyresult.do", "/board/list.do", "/board/write.do", "/board/register.do",
-						"/board/view.do", "/board/delete.do")
-				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll();
-
-	}
-
->>>>>>> d88569dba81f6428a1cd3729d2fc350cdcf36289
 	/*
 	 * // static 파일 권한 허용 설정
 	 * 

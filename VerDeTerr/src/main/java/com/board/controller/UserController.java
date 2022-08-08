@@ -1,7 +1,6 @@
 package com.board.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,18 +8,20 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.board.domain.MailDTO;
 import com.board.domain.SurveyOutputDTO;
 import com.board.domain.UserDTO;
 import com.board.service.UserService;
 
 @Controller
 public class UserController {
+	
 
 	@Autowired
 	private UserService userService;
@@ -159,7 +160,8 @@ public class UserController {
 		}
 	}
 	
-<<<<<<< HEAD
+
+	
 	/**
 	 * 
 	 * @param email
@@ -169,13 +171,6 @@ public class UserController {
 	@PostMapping("/findId_proc")
 	public String findUserId(String email, Model model) {
 		UserDTO params = userService.findLoginId(email);
-		System.out.println("================================");
-=======
-	@PostMapping("/findId_proc")
-	public String findUserId(String email, Model model) {
-		System.out.println(email);
-		UserDTO params = userService.findLoginId(email);
->>>>>>> d88569dba81f6428a1cd3729d2fc350cdcf36289
 		System.out.println(params);
 		if(params==null) {
 			model.addAttribute("msgFindID","입력하신 이메일로 가입된 아이디가 없습니다.");
@@ -187,8 +182,8 @@ public class UserController {
 			return "/login";
 		}
 	}
-	
-<<<<<<< HEAD
+
+
 	/**
 	 * 
 	 * @param id
@@ -196,23 +191,22 @@ public class UserController {
 	 * @param model
 	 * @return
 	 */
-=======
->>>>>>> d88569dba81f6428a1cd3729d2fc350cdcf36289
+
 	@PostMapping("/findPw_proc")
 	public String findUserPw(String id, String pwHint, Model model) {
 		UserDTO params = userService.findLoginPw(id, pwHint);
 		if(params==null) {
-<<<<<<< HEAD
 			model.addAttribute("msgFindPW","정보를 잘못입력하셨습니다.");
 		} else 
-			model.addAttribute("msgFindPW",params.getId()+"님의 비밀번호는 "+ params.getPw()+"입니다.");
-=======
-			model.addAttribute("msgFindPW","아이디 또는 비밀번호 힌트를 잘못 입력하셨습니다.");
-			return "/findPw";
-		} else {
-			model.addAttribute("msgFindPW",params.getId()+"님의 비밀번호는 "+passwordEncoder.upgradeEncoding(params.getPw())+"입니다.");
->>>>>>> d88569dba81f6428a1cd3729d2fc350cdcf36289
+			model.addAttribute("msgFindPW","가입하신 이메일로 임시 비밀번호가 전송되었습니다.");
+			MailDTO dto = userService.createMailContent(params.getEmail());
+			userService.mailSend(dto);
+			userService.newPassword(dto.getStr(),id);
 			return "/login";
 		}
-	}
+	
+	
+
+
 }
+

@@ -43,6 +43,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.python/jython
 	implementation group: 'org.python', name: 'jython', version: '2.7.2'
 	implementation 'org.springframework.session:spring-session-core'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 }
 

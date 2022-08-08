@@ -2,12 +2,6 @@ package com.board.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-<<<<<<< HEAD
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.List;
-=======
->>>>>>> d88569dba81f6428a1cd3729d2fc350cdcf36289
 
 import javax.servlet.http.HttpSession;
 

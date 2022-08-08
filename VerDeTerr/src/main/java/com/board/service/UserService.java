@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.board.domain.MailDTO;
 import com.board.domain.SurveyOutputDTO;
 import com.board.domain.UserDTO;
 
@@ -22,5 +23,11 @@ public interface UserService {
 
 	public int updateUserDetail(UserDTO params);
 
-
+	public MailDTO createMailContent(String Email);
+	
+	public String getTempPassword();
+	
+	public void newPassword(String str, String id);
+	
+	public void mailSend(MailDTO mailDTO);
 }
