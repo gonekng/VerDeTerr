@@ -2,6 +2,8 @@ package com.board.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.servlet.http.HttpSession;
 
@@ -116,7 +118,7 @@ public class SurveyController {
 
 	@PostMapping(value = "/survey/surveyresult.do")
 	public String registerSurvey(final SurveyDTO params, Model model) {
-
+		
 		try {
 			System.out.println("Controller surveyresult 시작");
 			boolean isRegistered = surveyService.registerSurvey(params);
@@ -129,87 +131,9 @@ public class SurveyController {
 			System.out.println(params.getId());
 			String convertID = params.getId();
 			
-//			PythonInterpreter intPre = new PythonInterpreter();
-//			
-//			intPre.execfile("src/main/test.py");
-//			intPre.exec("print('test')");
-//			
+			System.out.println("register controller");
 			
-			
-			
-			
-//			String convertID = params.getId();
-			System.out.println(convertID.getClass().getName());
-			String z1= " "+convertID;
-			String z2 = "src/main/python/test.bat".concat(z1);
-			System.out.println(z2);
-		    Process p = Runtime.getRuntime().exec(z2);
-		    System.out.println("python finished");
-		    
-//		    ProcessBuilder builder = new ProcessBuilder((List<String>) new InputStreamReader(p.getInputStream()));
-//	        builder.start();
-		    
-		    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		    String line = null;
-		    
-		    while ((line = br.readLine()) != null) {
-		      System.out.println(line);}
-			
-//		      ArrayList<String> list = new ArrayList<>();
-//		      list.add("python");
-//		      String convertID = params.getId();
-//		      String z1= convertID;
-//		      list.add("src/main/python/test2.py");
-//		      list.add(z1);
-//		      ProcessBuilder pb = new ProcessBuilder(list);
-//		      Process p = pb.start();
-//		      BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-//		      BufferedReader readerError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-//		      String line = null;
-//		      while ( (line = reader.readLine()) != null) {
-//		        System.out.println(line);
-//		      }
 
-//			System.out.println(convertID.getClass().getName());
-//			String z1= " "+convertID;
-//			String z2 = "src/main/python/test.bat".concat(z1);
-//			String z2 = "src/main/python/test.bat";
-////			System.out.println(z2);
-//		    Process p = Runtime.getRuntime().exec(z2);
-//		    System.out.println("python finished");
-//		    
-////		    ProcessBuilder builder = new ProcessBuilder((List<String>) new InputStreamReader(p.getInputStream()));
-////	        builder.start();
-//		    
-//		    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-//		    String line = null;
-//		    
-//		    while ((line = br.readLine()) != null) {
-//		      System.out.println(line);}
-//			
-//			String url = "http://127.0.0.1:5000/tospring";
-//			String sb = "";
-//			
-//			HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-//			
-//
-//			BufferedReader br2 = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-//
-//			String line2 = null;
-//
-//			while ((line2 = br2.readLine()) != null) {
-//				sb = sb + line2 + "\n";
-//			}
-//			System.out.println("========br======" + sb.toString());
-//			if (sb.toString().contains("ok")) {
-//				System.out.println("test");
-//				
-//			}
-//			br.close();
-//
-//			System.out.println("" + sb.toString());
-
-			
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			System.out.println("데이터베이스 처리과정 문제");

@@ -1,104 +1,94 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<head>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="survey/layout/basic">
+
+<head th:block layout:fragment="title">
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-
 </head>
-<body>
-	<div class="container">
-		<h1>회원가입</h1>
-		<form th:action="@{signup_proc}" method="post" name="signup">
-				<div class="form-group" style="margin-top: 10px;">
-					<label th:for="username">아이디</label>
-					<input type="text" id=id name="id" class="form-control" placeholder="아이디 입력해주세요">
-					<span id="check3"></span><br>
-					<input type="button" onclick="check_id();" value="아이디중복확인">
-				</div>
-				<div class="form-group" style="margin-top: 10px;">
-					<label th:for="password">비밀번호</label> 
-					<input type="password" id=pw1 onchange="check_pw()" class="form-control" name="pw"
-						placeholder="비밀번호 입력해주세요">
-					<div id="check1" style="color:gray; font-size:12px; margin-bottom: 10px;">
-					※ 비밀번호는 6글자 이상, 20글자 이하만 이용 가능합니다.</div>
-					<label th:for="password">비밀번호확인</label> 
-					<input type="password" id=pw2 onchange="check_pw()" class="form-control"placeholder="비밀번호 입력해주세요">
-						<span id="check2"></span>
-				</div>
-				<div class="form-group" style="margin-top: 10px;">
-					<label th:for="password">비밀번호힌트</label> <input type="text"
-						class="form-control" name="pwHint" placeholder="나의 보물 1호는?">
-				</div>
-				
-				<div class="form-group" style="margin-top: 10px;">
-					<label th:for="email">Email</label>
-					<input type="email" class="form-control" name="email" placeholder="example@example.com">
-				</div>
-				
-				<div class="form-group" style="margin-top: 10px;">
-					<label th:for="age">나이</label> 
-					<input type="text" class="form-control" name="age" placeholder="나이 입력해주세요">
-				</div>
-				
-				<div class="form-group" style="margin-top: 10px;">
-					<label th:for="gender">성별</label> 
-					<input type="radio" class="form-control" name="gender" value="남자" checked />남자 
-					<input type="radio" class="form-control" name="gender" value="여자" checked />여자
-				</div>
-				
-				<div class="btn_wrap text-center" style="margin-top: 20px;">
-					<button type="submit" class="btn btn-primary">회원가입</button>
-					<button type="button" class="btn btn-secondary" onClick="location.href='login'">취소하기</button>
-				</div>
-			</form>
+<body th:block layout:fragment="content">
+	<div class="container px-4 px-lg-5 h-100 align-items-center justify-content-center">
+		<br>
+		<h1 style="text-align: center; padding: 40px;">회원가입</h1>
+		<form th:action="@{/signup_proc}" method="post" name="signup">
+			<div class="form-group" style="margin-top: 10px;">
+				<label th:for="username">아이디</label> <input type="text" id="id" name="id" class="form-control" placeholder="아이디 입력해주세요">
+				<div id="check3"></div>
+				<button type="button" id="checkid" class="btn btn-outline-primary btn-sm" onclick="check_id();" style="margin-top: 7px; font-size: 12px; width: 11%;" value="false">아이디 중복확인</button>
+			</div>
+			<div class="form-group" style="margin-top: 10px;">
+				<label th:for="password">비밀번호</label> 
+				<input type="password" id="pw1" onkeyup="check_pw1();" class="form-control" name="pw" placeholder="비밀번호 입력해주세요">
+				<div id="check1" style="color: gray; font-size: 12px; margin-bottom: 10px;">※ 비밀번호는 6글자 이상, 20글자 이하만 이용 가능합니다.</div>
+				<label th:for="password">비밀번호확인</label> 
+				<input type="password" id="pw2" onkeyup="check_pw2();" class="form-control" placeholder="비밀번호 입력해주세요"> 
+				<div id="check2" style="color: gray; font-size: 12px; margin-bottom: 10px;">※</div>
+			</div>
+			<div class="form-group" style="margin-top: 10px;">
+				<label th:for="password">비밀번호힌트</label> <input type="text" class="form-control" name="pwHint" placeholder="나의 보물 1호는?">
+			</div>
+
+			<div class="form-group" style="margin-top: 10px;">
+				<label th:for="email">Email</label> 
+				<input type="email" class="form-control" name="email" placeholder="example@example.com">
+			</div>
+
+			<div class="form-group" style="margin-top: 10px;">
+				<label th:for="age">나이</label> 
+				<input type="text" class="form-control" name="age" placeholder="나이 입력해주세요">
+			</div>
+
+			<div class="form-group" style="margin-top: 10px;">
+				<label th:for="gender">성별</label> 
+				<input type="radio" class="form-control" name="gender" value="남자" checked />남자 
+				<input type="radio" class="form-control" name="gender" value="여자" checked />여자
+			</div>
+
+			<div class="btn_wrap text-center" style="margin-top: 20px;">
+				<button type="submit" class="btn btn-primary" onClick="signup()">회원가입</button>
+				<button type="button" class="btn btn-secondary" onClick="location.href='login'">취소하기</button>
+			</div>
+		</form>
 		<br />
 	</div>
 	<script>
-		$(document).ready(function() {
-			let message = "[[${msg}]]";
-			if (message != "") {
-				alert(message);
-			} else {
-			}
-		})
-		function check_pw() {
-			let pw = document.getElementById('pw1').value;
+      $(document).ready(function() {
+         let message = "[[${msg}]]";
+         if (message != "") {
+            alert(message);
+         } else {
+         }
+      })
+      
+      function check_pw1() {
+         let pw1 = document.getElementById('pw1').value;
 
-			if(pw.length < 6 || pw.length>20){
-				document.getElementById('check1').innerHTML = '비밀번호는 6글자 이상, 20글자 이하만 이용 가능합니다';
-				document.getElementById('check1').style.color = 'red';
-			} else{
-				document.getElementById('check1').innerHTML = '';
-			}
-			if (document.getElementById('pw1').value != ''
-					&& document.getElementById('pw2').value != '') {
-				if (document.getElementById('pw1').value == document
-						.getElementById('pw2').value) {
-					document.getElementById('check2').innerHTML = '비밀번호가 일치합니다.'
-					document.getElementById('check2').style.color = 'blue';
-				} else {
-					document.getElementById('check2').innerHTML = '비밀번호가 일치하지 않습니다.';
-					document.getElementById('check2').style.color = 'red';
-				}
-			}
-		}
-		function check_id(){
-		/* 	let win = window.open("/checkId.html", "PopupWin", "width=400,height=500");
-		} */
-		a= document.getElementById('id').value;
-        len_id = document.getElementById('id').length;
-        
-        if(a==null || a==""){
-        	document.getElementById('check3').innerHTML = ' 아이디를 입력해주세요.';
-			document.getElementById('check3').style.color = 'red';
-           signup.id.focus();
-           return;
-        }
-        window.open("/checkId", "아이디중복확인", "width=500, height=200, left=700, top=300");
-        }
-	</script>
+         if(pw1.length < 6 || pw1.length>20){
+             document.getElementById('check1').innerHTML = '비밀번호는 6글자 이상, 20글자 이하만 이용 가능합니다';
+             document.getElementById('check1').style.color = 'red';
+         } else{
+        	 document.getElementById('check1').innerHTML = '사용가능한 비밀번호 입니다.';
+        	 document.getElementById('check1').style.color = 'blue';
+         }
+      }
+         
+         function check_pw2(){
+        	 let pw1 = document.getElementById('pw1').value;
+             let pw2 = document.getElementById('pw2').value;
+             
+             if(pw1 != null){
+            	 if (pw2 == null || pw2 ==='') {
+            		 document.getElementById('check2').innerHTML = '';
+                	 document.getElementById('check2').style = 'diplay:none';
+            	 }else if (pw1 == pw2) {
+                             document.getElementById('check2').innerHTML = '비밀번호가 일치합니다.';
+                             document.getElementById('check2').style.color = 'blue';
+                         } else {
+                             document.getElementById('check2').innerHTML = '비밀번호가 일치하지 않습니다.';
+                             document.getElementById('check2').style.color = 'red';
+                         }
+                     }
+             }
+     
+   </script>
 </body>
 </html>
-
