@@ -1,18 +1,16 @@
 import sys
-import csv
+import pandas as pd
 
-def main():
-    print("hello world before")
-    import pandas as pd
-    # data_dir = './MBTI_dataset/
-    # train = pd.read_csv('./MBTI_dataset/MBTI_train.csv', encoding='ISO 8859-1', header=None, names=['type', 'posts'])
-    # with open('./MBTI_dataset/csvtest.csv', 'r', encoding='ISO 8859-1') as csvfile:
-    #     train = csv.reader(csvfile, delimiter=' ', quotechar='|')
-    #     for row in train:
-    #         print(', '.join(row))
-        # train = csv.reader('./MBTI_dataset/MBTI_train.csv', encoding='ISO 8859-1')
-        # print(train)
-        
-    print("after the dataframe")
-print(sys.argv[1])
-main()
+train = pd.read_csv('MBTI_train.csv', encoding='ISO 8859-1', header=None, names=['type', 'posts'])
+
+train2 = pd.DataFrame()
+for i, type in enumerate(train['type'].unique()):
+    df = train.loc[train['type']==type]
+    if(i%2==0):
+        train2 = pd.concat([train2, df.head(20)])
+    else:
+        train2 = pd.concat([train2, df.tail(20)])
+
+print("train2")
+print(train2['type'].value_counts())
+train2.to_csv("train2.csv", index=False, header=False)
