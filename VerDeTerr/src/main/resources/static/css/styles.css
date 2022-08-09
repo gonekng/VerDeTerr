@@ -11356,13 +11356,13 @@ hr.divider-light {
     background-color: transparent;
   }
   #mainNav .navbar-brand {
-    color: black;
+    color: white;
   }
   #mainNav .navbar-brand:hover {
     color: #ff8040;
   }
   #mainNav .navbar-nav .nav-item .nav-link {
-    color: black;
+    color: white;
     padding: 0 1rem;
   }
   #mainNav .navbar-nav .nav-item .nav-link:hover {
@@ -11392,7 +11392,7 @@ hr.divider-light {
 header.masthead {
   padding-top: 10rem;
   padding-bottom: calc(10rem - 4.5rem);
-  background: linear-gradient(to bottom, black 0%, rgba(92, 77, 66, 0.5) 1%), url("../assets/img/background.jpg");
+  background: linear-gradient(to bottom, black 0%, rgba(92, 77, 66, 0.5) 1%), url("../assets/img/background4.png");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;

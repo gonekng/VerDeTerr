@@ -53,13 +53,13 @@
 			}
 	        if (msgLogout != "") {
 		           alert(msgLogout);      	
-		        }
+		    }
 	        if (msgMod != "") {
 	           alert(msgMod);
 	        }
 	        if (surveyError != "") {
 		           alert(surveyError);
-		        }
+		    }
 	    })
 	</script>
 </head>
@@ -71,8 +71,8 @@
 			<a class="navbar-brand" th:if="${session.id}!=null"
 				th:href="@{/identify}">Mypage</a><a class="navbar-brand"
 				th:if="${session.id}==null" th:href="@{/main}">Main</a><a
-				th:if="${session.id}!=null" th:text="|Hello, ${session.id}!|"></a> <a
-				th:if="${session.id}==null">Please Log in!</a>
+				th:if="${session.id}!=null" th:text="|Hello, ${session.id}!|" style="color: #ff8040"></a> 
+			<a th:if="${session.id}==null" style="color: #ff8040">Please Log in!</a>
 			<button class="navbar-toggler navbar-toggler-right" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"

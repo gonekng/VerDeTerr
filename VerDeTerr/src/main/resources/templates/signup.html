@@ -88,6 +88,19 @@
                          }
                      }
              }
+
+         function check_id(){
+         	let a= document.getElementById('id').value;
+
+             if(a==null || a==""){
+             	document.getElementById('check3').innerHTML = ' 아이디를 입력해주세요.';
+         		document.getElementById('check3').style.color = 'red';
+                signup.id.focus();
+                return;
+             }
+             window.open("/checkId", "checkId", "width=500, height=200, left=700, top=300");
+             }
+
      
    </script>
 </body>
