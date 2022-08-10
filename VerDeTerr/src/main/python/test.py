@@ -1,9 +1,13 @@
+<<<<<<< HEAD
+=======
 import time
 start = time.time()
 
+>>>>>>> 4ee3f0685b54795838deabc442d363522d50eec5
 import pymysql.cursors
 import pandas as pd
 import pickle
+import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import LinearSVC
@@ -71,6 +75,24 @@ try:
     print(X.head())
     print(y.head())
 
+<<<<<<< HEAD
+    X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, test_size=0.2, random_state=42)
+
+    vectorizer = sklearn.feature_extraction.text.TfidfVectorizer()
+    X_train_tfidf = vectorizer.fit_transform(X_train)
+    print('1111111111')
+
+    clf = sklearn.svm.LinearSVC()
+    clf.fit(X_train_tfidf, y_train)
+    print('22222222222')
+
+    text_clf = sklearn.pipeline.Pipeline([('tfidf',TfidfVectorizer()),('clf',LinearSVC())])
+    text_clf.fit(X_train, y_train)
+    print('333333333333')
+
+    predictions = text_clf.predict(X_test)
+    print('4444444444')
+=======
     filename = 'mbti_svm_v10.sav'
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     text_clf = pickle.load(open(filename, 'rb'))
@@ -87,6 +109,7 @@ try:
     #text_clf = Pipeline([('tfidf',TfidfVectorizer()),('clf',LinearSVC())])
     #text_clf.fit(X_train, y_train)
     #print('text_clf_fitted')
+>>>>>>> 4ee3f0685b54795838deabc442d363522d50eec5
 
     predictions = text_clf.predict(test)
     prediction = predictions[0]

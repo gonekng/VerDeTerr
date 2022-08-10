@@ -3,11 +3,10 @@ package com.board.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import com.board.domain.MailDTO;
 import com.board.domain.SurveyOutputDTO;
 import com.board.domain.UserDTO;
@@ -126,8 +125,8 @@ public class UserServiceImpl implements UserService {
         message.setTo(mailDTO.getAddress());
         message.setSubject(mailDTO.getTitle());
         message.setText(mailDTO.getMessage());
-        message.setFrom("dhtmddms4043@naver.com");
-        message.setReplyTo("dhtmddms4043@naver.com");
+        message.setFrom("verdeterr@naver.com");
+        message.setReplyTo("verdeterr@naver.com");
         System.out.println("message"+message);
         javaMailSender.send(message);
     }
