@@ -1,10 +1,13 @@
 package com.board.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.board.domain.MailDTO;
 import com.board.domain.UserDTO;
 import com.board.mapper.SignUpMapper;
 import com.board.mapper.UserMapper;
@@ -62,4 +65,31 @@ public class SignUpServiceImpl implements SignUpService {
 	public int delete(String id) {
 		return userMapper.deleteUser(id);
 	}
+	
+    
+    @Override
+    public MailDTO createMailContent(String Email) {
+        MailDTO dto = new MailDTO();
+        dto.setAddress(Email);
+        dto.setTitle("VerDeTerr 가입을 환영합니다.");
+        dto.setMessage("환영합니다. VerDeTerr 가입이 완료되었습니다.");
+        return dto;
+    }
+    
+    @Autowired
+    private JavaMailSender javaMailSender;
+    
+    // 메일 보내기
+    @Override
+    public void mailSend(MailDTO mailDTO) {
+        System.out.println("전송 완료!");
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(mailDTO.getAddress());
+        message.setSubject(mailDTO.getTitle());
+        message.setText(mailDTO.getMessage());
+        message.setFrom("verdeterr@naver.com");
+        message.setReplyTo("verdeterr@naver.com");
+        System.out.println("message"+message);
+        javaMailSender.send(message);
+    }
 }
