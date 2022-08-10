@@ -12,6 +12,8 @@ public interface SignUpService {
 	
 	public int checkId(String id);
 	
+	public int checkEmail(String email);
+	
 	public int delete(String id);
 	
 }

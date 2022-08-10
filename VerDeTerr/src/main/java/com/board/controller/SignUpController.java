@@ -2,6 +2,7 @@ package com.board.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.regex.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,6 +65,38 @@ public class SignUpController {
 		} return"checkId";
 	}
 	
+	@GetMapping("/checkEmail")
+	public String checkEmail(){
+		return "checkEmail";
+	}
+	
+	@GetMapping("/checkEmail_proc")
+	public String checkEmailProcess(@RequestParam String email, Model model) {
+		System.out.println("체크이메일프로세스");
+		String regx = "^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$";
+		Pattern pattern = Pattern.compile(regx);
+		model.addAttribute("emailInput", email);
+		Matcher matcher = pattern.matcher(email);
+		if (matcher.matches()) {
+			System.out.println("체크이메일정규식");
+			int result = signUpService.checkEmail(email);
+			if(result==0) {
+				System.out.println("중복된 이메일 없음22222" +result);
+				model.addAttribute("msgCheckEmail","사용 가능합니다.");
+			}else {
+				System.out.println("중복된 이메일 있음22222"+result);
+				model.addAttribute("msgCheckEmail","이미 사용중입니다.");
+				return "/checkEmail";
+			} 
+		}else {
+			System.out.println("이메일형식이 맞지 않음222222");
+			model.addAttribute("msgCheckEmail","이메일 형식에 맞지 않습니다.");
+		}
+	 return"checkEmail";
+	}
+	
+	
 }
 	
+
 

@@ -33,13 +33,22 @@
 		)
 	</insert>
 
-	<select id="selectUser" parameterType="String" resultType="int">
+	<select id="selectUserID" parameterType="String" resultType="int">
 		SELECT 
 		count(*)
 		FROM
 		member
 		WHERE
 		id = #{id}
+	</select>
+	
+	<select id="selectUserEmail" parameterType="String" resultType="int">
+		SELECT 
+		count(*)
+		FROM
+		member
+		WHERE
+		email = #{email}
 	</select>
 
 </mapper>

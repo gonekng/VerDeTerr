@@ -9,6 +9,8 @@ public interface SignUpMapper {
 
 	public int insertUser(UserDTO params);
 	
-	public int selectUser(String id);
+	public int selectUserID(String id);
+	
+	public int selectUserEmail(String email);
 		
 }
