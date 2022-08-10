@@ -1,7 +1,7 @@
-from distutils.log import error
 import pymysql.cursors
 import pandas as pd
 import pickle
+import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import LinearSVC
@@ -69,17 +69,17 @@ try:
     print(X.head())
     print(y.head())
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, test_size=0.2, random_state=42)
 
-    vectorizer = TfidfVectorizer()
+    vectorizer = sklearn.feature_extraction.text.TfidfVectorizer()
     X_train_tfidf = vectorizer.fit_transform(X_train)
     print('1111111111')
 
-    clf = LinearSVC()
+    clf = sklearn.svm.LinearSVC()
     clf.fit(X_train_tfidf, y_train)
     print('22222222222')
 
-    text_clf = Pipeline([('tfidf',TfidfVectorizer()),('clf',LinearSVC())])
+    text_clf = sklearn.pipeline.Pipeline([('tfidf',TfidfVectorizer()),('clf',LinearSVC())])
     text_clf.fit(X_train, y_train)
     print('333333333333')
 
