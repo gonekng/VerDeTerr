@@ -2,6 +2,7 @@ package com.board.service;
 
 import org.springframework.stereotype.Service;
 
+import com.board.domain.MailDTO;
 import com.board.domain.UserDTO;
 
 
@@ -14,4 +15,7 @@ public interface SignUpService {
 	
 	public int delete(String id);
 	
+	public MailDTO createMailContent(String Email);
+	
+	public void mailSend(MailDTO mailDTO);
 }
