@@ -106,12 +106,12 @@ public class SignUpController {
 	
 	@GetMapping("/deleteUser")
 	public String deleteUser() {
+		
 		return "deleteUser";
 	}
 	
 	@PostMapping("/deleteUser_proc")
-	public String deleteUserProcess(HttpServletRequest request, UserDTO params, Model model) {
-		HttpSession session = request.getSession(true);
+	public String deleteUserProcess(HttpSession session, UserDTO params, Model model) {
 		String myID = params.getId();
 		String myPW = params.getPw();
 		UserDTO user = userService.loginCheck(myID, myPW);
@@ -125,10 +125,11 @@ public class SignUpController {
 			System.out.println("탈퇴정보잘넣음");
 			int deleteUser = signUpService.delete(myID);
 			System.out.println("탈퇴됨."+deleteUser);
+			session.removeAttribute("id");
 			model.addAttribute("msgDeleteUser", myID + "님. 그 동안 저희 서비스를 이용해주셔서 감사합니다.");
-			session.invalidate();
+			return "main";
 		}
-		return "main";
+		
 	}
 	
 	

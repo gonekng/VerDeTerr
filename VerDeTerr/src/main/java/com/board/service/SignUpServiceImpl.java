@@ -24,7 +24,9 @@ public class SignUpServiceImpl implements SignUpService {
 
 	@Autowired
 	public SignUpMapper signUpMapper;
-	UserMapper userMapper;
+	
+	@Autowired
+	public UserMapper userMapper;
 
 	@Override
 	public int signUp(UserDTO params) {
@@ -76,8 +78,9 @@ public class SignUpServiceImpl implements SignUpService {
 	@Override
 	public int delete(String id) {
 		System.out.println("사인서비스딜리트 잘됨?");
-		System.out.println(userMapper.deleteUser(id));
-		return userMapper.deleteUser(id);
+		int result = userMapper.deleteUser(id);
+		System.out.println("나 result임"+result);
+		return result;
 	}
 
     @Override

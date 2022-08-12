@@ -29,7 +29,8 @@
          let msgLogout = "[[${msgLogout}]]";
          let msgMod = "[[${msgMod}]]";
          let surveyError = "[[${surveyError}]]";
-
+         let msgDeleteUser = "[[${msgDeleteUser}]]";
+         
          if (msgLoginSuccess != "") {
             alert(msgLoginSuccess);
          }
@@ -53,7 +54,16 @@
          if (surveyError != "") {
             alert(surveyError);
          }
-      })
+         if(msgDeleteUser !=""){
+        	 let deleteUser = confirm(msgDeleteUser);
+        	 if(deleteUser==true){
+        		 window.close();
+        	 }else{
+        		 window.close();
+        	 }
+         }
+         
+               })
 
    </script>
 </head>
