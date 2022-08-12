@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/main",
 						"/signup", "/signup_proc", "/checkId", "/checkId_proc", "/checkEmail", "/checkEmail_proc",
-						"/login", "/login_proc", "/logout",
+						"/login", "/login_proc", "/logout", "/deleteUser", "/deleteUser_proc",
 						"/findId", "/findPw", "/findId_proc", "/findPw_proc",
 						"/identify", "/identify_proc", "/mypage",
 						"/modify", "/modify_proc",
