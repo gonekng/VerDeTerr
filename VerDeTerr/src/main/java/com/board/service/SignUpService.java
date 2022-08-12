@@ -13,6 +13,8 @@ public interface SignUpService {
 	
 	public int checkId(String id);
 	
+	public int checkEmail(String email);
+	
 	public int delete(String id);
 	
     public MailDTO createMailContent(String Email);

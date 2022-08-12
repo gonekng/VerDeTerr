@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class SignUpServiceImpl implements SignUpService {
+public class SignUpServiceImpl implements SignUpService { 
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -28,7 +28,7 @@ public class SignUpServiceImpl implements SignUpService {
 
 	@Override
 	public int signUp(UserDTO params) {
-		int userId = signUpMapper.selectUser(params.getId());
+		int userId = signUpMapper.selectUserID(params.getId());
 		String userPw = params.getPw();
 		if (userPw.length() >= 6 || userPw.length() < 20) {
 			System.out.println("비번적절");
@@ -50,7 +50,7 @@ public class SignUpServiceImpl implements SignUpService {
 
 	@Override
 	public int checkId(String id) {
-		int result = signUpMapper.selectUser(id);
+		int result = signUpMapper.selectUserID(id);
 		if(result==0) {
 			System.out.println("중복된 아이디 없음");
 			return 0;
@@ -60,13 +60,24 @@ public class SignUpServiceImpl implements SignUpService {
 		}
 		
 	}
+	
+	@Override
+	public int checkEmail(String email) {
+		int result = signUpMapper.selectUserEmail(email);
+		if(result==0) {
+			System.out.println("중복된 이메일 없음1111111");
+		return 0;
+		}else {
+			System.out.println("중복된 이메일 있음111111");
+			return result;
+		}
+	}
 
 	@Override
 	public int delete(String id) {
 		return userMapper.deleteUser(id);
 	}
-	
-    
+
     @Override
     public MailDTO createMailContent(String Email) {
         MailDTO dto = new MailDTO();
@@ -92,4 +103,5 @@ public class SignUpServiceImpl implements SignUpService {
         System.out.println("message"+message);
         javaMailSender.send(message);
     }
+
 }
