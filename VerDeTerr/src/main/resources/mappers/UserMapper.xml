@@ -71,11 +71,9 @@
 		id = #{id}
 	</update>
 
-	<delete id="deleteUser" parameterType="String">
+	<delete id="deleteUser" parameterType="String" >
 		DELETE FROM member
-		WHERE
-		id
-		= #{id}
+		WHERE id = #{id}
 	</delete>
 
 	<select id="selectUserHistory" parameterType="String"
