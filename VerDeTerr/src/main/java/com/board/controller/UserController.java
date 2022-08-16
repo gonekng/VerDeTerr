@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.domain.MailDTO;
 import com.board.domain.SurveyOutputDTO;
@@ -23,20 +24,27 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@GetMapping(value = "/main")
+	public String openMainpage(Model model) {
+		return "main";
+	}
 
 	@GetMapping("/login")
 	public String login() {
 		return "login";
 	}
 	
-	@PostMapping("/logout")
-	public String logoutProcess(HttpSession session, Model model) {
-		System.out.println("1111");
-		model.addAttribute("msgLogout", "로그아웃되었습니다.");
-		session.removeAttribute("id");
-		return "main";
+	// 시큐리티에서 로그아웃 성공 url을 logoutProc으로 지정
+	@GetMapping("/logoutProc")
+	public String logout(RedirectAttributes redirectAttributes) {
+		System.out.println("겟 로그아웃");
+		// url을 main으로 노출시키기 위해 redirectAttributes를 사용
+		redirectAttributes.addFlashAttribute("msgLogout", "로그아웃되었습니다.");
+		return "redirect:/main";
 	}
-
+	
+	
 	@GetMapping("/findId")
 	public String findId() {
 		return "findId";
@@ -56,26 +64,22 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/login_proc")
-	public String loginProcess(HttpServletRequest request, UserDTO params, Model model) {
+	public String loginProcess(HttpServletRequest request, UserDTO params, RedirectAttributes redirectAttributes) {
 		HttpSession session = request.getSession(true);
 		String myID = params.getId();
 		String myPW = params.getPw();
 		UserDTO user = userService.loginCheck(myID, myPW);
 		if (user == null) {
-			model.addAttribute("msgLoginError", "아이디 혹은 비밀번호 오류");
-			return "main";
+			redirectAttributes.addFlashAttribute("msgLoginError", "아이디 혹은 비밀번호 오류");
+			return "redirect:/main";
 
 		} else {
-			model.addAttribute("msgLoginSuccess", "로그인되었습니다. " + myID + "님, 환영합니다!");
+			redirectAttributes.addFlashAttribute("msgLoginSuccess", "로그인되었습니다. " + myID + "님, 환영합니다!");
 			session.setAttribute("id", myID);
 		}
-		return "main";
+		return "redirect:/main";
 	}
 
-	@GetMapping(value = "/main")
-	public String openMainpage(Model model) {
-		return "main";
-	}
 	
     @GetMapping(value = "/mypage")
     public String openMypage(HttpSession session, Model model) {

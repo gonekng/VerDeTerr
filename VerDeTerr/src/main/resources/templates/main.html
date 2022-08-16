@@ -44,9 +44,9 @@
 				alert(msgSignupError);
 				location.href = "main#signup";
 			}
-			if (msgLogout != "") {
+ 			if (msgLogout != "") {
 				alert(msgLogout);
-			}
+			} 
 			if (msgMod != "") {
 				alert(msgMod);
 			}
@@ -173,7 +173,27 @@
 				<div class="col-lg-6 col-md-6 text-center">
 					<div class="mt-5">
 						<div class="mb-2">
-							<img src="assets/img/capture.png" width=100%>
+						<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+						  <div class="carousel-inner">
+						    <div class="carousel-item active">
+						      <img src="assets/img/test1.png" class="d-block w-100" alt="...">
+						    </div>
+						    <div class="carousel-item">
+						      <img src="assets/img/test2.png" class="d-block w-100" alt="...">
+						    </div>
+						    <div class="carousel-item">
+						      <img src="assets/img/test3.png" class="d-block w-100" alt="...">
+						    </div>
+						  </div>
+						  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+						    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						    <span class="visually-hidden">Previous</span>
+						  </button>
+						  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+						    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+						    <span class="visually-hidden">Next</span>
+						  </button>
+						</div>
 						</div>
 					</div>
 				</div>
@@ -247,8 +267,7 @@
 					<div class="btn_wrap text-center" style="margin-top: 20px;">
 						<button type="submit" class="btn btn-primary">로그인</button>
 						<button type="button" class="btn btn-secondary" onClick="location.href='findId'">아이디 찾기</button>
-						<button type="button" class="btn btn-secondary" onClick="location.href='findPw'">비밀번호
-							찾기</button>
+						<button type="button" class="btn btn-secondary" onClick="location.href='findPw'">비밀번호 찾기</button>
 					</div>
 				</form>
 				<br />
@@ -259,7 +278,7 @@
 		<footer class="bg-light py-5">
 			<div class="container px-4 px-lg-5">
 				<div class="small text-center text-muted">Copyright &copy; 2022
-					- Company Name</div>
+					- Ver De Terr</div>
 			</div>
 		</footer>
 		<!-- Bootstrap core JS-->
@@ -273,6 +292,8 @@
 		<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
 		<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 		<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+
 </body>
 
 </html>

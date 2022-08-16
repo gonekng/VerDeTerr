@@ -35,8 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/survey/surveylist.do", "/survey/surveyresult.do", "redirect:/survey/surveyresult.do",
 						"/board/list.do", "/board/write.do", "/board/register.do", "/board/view.do", "/board/delete.do",
 						"/board/write.do", "/board/register.do", "/board/view.do", "/board/delete.do")
-				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll().and()
-				.logout().logoutUrl("/logout").logoutSuccessUrl("/main").permitAll();
+				.permitAll().anyRequest().authenticated().
+//				and().formLogin().loginPage("/login").permitAll();
+				and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutProc").permitAll();
 
 	}
 
