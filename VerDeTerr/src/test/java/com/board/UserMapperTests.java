@@ -79,9 +79,9 @@ class UserMapperTests {
 
 	@Test
 	public void testOfDelete() {
-		int result = userMapper.deleteUser("hi_gorae");
+		int result = userMapper.deleteUser("youngjae");
 		if (result == 1) {
-			UserDTO user = userMapper.selectUserDetail("hi_gorae");
+			UserDTO user = userMapper.selectUserDetail("youngjae");
 			try {
 				// String userJson = new ObjectMapper().writeValueAsString(user);
 				String userJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(user);
