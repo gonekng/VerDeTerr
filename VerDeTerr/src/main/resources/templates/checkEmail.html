@@ -14,7 +14,7 @@
 					<label th:for="username">이메일</label> 
 					<input type="text" id="email" name="email" th:value="${emailInput}" class="form-control" placeholder="이메일 입력해주세요">
 					<input type="submit" value="중복확인">
-					<button type="button" onclick="checkClose();">창 닫기</button>
+					<button type="button" onclick="Close()">창 닫기</button>
 				</div>
 		</form>
 	</div>
@@ -32,16 +32,19 @@
 			}
 			let message = "[[${msgCheckEmail}]]";
 			if (message != "") {
-				alert(message);
+				let result = confirm(message);
+				if (result == true){
+					opener.document.getElementById("email").value = document.getElementById("email").value;
+					// 자식창에서 부모창으로 값 전달하기 : 오프너.부모창 id = 자식창 id;
+					// opener.document.getElementById("pInput").value = document.getElementById("cInput").value
+					opener.document.getElementById("checkemail").value = true;
+					window.close();
+				}
 			} else {
 			}
 		})
-		function checkClose(){
-			opener.document.getElementById("email").value = document.getElementById("email").value;
-			// 자식창에서 부모창으로 값 전달하기 : 오프너.부모창 id = 자식창 id;
-			// opener.document.getElementById("pInput").value = document.getElementById("cInput").value
-			opener.document.getElementById("checkemail").value = true;
-			window.close();
+		function Close(){
+						window.close();
 		}
 	</script>
 </body>

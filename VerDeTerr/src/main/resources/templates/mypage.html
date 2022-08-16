@@ -7,7 +7,7 @@
 	<title>My page</title>
 	<link href="css/styles.css" rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-</th:block>
+	</th:block>
 
 <th:block layout:fragment="content">
 
@@ -51,11 +51,11 @@
 
 		<div class="btn_wrap text-center">
 			<a th:href="@{/mypage(id=${session.id})}"
-				class="btn btn-primary waves-effect waves-light">내가 쓴 글 보기</a> <a
-				th:href="@{/modify(id=${session.id})}"
-				class="btn btn-primary waves-effect waves-light">비밀번호 변경</a> <a
-				th:href="@{/mypage(id=${session.id})}"
-				class="btn btn-primary waves-effect waves-light">회원 탈퇴</a>
+				class="btn btn-primary waves-effect waves-light">내가 쓴 글 보기</a> 
+				<a th:href="@{/modify(id=${session.id})}"
+				class="btn btn-primary waves-effect waves-light">비밀번호 변경</a>
+				 <a th:href="@{/deleteUser}"
+				class="btn btn-primary waves-effect waves-light" >회원탈퇴</a>
 		</div>
 
 </th:block>

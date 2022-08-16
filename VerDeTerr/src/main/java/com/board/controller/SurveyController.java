@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.domain.SurveyDTO;
 import com.board.domain.SurveyOutputDTO;
@@ -22,43 +23,24 @@ import com.board.service.UserService;
 
 @Controller
 public class SurveyController {
-	
+
 	@Autowired
 	private SurveyService surveyService;
-	
+
 	@Autowired
 	private UserService userService;
-	
-//	@GetMapping(value = "/survey/surveylist.do")
-//	public String openSurveyWrite(@RequestParam(value = "id", required = false) String id, Model model, HttpSession session) {
-//		String myID = (String) session.getAttribute("id");
-//		if(id == null){
-//			model.addAttribute("survey",  new SurveyDTO());
-//		} else {
-//			SurveyDTO survey = surveyService.getSurveyResult(id);
-//			System.out.println("survey:"+survey);
-//			if (survey == null) {
-//				return "redirect:/survey/surveylist.do";
-//			}
-//			model.addAttribute("survey", survey);
-//			
-//			
-//		}
-//		
-//		return "survey/surveylist";
-//	}
-	
+
 	@GetMapping(value = "/survey/surveylist.do")
-	public String openSurveyWrite(Model model, HttpSession session) {
+	public String openSurveyWrite(RedirectAttributes redirectAttributes, HttpSession session, Model model) {
 		String myID = (String) session.getAttribute("id");
-		if(myID == null){
+		if (myID == null) {
 			System.out.println("???");
-			model.addAttribute("surveyError", "로그인 후 사용 가능합니다.");
+			redirectAttributes.addFlashAttribute("surveyError", "로그인 후 사용 가능합니다.");
 			return "redirect:/main";
 		} else {
 			SurveyDTO survey = surveyService.getSurveyResult(myID);
-			System.out.println("survey : "+survey);
-			if(survey == null) {
+			System.out.println("survey : " + survey);
+			if (survey == null) {
 				survey = new SurveyDTO(myID);
 			}
 			UserDTO user = userService.getUserDetail(myID);
@@ -66,45 +48,13 @@ public class SurveyController {
 			model.addAttribute("survey", survey);
 			return "survey/surveylist";
 		}
-		
+
 	}
-	
-	
-//	@GetMapping(value = "/survey/surveylist.do")
-//	public String openSurveyWrite(Model model) {
-//		System.out.println("controller");
-//		return "/survey/surveylist";
-//	}
-	
-//	@GetMapping(value="/survey/surveyresult.do")
-//	public String getSurveyOutput(@RequestParam(value = "id", required = false) String id, Model model) {
-//		if(id == null) {
-//			model.addAttribute("survey", new SurveyOutputDTO());
-//		} else {
-//			SurveyOutputDTO survey = surveyService.getSurveyOuput(id);
-//			if (survey == null) {
-//				return "redirect:/survey/surveylist.do";
-//			}
-//			model.addAttribute("id", id);
-//		}
-//		
-//		
-//		return "survey/surveyresult";
-//	}
-	
-//	@GetMapping(value="/survey/surveyresult.do")
-//	public String getSurveyOutput(Model model) {
-//		String id = "mjmjmj";
-//		
-//		model.addAttribute("id", id);
-//		
-//		return "survey/surveyresult";
-//	}
-	
-	@GetMapping(value="/survey/surveyresult.do")
+
+	@GetMapping(value = "/survey/surveyresult.do")
 	public String getSurveyList(Model model, HttpSession session) {
-		
-		String myID = (String)session.getAttribute("id");
+
+		String myID = (String) session.getAttribute("id");
 		SurveyOutputDTO surveyList = surveyService.getSurveyList(myID);
 		System.out.println("!!!!!!!!!!" + surveyList);
 		model.addAttribute("surveyList", surveyList);
@@ -113,55 +63,51 @@ public class SurveyController {
 
 		return "survey/surveyresult";
 	}
-	
-	 private static PythonInterpreter intPre;
 
-		@PostMapping(value = "/survey/surveyresult.do")
-		public String registerSurvey(final SurveyDTO params, Model model) {
+	private static PythonInterpreter intPre;
 
-			try {
-				System.out.println("Controller surveyresult 시작");
-				boolean isRegistered = surveyService.registerSurvey(params);
-				System.out.println("Controller isRegistered 받아옴");
-				System.out.println("Controller isRegistered params: "+ params);
-				if (isRegistered == false) {
-					System.out.println("정답등록실패");
-				}
-				System.out.println(params.getId());
-				String convertID = params.getId();
-				
-				System.setProperty("python.import.site", "false");
-				PythonInterpreter intPre = new PythonInterpreter();
-				
-//				intPre.execfile("src/main/python/text.py");
-//				intPre.exec("print('test')");
-				
-				System.out.println(convertID.getClass().getName());
-				
-				String t = "src/main/python/python_batch.bat".concat(" "+convertID);
-				
-			    Process p = Runtime.getRuntime().exec(t);
-			    System.out.println("python finished");
-			    
-			    BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			    String line = null;
-			    
-			    while ((line = br.readLine()) != null) {
-			      System.out.println(line);}
+	@PostMapping(value = "/survey/surveyresult.do")
+	public String registerSurvey(final SurveyDTO params, Model model) {
 
-			    intPre.close();
-			} catch (DataAccessException e) {
-				e.printStackTrace();
-				System.out.println("데이터베이스 처리과정 문제");
+		try {
+			System.out.println("Controller surveyresult 시작");
+			boolean isRegistered = surveyService.registerSurvey(params);
+			System.out.println("Controller isRegistered 받아옴");
+			System.out.println("Controller isRegistered params: " + params);
+			if (isRegistered == false) {
+				System.out.println("정답등록실패");
+			}
+			System.out.println(params.getId());
+			String convertID = params.getId();
 
-			}  catch (Exception e) {
-				// TODO => 시스템에 문제가 발생하였다는 메시지를 전달
-				e.printStackTrace();
-				System.out.println("시스템 문제 발생");
-			} 
-			
-			return "redirect:/survey/surveyresult.do";
+			System.setProperty("python.import.site", "false");
+			PythonInterpreter intPre = new PythonInterpreter();
+
+			System.out.println(convertID.getClass().getName());
+
+			String t = "src/main/python/python_batch.bat".concat(" " + convertID);
+
+			Process p = Runtime.getRuntime().exec(t);
+			System.out.println("python finished");
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			String line = null;
+
+			while ((line = br.readLine()) != null) {
+				System.out.println(line);
+			}
+
+			intPre.close();
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			System.out.println("데이터베이스 처리과정 문제");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("시스템 문제 발생");
 		}
-	
-	
+
+		return "redirect:/survey/surveyresult.do";
+	}
+
 }

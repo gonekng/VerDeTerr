@@ -1,8 +1,10 @@
 package com.board.controller;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.regex.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.board.domain.MailDTO;
 import com.board.domain.UserDTO;
 import com.board.service.SignUpService;
+import com.board.service.UserService;
 
 @Controller
 public class SignUpController {
 
 	@Autowired
 	private SignUpService signUpService;
+	
+	@Autowired
+	private UserService userService;
 
 	@GetMapping("/signup")
 	public String signUp() {
@@ -97,6 +103,37 @@ public class SignUpController {
 		}
 	 return"checkEmail";
 	}
+	
+	@GetMapping("/deleteUser")
+	public String deleteUser() {
+		
+		return "deleteUser";
+	}
+	
+	@PostMapping("/deleteUser_proc")
+	public String deleteUserProcess(HttpServletRequest request, UserDTO params, Model model) {
+		HttpSession session = request.getSession(true);
+		String myID = params.getId();
+		String myPW = params.getPw();
+		UserDTO user = userService.loginCheck(myID, myPW);
+		System.out.println("탈퇴창 열림");
+		if (user == null) {
+			System.out.println("탈퇴정보잘못넣음");
+			model.addAttribute("msgDeleteUser", "아이디 혹은 비밀번호 오류");
+			return "deleteUser";
+
+		} else {
+			System.out.println("탈퇴정보잘넣음");
+			int deleteUser = signUpService.delete(myID);
+			System.out.println("탈퇴됨."+deleteUser);
+			session.removeAttribute("id");
+			model.addAttribute("msgDeleteUser", myID + "님. 그 동안 저희 서비스를 이용해주셔서 감사합니다.");
+			return "main";
+		}
+		
+	}
+	
+	
 	
 	
 }
