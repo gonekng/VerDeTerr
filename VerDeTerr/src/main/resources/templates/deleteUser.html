@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<head>
-<meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="survey/layout/basic">
 
-</head>
-<body>
-	<div>
+<th:block layout:fragment="title">
+	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+</th:block>
+
+<th:block layout:fragment="content">
+	<div
+		class="container px-4 px-lg-5 h-100 align-items-center justify-content-center">
+		<br>
 		<h1>회원탈퇴</h1>
 		<form name="deleteUser" th:action="@{/deleteUser_proc}" method="post">
 			<div class="form-group" style="margin-top: 10px;">
@@ -31,6 +36,6 @@
 			window.close();
 		}
 		</script>
-	</body>
-	
+
+	</th:block>
 </html>

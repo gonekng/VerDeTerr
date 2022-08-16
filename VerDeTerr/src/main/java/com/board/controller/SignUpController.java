@@ -111,7 +111,8 @@ public class SignUpController {
 	}
 	
 	@PostMapping("/deleteUser_proc")
-	public String deleteUserProcess(HttpSession session, UserDTO params, Model model) {
+	public String deleteUserProcess(HttpServletRequest request, UserDTO params, Model model) {
+		HttpSession session = request.getSession(true);
 		String myID = params.getId();
 		String myPW = params.getPw();
 		UserDTO user = userService.loginCheck(myID, myPW);
