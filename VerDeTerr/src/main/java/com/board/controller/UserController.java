@@ -21,7 +21,6 @@ import com.board.service.UserService;
 @Controller
 public class UserController {
 	
-
 	@Autowired
 	private UserService userService;
 
@@ -35,7 +34,7 @@ public class UserController {
 		redirectAttributes.addFlashAttribute("msgLogout", "로그아웃되었습니다.");
 		return "redirect:/main";
 	}
-
+	
 	@GetMapping("/findId")
 	public String findId() {
 		return "findId";

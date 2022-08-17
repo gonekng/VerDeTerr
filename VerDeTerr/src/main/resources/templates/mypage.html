@@ -7,15 +7,7 @@
 	<title>My page</title>
 	<link href="css/styles.css" rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-	<script>
-
-	function deleteUser(){
-	window.open("/deleteUser", "deleteUser", "width=400, height=200, left=700, top=300")
-	
-			return location.href="main";
-}
-</script>
-</th:block>
+	</th:block>
 
 <th:block layout:fragment="content">
 
@@ -59,11 +51,11 @@
 
 		<div class="btn_wrap text-center">
 			<a th:href="@{/mypage(id=${session.id})}"
-				class="btn btn-primary waves-effect waves-light">내가 쓴 글 보기</a> <a
-				th:href="@{/modify(id=${session.id})}"
+				class="btn btn-primary waves-effect waves-light">내가 쓴 글 보기</a> 
+				<a th:href="@{/modify(id=${session.id})}"
 				class="btn btn-primary waves-effect waves-light">비밀번호 변경</a>
-				 <button type="button" id="deleteUser" onclick="deleteUser()" 
-				class="btn btn-primary waves-effect waves-light" value="false">회원탈퇴</button>
+				 <a th:href="@{/deleteUser(id=${session.id})}"
+				class="btn btn-primary waves-effect waves-light" >회원탈퇴</a>
 		</div>
 
 </th:block>
