@@ -101,7 +101,9 @@ public class UserController {
 		model.addAttribute("email", myEmail);
 		
         List<SurveyOutputDTO> testList = userService.getUserHistory(myID);
+        int listCount = testList.size();
         model.addAttribute("testList", testList);
+        model.addAttribute("listCount", listCount);
 		return "mypage";
 	}
     

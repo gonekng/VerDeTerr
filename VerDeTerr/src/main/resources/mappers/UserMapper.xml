@@ -83,6 +83,7 @@
 		from Mbti_ML_Output
 		where ID = #{id}
 		order by TestDate
+		desc
 	</select>
 
 	<select id="selectUserHistoryCount" parameterType="String"
