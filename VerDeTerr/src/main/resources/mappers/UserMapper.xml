@@ -109,6 +109,22 @@
 		from Member
 		where PwHint=#{pwHint} 
 	</select>
+	
+		<select id="selectUserList"	resultType="UserDTO">
+		select
+		<include refid="userColumns" />
+		from `Member`
+		order by regdate
+		desc
+	</select>
+
+	<select id="selectUserTotalCount" resultType="int">
+		select
+		Count(id)
+		from `Member`
+		order by regdate
+		desc
+	</select>
 
 
 </mapper>

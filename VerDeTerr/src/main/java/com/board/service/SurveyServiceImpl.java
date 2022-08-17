@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.board.domain.BoardDTO;
 import com.board.domain.SurveyDTO;
 import com.board.domain.SurveyOutputDTO;
+import com.board.domain.TypeDTO;
 import com.board.mapper.SurveyMapper;
 
 
@@ -57,6 +58,9 @@ public class SurveyServiceImpl implements SurveyService {
 		return surveyMapper.selectSurveyList(id);
 	}
 	
-	
+	@Override
+	public TypeDTO getTypeInfo(String type) {
+		return surveyMapper.selectTypeInfo(type);
+	}
 
 }

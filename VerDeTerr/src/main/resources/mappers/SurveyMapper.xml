@@ -102,8 +102,24 @@
 		DESC limit 1
 		
 	</select>
-
 	
+	<sql id="mbtiTypeColumns">
+		  UserType
+		, Category
+		, Feature
+		, Job
+		, GoodMatch
+		, BadMatch
+	</sql>
+
+	<select id="selectTypeInfo" parameterType="String" resultType="TypeDTO">
+		SELECT
+			<include refid="mbtiTypeColumns" />
+		FROM
+			Mbti_Type
+		WHERE
+			UserType = #{userType}
+	</select>
 
 
 </mapper>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="survey/layout/basic">
+
+<th:block layout:fragment="title">
+	<title>Manager page</title>
+	<link href="css/styles.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</th:block>
+
+<th:block layout:fragment="content">
+
+		<h1 style="text-align: center; padding: 40px;">관리자 페이지</h1>
+
+		<div style="text-align: center; padding: 5px;">
+			아이디 : <span th:text="${session.id}">여기는 아이디입니다.</span>
+		</div>
+		<div style="text-align: center; padding: 5px;">
+			닉네임 : <span th:text="${nick}">여기는 닉네임입니다.</span>
+		</div>
+		<div style="text-align: center; padding: 5px;">
+			이메일 : <span th:text="${email}">여기는 이메일입니다.</span>
+		</div>
+
+		<div class="table-responsive clearfix" style="padding: 40px;">
+			<table class="table table-hover"
+				style="margin-left: auto; margin-right: auto; text-align: center;">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>구분</th>
+						<th>아이디</th>
+						<th>성별</th>
+						<th>나이</th>
+						<th>유형</th>
+						<th>이메일</th>
+						<th>가입일자</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${not #lists.isEmpty( userList )}"
+						th:each="row, i : ${userList}">
+						<td scope="row" th:text="${listCount - i.index}"></td>
+						<td th:if="${row.managerYn}">관리자</td>
+						<td th:if="${!row.managerYn}">사용자</td>
+						<td th:text="${row.id}"></td>
+						<td th:text="${row.gender}"></td>
+						<td th:text="${row.age}"></td>
+						<td th:text="${row.userType}"></td>
+						<td th:text="${row.email}"></td>
+						<td class="text-left"><a
+							th:text="${#temporals.format( row.regDate, 'yyyy-MM-dd' )}"></a>
+						</td>
+					</tr>
+					<tr th:unless="${not #lists.isEmpty( userList )}">
+						<td colspan="5">조회된 결과가 없습니다.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="btn_wrap text-center">
+			<a th:href="@{/mypage(id=${session.id})}"
+				class="btn btn-primary waves-effect waves-light">회원 관리</a> <a
+				th:href="@{/modify(id=${session.id})}"
+				class="btn btn-primary waves-effect waves-light">게시글 관리</a> <a
+				th:href="@{/character/list}"
+				class="btn btn-primary waves-effect waves-light">캐릭터 관리</a>
+		</div>
+
+</th:block>
+
+</html>

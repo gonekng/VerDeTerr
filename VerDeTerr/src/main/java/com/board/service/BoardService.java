@@ -2,9 +2,11 @@ package com.board.service;
 
 import java.util.List;
 
-import com.board.domain.BoardCriteria;
+import org.springframework.stereotype.Service;
+
 import com.board.domain.BoardDTO;
 
+@Service
 public interface BoardService {
 
 	public boolean registerBoard(BoardDTO params);

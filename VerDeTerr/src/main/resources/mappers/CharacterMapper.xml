@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.board.mapper.CharacterMapper">
+
+	<sql id="characterColumns">
+		idx
+		, name
+		, title
+		, category
+		, usertype
+		, regdate
+	</sql>
+
+	<insert id="insertCharacter" parameterType="CharacterDTO">
+		INSERT INTO `Character` (
+		<include refid="characterColumns" />
+		) VALUES (
+		#{idx}
+		, #{name}
+		, #{title}
+		, #{category}
+		, #{usertype}
+		, NOW()
+		)
+	</insert>
+
+	<select id="selectCharacterDetail" parameterType="String"
+		resultType="CharacterDTO">
+		SELECT
+		<include refid="characterColumns" />
+		FROM
+		`Character`
+		WHERE
+		name = #{name}
+	</select>
+
+	<update id="updateCharacter" parameterType="CharacterDTO">
+		UPDATE `Character`
+		SET
+		usertype = IFNULL(#{usertype}, usertype)
+		WHERE
+		name = #{name}
+	</update>
+
+	<delete id="deleteCharacter" parameterType="String" >
+		DELETE FROM `Character`
+		WHERE name = #{name}
+	</delete>
+
+	<select id="selectCharacterList" parameterType="String" resultType="CharacterDTO">
+		select
+		<include refid="characterColumns" />
+		from `Character`
+		where userType like IFNULL(#{userType}, '%')
+		order by regdate
+		desc
+	</select>
+
+	<select id="selectCharacterTotalCount" parameterType="String" resultType="int">
+		select
+		Count(idx)
+		from `Character`
+		where userType like IFNULL(#{userType}, '%')
+		order by regdate
+	</select>
+
+</mapper>

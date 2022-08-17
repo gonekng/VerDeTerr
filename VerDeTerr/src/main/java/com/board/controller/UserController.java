@@ -21,29 +21,19 @@ import com.board.service.UserService;
 @Controller
 public class UserController {
 	
-
 	@Autowired
 	private UserService userService;
-	
-	@GetMapping(value = "/main")
-	public String openMainpage(Model model) {
-		return "main";
-	}
 
 	@GetMapping("/login")
 	public String login() {
 		return "login";
 	}
 	
-	// 시큐리티에서 로그아웃 성공 url을 logoutProc으로 지정
 	@GetMapping("/logoutProc")
 	public String logout(RedirectAttributes redirectAttributes) {
-		System.out.println("겟 로그아웃");
-		// url을 main으로 노출시키기 위해 redirectAttributes를 사용
 		redirectAttributes.addFlashAttribute("msgLogout", "로그아웃되었습니다.");
 		return "redirect:/main";
 	}
-	
 	
 	@GetMapping("/findId")
 	public String findId() {
@@ -64,7 +54,7 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/login_proc")
-	public String loginProcess(HttpServletRequest request, UserDTO params, RedirectAttributes redirectAttributes) {
+	public String loginProcess(RedirectAttributes redirectAttributes, HttpServletRequest request, UserDTO params, Model model) {
 		HttpSession session = request.getSession(true);
 		String myID = params.getId();
 		String myPW = params.getPw();
@@ -80,6 +70,17 @@ public class UserController {
 		return "redirect:/main";
 	}
 
+	@GetMapping(value = "/main")
+	public String openMainpage(HttpSession session, Model model) {
+		
+		UserDTO params = new UserDTO();
+		String myID = (String) session.getAttribute("id");
+		if(myID!=null) {
+			params = userService.getUserDetail(myID);
+			model.addAttribute("isManager", params.isManagerYn());
+		}
+		return "main";
+	}
 	
     @GetMapping(value = "/mypage")
     public String openMypage(HttpSession session, Model model) {
@@ -90,7 +91,6 @@ public class UserController {
         String myEmail = "";
         
         if(myID!=null) {
-        	System.out.println("1111");
             params = userService.getUserDetail(myID);
             myNickname = params.getNickname();
             myEmail = params.getEmail();
@@ -105,6 +105,31 @@ public class UserController {
         model.addAttribute("testList", testList);
         model.addAttribute("listCount", listCount);
 		return "mypage";
+	}
+	
+    @GetMapping(value = "/managerpage")
+    public String openManagerpage(HttpSession session, Model model) {
+        
+        UserDTO params = new UserDTO();
+        String myID = (String) session.getAttribute("id");
+        String myNickname = "";
+        String myEmail = "";
+        
+        if(myID!=null) {
+            params = userService.getUserDetail(myID);
+            myNickname = params.getNickname();
+            myEmail = params.getEmail();
+        }
+        System.out.println(params.toString());
+		model.addAttribute("nick", myNickname);
+		model.addAttribute("email", myEmail);
+		
+        List<UserDTO> userList = userService.getUserList();
+        int listCount = userList.size();
+        model.addAttribute("userList", userList);
+        model.addAttribute("listCount", listCount);
+
+		return "managerpage";
 	}
     
 	@GetMapping("/identify")
@@ -133,7 +158,11 @@ public class UserController {
 		if (!passwordEncoder.matches(params.getPw(),user.getPw())) {
 			model.addAttribute("msgIden", "비밀번호가 틀렸습니다.");
 			return "identify";
+		} else if (user.isManagerYn()) {
+			System.out.println("1111");
+			return "redirect:/managerpage";
 		} else {
+			System.out.println("2222");
 			return "redirect:/mypage";
 		}
 	}
