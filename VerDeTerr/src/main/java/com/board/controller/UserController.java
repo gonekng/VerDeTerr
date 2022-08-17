@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.domain.MailDTO;
 import com.board.domain.SurveyOutputDTO;
@@ -29,12 +30,10 @@ public class UserController {
 		return "login";
 	}
 	
-	@PostMapping("/logout")
-	public String logoutProcess(HttpSession session, Model model) {
-		System.out.println("1111");
-		model.addAttribute("msgLogout", "로그아웃되었습니다.");
-		session.removeAttribute("id");
-		return "main";
+	@GetMapping("/logoutProc")
+	public String logout(RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("msgLogout", "로그아웃되었습니다.");
+		return "redirect:/main";
 	}
 
 	@GetMapping("/findId")
@@ -56,24 +55,31 @@ public class UserController {
 	 * @return
 	 */
 	@PostMapping("/login_proc")
-	public String loginProcess(HttpServletRequest request, UserDTO params, Model model) {
+	public String loginProcess(RedirectAttributes redirectAttributes, HttpServletRequest request, UserDTO params, Model model) {
 		HttpSession session = request.getSession(true);
 		String myID = params.getId();
 		String myPW = params.getPw();
 		UserDTO user = userService.loginCheck(myID, myPW);
 		if (user == null) {
-			model.addAttribute("msgLoginError", "아이디 혹은 비밀번호 오류");
-			return "main";
+			redirectAttributes.addFlashAttribute("msgLoginError", "아이디 혹은 비밀번호 오류");
+			return "redirect:/main";
 
 		} else {
-			model.addAttribute("msgLoginSuccess", "로그인되었습니다. " + myID + "님, 환영합니다!");
+			redirectAttributes.addFlashAttribute("msgLoginSuccess", "로그인되었습니다. " + myID + "님, 환영합니다!");
 			session.setAttribute("id", myID);
 		}
-		return "main";
+		return "redirect:/main";
 	}
 
 	@GetMapping(value = "/main")
-	public String openMainpage(Model model) {
+	public String openMainpage(HttpSession session, Model model) {
+		
+		UserDTO params = new UserDTO();
+		String myID = (String) session.getAttribute("id");
+		if(myID!=null) {
+			params = userService.getUserDetail(myID);
+			model.addAttribute("isManager", params.isManagerYn());
+		}
 		return "main";
 	}
 	
@@ -86,7 +92,6 @@ public class UserController {
         String myEmail = "";
         
         if(myID!=null) {
-        	System.out.println("1111");
             params = userService.getUserDetail(myID);
             myNickname = params.getNickname();
             myEmail = params.getEmail();
@@ -97,8 +102,35 @@ public class UserController {
 		model.addAttribute("email", myEmail);
 		
         List<SurveyOutputDTO> testList = userService.getUserHistory(myID);
+        int listCount = testList.size();
         model.addAttribute("testList", testList);
+        model.addAttribute("listCount", listCount);
 		return "mypage";
+	}
+	
+    @GetMapping(value = "/managerpage")
+    public String openManagerpage(HttpSession session, Model model) {
+        
+        UserDTO params = new UserDTO();
+        String myID = (String) session.getAttribute("id");
+        String myNickname = "";
+        String myEmail = "";
+        
+        if(myID!=null) {
+            params = userService.getUserDetail(myID);
+            myNickname = params.getNickname();
+            myEmail = params.getEmail();
+        }
+        System.out.println(params.toString());
+		model.addAttribute("nick", myNickname);
+		model.addAttribute("email", myEmail);
+		
+        List<UserDTO> userList = userService.getUserList();
+        int listCount = userList.size();
+        model.addAttribute("userList", userList);
+        model.addAttribute("listCount", listCount);
+
+		return "managerpage";
 	}
     
 	@GetMapping("/identify")
@@ -127,7 +159,11 @@ public class UserController {
 		if (!passwordEncoder.matches(params.getPw(),user.getPw())) {
 			model.addAttribute("msgIden", "비밀번호가 틀렸습니다.");
 			return "identify";
+		} else if (user.isManagerYn()) {
+			System.out.println("1111");
+			return "redirect:/managerpage";
 		} else {
+			System.out.println("2222");
 			return "redirect:/mypage";
 		}
 	}

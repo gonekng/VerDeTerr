@@ -22,6 +22,8 @@ public interface UserService {
     public List<SurveyOutputDTO> getUserHistory(String ID);
 
 	public int updateUserDetail(UserDTO params);
+	
+	public List<UserDTO> getUserList();
 
 	public MailDTO createMailContent(String Email);
 	

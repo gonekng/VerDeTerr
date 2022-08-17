@@ -31,6 +31,7 @@
 			let msgLogout = "[[${msgLogout}]]";
 			let msgMod = "[[${msgMod}]]";
 			let surveyError = "[[${surveyError}]]";
+			let isManager = "[[${isManager}]]";
 
 			if (msgLoginSuccess != "") {
 				alert(msgLoginSuccess);
@@ -42,10 +43,6 @@
 			if (msgSignupSuccess != "") {
 				alert(msgSignupSuccess);
 			}
-			if (msgSignupError != "") {
-				alert(msgSignupError);
-				location.href = "main#signup";
-			}
 			if (msgLogout != "") {
 				alert(msgLogout);
 			}
@@ -56,6 +53,15 @@
 				alert(surveyError);
 			}
 		})
+
+		function isManager() {
+			if (isManager) {
+				location.href = '/identify';
+			}
+			else {
+				alert("관리자만 접근 가능합니다.");
+			}
+		}
 	</script>
 </head>
 
@@ -91,7 +97,9 @@
 					<li class="nav-item"><a class="nav-link" th:href="@{/survey/surveylist.do}">Survey</a></li>
 					<li class="nav-item">
 						<a class="nav-link" th:if="${session.id}==null" th:href="@{/signup}">SignUp</a>
-						<a class="nav-link" th:if="${session.id}!=null" th:href="@{/identify}">Mypage</a>
+					</li>
+					<li class="nav-item" th:if="${session.id}!=null and ${isManager}"><a class="nav-link" onclick="isManager()">Manager</a>
+					<li class="nav-item" th:if="${session.id}!=null and ${!isManager}"> <a class="nav-link"th:href="@{/identify}">Mypage</a>
 					</li>
 					<li class="nav-item" th:if="${session.id}==null"><a class="nav-link" href="#login">LogIn</a></li>
 					<li class="nav-item" th:if="${session.id}!=null"><a class="nav-link" th:href="@{/logout}">LogOut</a>
@@ -114,7 +122,7 @@
 						Join us and take an Interesting test,<br>And you can use our
 						community service!
 					</p>
-					<a class="btn btn-primary btn-xl" href="#signup">Join Us</a>
+					<a class="btn btn-primary btn-xl" th:href="@{/signup}">Join Us</a>
 				</div>
 			</div>
 		</div>

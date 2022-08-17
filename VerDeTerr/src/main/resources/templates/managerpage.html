@@ -4,22 +4,14 @@
 	layout:decorate="survey/layout/basic">
 
 <th:block layout:fragment="title">
-	<title>My page</title>
+	<title>Manager page</title>
 	<link href="css/styles.css" rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-	<script>
-
-	function deleteUser(){
-	window.open("/deleteUser", "deleteUser", "width=400, height=200, left=700, top=300")
-	
-			return location.href="main";
-}
-</script>
 </th:block>
 
 <th:block layout:fragment="content">
 
-		<h1 style="text-align: center; padding: 40px;">My Page</h1>
+		<h1 style="text-align: center; padding: 40px;">관리자 페이지</h1>
 
 		<div style="text-align: center; padding: 5px;">
 			아이디 : <span th:text="${session.id}">여기는 아이디입니다.</span>
@@ -37,33 +29,44 @@
 				<thead>
 					<tr>
 						<th>번호</th>
-						<th>날짜</th>
+						<th>구분</th>
+						<th>아이디</th>
+						<th>성별</th>
+						<th>나이</th>
 						<th>유형</th>
+						<th>이메일</th>
+						<th>가입일자</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:if="${not #lists.isEmpty( testList )}"
-						th:each="row, i : ${testList}">
+					<tr th:if="${not #lists.isEmpty( userList )}"
+						th:each="row, i : ${userList}">
 						<td scope="row" th:text="${listCount - i.index}"></td>
+						<td th:if="${row.managerYn}">관리자</td>
+						<td th:if="${!row.managerYn}">사용자</td>
+						<td th:text="${row.id}"></td>
+						<td th:text="${row.gender}"></td>
+						<td th:text="${row.age}"></td>
+						<td th:text="${row.userType}"></td>
+						<td th:text="${row.email}"></td>
 						<td class="text-left"><a
-							th:text="${#temporals.format( row.testdate, 'yyyy-MM-dd' )}"></a>
+							th:text="${#temporals.format( row.regDate, 'yyyy-MM-dd' )}"></a>
 						</td>
-						<td th:text="${row.usertype}"></td>
 					</tr>
-					<tr th:unless="${not #lists.isEmpty( testList )}">
+					<tr th:unless="${not #lists.isEmpty( userList )}">
 						<td colspan="5">조회된 결과가 없습니다.</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-
+		
 		<div class="btn_wrap text-center">
 			<a th:href="@{/mypage(id=${session.id})}"
-				class="btn btn-primary waves-effect waves-light">내가 쓴 글 보기</a> <a
+				class="btn btn-primary waves-effect waves-light">회원 관리</a> <a
 				th:href="@{/modify(id=${session.id})}"
-				class="btn btn-primary waves-effect waves-light">비밀번호 변경</a>
-				 <button type="button" id="deleteUser" onclick="deleteUser()" 
-				class="btn btn-primary waves-effect waves-light" value="false">회원탈퇴</button>
+				class="btn btn-primary waves-effect waves-light">게시글 관리</a> <a
+				th:href="@{/character/list}"
+				class="btn btn-primary waves-effect waves-light">캐릭터 관리</a>
 		</div>
 
 </th:block>
