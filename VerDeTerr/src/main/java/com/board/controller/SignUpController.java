@@ -51,6 +51,7 @@ public class SignUpController {
             signUpService.mailSend(dto);
 		} else {
 			model.addAttribute("msgSignupError", "회원가입 오류");
+			return "signup";
 		}
 		return "main";
 	}
