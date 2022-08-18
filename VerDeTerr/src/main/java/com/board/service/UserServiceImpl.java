@@ -1,5 +1,6 @@
 package com.board.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+
+import com.board.domain.CharacterDTO;
 import com.board.domain.MailDTO;
 import com.board.domain.SurveyOutputDTO;
 import com.board.domain.UserDTO;
@@ -71,6 +74,17 @@ public class UserServiceImpl implements UserService {
 			return selectId;
 		}
 	}
+
+	@Override
+	public List<UserDTO> getUserList() {
+		List<UserDTO> userList = Collections.emptyList();
+
+		int userCount = userMapper.selectUserTotalCount();
+		if(userCount > 0) {
+			userList = userMapper.selectUserList();
+		}
+		return userList;
+	};
 
 	// 메일 내용 생성
 	@Override

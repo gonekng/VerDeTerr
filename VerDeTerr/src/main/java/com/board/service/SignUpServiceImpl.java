@@ -30,7 +30,7 @@ public class SignUpServiceImpl implements SignUpService {
 
 	@Override
 	public int signUp(UserDTO params) {
-		int userId = signUpMapper.selectUserID(params.getId());
+		int userId = signUpMapper.selectUserIdCount(params.getId());
 		String userPw = params.getPw();
 		if (userPw.length() >= 6 || userPw.length() < 20) {
 			System.out.println("비번적절");
@@ -52,7 +52,7 @@ public class SignUpServiceImpl implements SignUpService {
 
 	@Override
 	public int checkId(String id) {
-		int result = signUpMapper.selectUserID(id);
+		int result = signUpMapper.selectUserIdCount(id);
 		if(result==0) {
 			System.out.println("중복된 아이디 없음");
 			return 0;
@@ -65,7 +65,7 @@ public class SignUpServiceImpl implements SignUpService {
 	
 	@Override
 	public int checkEmail(String email) {
-		int result = signUpMapper.selectUserEmail(email);
+		int result = signUpMapper.selectUserEmailCount(email);
 		if(result==0) {
 			System.out.println("중복된 이메일 없음1111111");
 		return 0;
@@ -103,8 +103,8 @@ public class SignUpServiceImpl implements SignUpService {
         message.setTo(mailDTO.getAddress());
         message.setSubject(mailDTO.getTitle());
         message.setText(mailDTO.getMessage());
-        message.setFrom("verdeterr@naver.com");
-        message.setReplyTo("verdeterr@naver.com");
+        message.setFrom("verdeterr123@naver.com");
+        message.setReplyTo("verdeterr123@naver.com");
         System.out.println("message"+message);
         javaMailSender.send(message);
     }

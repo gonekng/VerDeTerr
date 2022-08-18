@@ -29,14 +29,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/signup", "/signup_proc", "/checkId", "/checkId_proc", "/checkEmail", "/checkEmail_proc",
 						"/login", "/login_proc", "/logout", "/deleteUser", "/deleteUser_proc",
 						"/findId", "/findPw", "/findId_proc", "/findPw_proc",
-						"/identify", "/identify_proc", "/mypage",
-						"/modify", "/modify_proc",
+						"/identify", "/identify_proc", "/mypage", "/managerpage",
+						"/modify", "/modify_proc", "/character/list",
 						"/css/**", "/assets/**", "/js/**" , "/scripts/**", "/plugin/**",
-						"/survey/surveylist.do", "/survey/surveyresult.do", "redirect:/survey/surveyresult.do",
-						"/board/list.do", "/board/write.do", "/board/register.do", "/board/view.do", "/board/delete.do",
-						"/board/write.do", "/board/register.do", "/board/view.do", "/board/delete.do")
+						"/survey/surveylist", "/survey/surveyresult", "redirect:/survey/surveyresult",
+						"/board/list", "/board/write", "/board/register", "/board/view", "/board/delete",
+						"/board/write", "/board/register", "/board/view", "/board/delete")
 				.permitAll().anyRequest().authenticated().
-//				and().formLogin().loginPage("/login").permitAll();
+				and().formLogin().loginPage("/login").permitAll().
 				and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutProc").permitAll();
 
 	}

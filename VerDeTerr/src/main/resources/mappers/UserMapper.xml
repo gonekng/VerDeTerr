@@ -13,7 +13,9 @@
 		, age
 		, gender
 		, managerYn
+		, deleteYn
 		, regDate
+		, deleteDate
 	</sql>
 
 	<sql id="surveyOutputColumns">
@@ -38,7 +40,9 @@
 		, #{age}
 		, #{gender}
 		, 0
+		, 0
 		, NOW()
+		, null
 		)
 	</insert>
 
@@ -50,6 +54,7 @@
 		member
 		WHERE
 		id = #{id}
+		and deleteYn = 0
 	</select>
 
 	<update id="updateUser" parameterType="UserDTO">
@@ -71,10 +76,13 @@
 		id = #{id}
 	</update>
 
-	<delete id="deleteUser" parameterType="String" >
-		DELETE FROM member
-		WHERE id = #{id}
-	</delete>
+	<update id="deleteUser" parameterType="String" >
+		update Member
+		set
+		deleteYn = 1
+		deleteDate = NOW()
+		where id = #{id}
+	</update>
 
 	<select id="selectUserHistory" parameterType="String"
 		resultType="SurveyOutputDTO">
@@ -93,6 +101,7 @@
 		from Member a, Mbti_ML_Output b
 		where a.ID = b.ID
 		and a.ID = #{id}
+		and a.deleteYn = 0
 		order by b.TestDate
 	</select>
 
@@ -101,6 +110,7 @@
 		<include refid="userColumns" />
 		from Member
 		where Email=#{email} 
+		and deleteYn = 0
 	</select>
 
 	<select id= "findPw" resultType="UserDTO">
@@ -108,6 +118,25 @@
 		<include refid="userColumns" />
 		from Member
 		where PwHint=#{pwHint} 
+		and deleteYn = 0
+	</select>
+	
+		<select id="selectUserList"	resultType="UserDTO">
+		select
+		<include refid="userColumns" />
+		from Member
+		where deleteYn = 0
+		order by regdate
+		desc
+	</select>
+
+	<select id="selectUserTotalCount" resultType="int">
+		select
+		Count(id)
+		from Member
+		where deleteYn = 0
+		order by regdate
+		desc
 	</select>
 
 

@@ -13,7 +13,9 @@
 		, age
 		, gender
 		, managerYn
+		, deleteYn
 		, regDate
+		, deleteDate
 	</sql>
 
 	<insert id="insertUser" parameterType="UserDTO">
@@ -29,26 +31,29 @@
 		, #{age}
 		, #{gender}
 		, 0
+		, 0
 		, NOW()
+		, null
 		)
 	</insert>
 
-	<select id="selectUserID" parameterType="String" resultType="int">
+	<select id="selectUserIdCount" parameterType="String" resultType="int">
 		SELECT 
-		count(*)
+		count(id)
 		FROM
 		member
 		WHERE
 		id = #{id}
 	</select>
 	
-	<select id="selectUserEmail" parameterType="String" resultType="int">
+	<select id="selectUserEmailCount" parameterType="String" resultType="int">
 		SELECT 
-		count(*)
+		count(email)
 		FROM
 		member
 		WHERE
 		email = #{email}
+		and deleteYn = 0
 	</select>
 
 </mapper>

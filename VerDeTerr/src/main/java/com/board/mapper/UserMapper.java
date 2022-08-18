@@ -26,5 +26,8 @@ public interface UserMapper {
 	
 	public UserDTO findPw(String pwHint);
 
+	public List<UserDTO> selectUserList();
+
+	public int selectUserTotalCount();
 
 }

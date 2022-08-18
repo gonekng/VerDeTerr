@@ -2,6 +2,7 @@ package com.board.service;
 
 import com.board.domain.SurveyDTO;
 import com.board.domain.SurveyOutputDTO;
+import com.board.domain.TypeDTO;
 
 public interface SurveyService {
 	
@@ -13,6 +14,7 @@ public interface SurveyService {
 	
 	public SurveyOutputDTO getSurveyList(String id);
 
+	public TypeDTO getTypeInfo(String type);
 
 }
 
