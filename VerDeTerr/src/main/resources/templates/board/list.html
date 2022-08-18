@@ -1,16 +1,28 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="board/layout/basic">
 <th:block layout:fragment="title">
 	<title>This page is a list page</title>
 	<meta charset="UTF-8">
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script>
+		 function isMyType(){
+			let isMyType = "[[${isMyType}]]";
+			let type = "[[${type}]]";
+			if (isMyType == "f") {
+				alert("해당 게시판의 글 작성 권한이 없습니다.");
+				location.href = "/board/list?type=" + type;
+			}
+			else{
+				location.href = "/board/write?type=" + type;
+			}
+		};
+	</script>
 </th:block>
 
+
 <th:block layout:fragment="search">
-	<form action="#" id="searchform-header"
-		class="searchform js__toggle active pull-right">
+	<form action="#" id="searchform-header" class="searchform js__toggle active pull-right">
 		<input type="search" placeholder="Search..." class="input-search">
 		<button class="mdi mdi-magnify button-search" type="submit">
 			<i class="fa fa-search" aria-hidden="true"></i>
@@ -31,13 +43,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:if="${not #lists.isEmpty( boardlist )}"
-					th:each="row : ${boardlist}">
-					<td scope="row"
-						th:text="${#strings.equals( row.NoticeYn, true ) ? '&#8251공지&#8251' : row.idx}"></td>
-					<td class="text-left"><a
-						th:href="@{/board/view.do( idx=${row.idx} )}"
-						th:text="${row.title}"></a></td>
+				<tr th:if="${not #lists.isEmpty( boardlist )}" th:each="row : ${boardlist}">
+					<td scope="row" th:text="${#strings.equals( row.NoticeYn, true ) ? '&#8251공지&#8251' : row.idx}">
+					</td>
+					<td class="text-left"><a th:href="@{/board/view( idx=${row.idx}, type=${type} )}"
+							th:text="${row.title}"></a></td>
 					<td th:text="${row.writer}"></td>
 					<td th:text="${#temporals.format( row.insertTime, 'yyyy-MM-dd' )}"></td>
 					<td th:text="${row.viewCnt}"></td>
@@ -49,27 +59,25 @@
 		</table>
 
 		<div class="btn_wrap text-right">
-			<a th:href="@{/board/write.do}"
-				class="btn btn-primary waves-effect waves-light">Write</a>
+			<button onclick="isMyType();" class="btn btn-primary waves-effect waves-light">Write</button>
 		</div>
 
 		<th:block layout:fragment="paging">
 			<nav aria-label="Page navigation" class="text-center">
 				<ul class="pagination">
-					<li><a href="#" aria-label="Previous"> <span
-							aria-hidden="true">&laquo;</span>
-					</a></li>
+					<li><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a></li>
 					<li><a href="#">1</a></li>
 					<li><a href="#">2</a></li>
 					<li><a href="#">3</a></li>
 					<li><a href="#">4</a></li>
 					<li><a href="#">5</a></li>
-					<li><a href="#" aria-label="Next"> <span
-							aria-hidden="true">&raquo;</span>
-					</a></li>
+					<li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+						</a></li>
 				</ul>
 			</nav>
 		</th:block>
 	</div>
 </th:block>
+
 </html>

@@ -79,7 +79,9 @@
 	<update id="deleteUser" parameterType="String" >
 		update Member
 		set
-		deleteYn = 1
+		deleteYn = 1,
+		deleteDate = NOW()
+		where id = #{id}
 	</update>
 
 	<select id="selectUserHistory" parameterType="String"

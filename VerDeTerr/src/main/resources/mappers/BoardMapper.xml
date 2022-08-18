@@ -87,16 +87,13 @@
 			post
 		WHERE
 			deleteYn = 0
-			<!-- and postType = #{boardDTO.postType} posttype 으로 출력해주고 싶을때-->
+			and postType = #{boardDTO.postType}
 		ORDER BY
 			noticeYn ASC,
 			idx DESC,
 			insertTime DESC
 		LIMIT
 			#{criteria.startPage},#{criteria.recordsPerPage}	
-		
-		
-		
 			
 	<!-- 마이바티스에서 #{파라미터}는 여러 멤버를 가진 객체의 경우 Getter에 해당됩니다. 
 	startPage 는 Criteria 클래스의 getStartPage 메서드의 리턴값을 의미하는데요, 

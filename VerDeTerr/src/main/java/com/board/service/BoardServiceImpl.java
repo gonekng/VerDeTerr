@@ -71,7 +71,7 @@ public class BoardServiceImpl implements BoardService {
 		Criteria criteria=new Criteria(); 
 		
 		BoardCriteria boardCriteria = new BoardCriteria(params, criteria);
-		params.setPostType("개발자형");
+		
 		
 //		boardCriteria.setBoardDTO(params);
 		

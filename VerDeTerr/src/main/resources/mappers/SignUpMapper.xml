@@ -37,19 +37,18 @@
 		)
 	</insert>
 
-	<select id="selectUserID" parameterType="String" resultType="int">
+	<select id="selectUserIdCount" parameterType="String" resultType="int">
 		SELECT 
-		count(*)
+		count(id)
 		FROM
 		member
 		WHERE
 		id = #{id}
-		and deleteYn = 0
 	</select>
 	
-	<select id="selectUserEmail" parameterType="String" resultType="int">
+	<select id="selectUserEmailCount" parameterType="String" resultType="int">
 		SELECT 
-		count(*)
+		count(email)
 		FROM
 		member
 		WHERE

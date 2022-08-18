@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/css/**", "/assets/**", "/js/**" , "/scripts/**", "/plugin/**",
 						"/survey/surveylist", "/survey/surveyresult", "redirect:/survey/surveyresult",
 						"/board/list", "/board/write", "/board/register", "/board/view", "/board/delete",
-						"/board/write", "/board/register", "/board/view", "/board/delete")
+						"/board/select", "/board/write", "/board/register", "/board/view", "/board/delete")
 				.permitAll().anyRequest().authenticated().
 				and().formLogin().loginPage("/login").permitAll().
 				and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutProc").permitAll();

@@ -87,22 +87,8 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ms-auto my-2 my-lg-0">
-					<li class="nav-item">
-						<div class="box">
-							<select id="boardType" onchange="if(this.value) location.href=(this.value);">
-								<option class="option" value="">Select Board Type</option>
-								<option class="option" th:value="@{/board/list(type='ESTJ')}">관리자형 - ESTJ / ESFJ / ISTJ / ISFJ
-								</option>
-								<option class="option" th:value="@{/board/list(type='ENTJ')}">분석가형 - ENTJ / ENTP / INTJ / INTP
-								</option>
-								<option class="option" th:value="@{/board/list(type='ENFP')}">외교관형 - ENFP / ENFJ / INFP / INFJ
-								</option>
-								<option class="option" th:value="@{/board/list(type='ESTP')}">탐험가형 - ESTP / ESFP / ISTP / ISFP
-								</option>
-							</select>
-						</div>
-					</li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/survey/surveylist}">Survey</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/board/select}">Board</a></li>
 					<li class="nav-item">
 						<a class="nav-link" th:if="${session.id}==null" th:href="@{/signup}">SignUp</a>
 					</li>
