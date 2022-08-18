@@ -6,9 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.board.domain.BoardCriteria;
 import com.board.domain.BoardDTO;
-import com.board.domain.memberDTO;
 import com.board.mapper.BoardMapper;
 import com.board.paging.Criteria;
 
@@ -70,20 +68,17 @@ public class BoardServiceImpl implements BoardService {
 		//생성자로 초기화 지정했던 부분 이곳에서 실행.
 		Criteria criteria=new Criteria(); 
 		
-		BoardCriteria boardCriteria = new BoardCriteria(params, criteria);
-		
-		
 //		boardCriteria.setBoardDTO(params);
 		
 //		int boardTotalCount = boardMapper.selectBoardTotalCount(params);
-		int boardTotalCount = boardMapper.selectBoardTotalCount(boardCriteria);
+		int boardTotalCount = boardMapper.selectBoardTotalCount(params);
 		
 		System.out.println("boardTotalCount : " + boardTotalCount);
 		System.out.println("params.getIdx()" + params.getIdx());
 		
 		if (boardTotalCount > 0) {
 			
-			boardList = boardMapper.selectBoardList(boardCriteria);
+			boardList = boardMapper.selectBoardList(params);
 			System.out.println("boardlist:"+boardList);
 			System.out.println("params 뭐 나오지"+params.getIdx());
 		}
