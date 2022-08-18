@@ -13,7 +13,9 @@
 		, age
 		, gender
 		, managerYn
+		, deleteYn
 		, regDate
+		, deleteDate
 	</sql>
 
 	<insert id="insertUser" parameterType="UserDTO">
@@ -29,7 +31,9 @@
 		, #{age}
 		, #{gender}
 		, 0
+		, 0
 		, NOW()
+		, null
 		)
 	</insert>
 
@@ -40,6 +44,7 @@
 		member
 		WHERE
 		id = #{id}
+		and deleteYn = 0
 	</select>
 	
 	<select id="selectUserEmail" parameterType="String" resultType="int">
@@ -49,6 +54,7 @@
 		member
 		WHERE
 		email = #{email}
+		and deleteYn = 0
 	</select>
 
 </mapper>

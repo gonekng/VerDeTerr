@@ -70,17 +70,19 @@ public class UserController {
 		return "redirect:/main";
 	}
 
-	@GetMapping(value = "/main")
-	public String openMainpage(HttpSession session, Model model) {
-		
-		UserDTO params = new UserDTO();
-		String myID = (String) session.getAttribute("id");
-		if(myID!=null) {
-			params = userService.getUserDetail(myID);
-			model.addAttribute("isManager", params.isManagerYn());
-		}
-		return "main";
-	}
+	   @GetMapping(value = "/main")
+	   public String openMainpage(HttpSession session, Model model) {
+	      UserDTO params = new UserDTO();
+	      String myID = (String) session.getAttribute("id");
+	      params = userService.getUserDetail(myID);
+	      if(params!=null) {
+	    	  System.out.println(params.isManagerYn());
+	         model.addAttribute("isManager", params.isManagerYn());
+	      } else {
+	         model.addAttribute("isManager", false);
+	      }
+	      return "main";
+	   }
 	
     @GetMapping(value = "/mypage")
     public String openMypage(HttpSession session, Model model) {
@@ -238,8 +240,5 @@ public class UserController {
 			return "/login";
 		}
 	
-	
-
-
 }
 

@@ -37,7 +37,7 @@ public class SurveyController {
 	@Autowired	
 	private CharacterService characterService;
 
-	@GetMapping(value = "/survey/surveylist.do")
+	@GetMapping(value = "/survey/surveylist")
 	public String openSurveyWrite(RedirectAttributes redirectAttributes, HttpSession session, Model model) {
 		String myID = (String) session.getAttribute("id");
 		if (myID == null) {
@@ -58,31 +58,36 @@ public class SurveyController {
 
 	}
 
-	@GetMapping(value = "/survey/surveyresult.do")
+	@GetMapping(value = "/survey/surveyresult")
 	public String getSurveyList(Model model, HttpSession session) {
 
 		String myID = (String) session.getAttribute("id");
 		SurveyOutputDTO surveyList = surveyService.getSurveyList(myID);
-		System.out.println("!!!!!" + surveyList);
+		System.out.println("***********" + surveyList);
 		model.addAttribute("surveyList", surveyList);
-		UserDTO user = userService.getUserDetail(myID);
-		System.out.println("!!!!!" + user);
-		userService.updateUserDetail(user);
 		
+		UserDTO user = userService.getUserDetail(myID);
+		System.out.println("***********" + user);
+		
+		userService.updateUserDetail(user);
+		user = userService.getUserDetail(myID);
+		System.out.println("***********" + user);
+		
+		String myType = user.getUserType();
 		TypeDTO typeInfo = surveyService.getTypeInfo(user.getUserType());
-		System.out.println("!!!!!" + typeInfo);
+		System.out.println("***********" + typeInfo);
 		model.addAttribute("typeFeature", typeInfo.getFeature());
 		model.addAttribute("typeJob", typeInfo.getJob());
 		
-		String myType = user.getUserType();
 		List<CharacterDTO> characterList = characterService.getCharacterList(myType);
 		model.addAttribute("character", characterList);
+		System.out.println("***********" + characterList);
 		return "survey/surveyresult";
 	}
 
 	private static PythonInterpreter intPre;
 
-	@PostMapping(value = "/survey/surveyresult.do")
+	@PostMapping(value = "/survey/surveyresult")
 	public String registerSurvey(final SurveyDTO params, Model model) {
 
 		try {
@@ -123,7 +128,7 @@ public class SurveyController {
 			System.out.println("시스템 문제 발생");
 		}
 
-		return "redirect:/survey/surveyresult.do";
+		return "redirect:/survey/surveyresult";
 	}
 
 }

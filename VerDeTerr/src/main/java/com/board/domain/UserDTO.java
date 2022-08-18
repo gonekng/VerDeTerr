@@ -89,6 +89,22 @@ public class UserDTO {
 		this.regDate = regDate;
 	}
 
+	public boolean isDeleteYn() {
+		return deleteYn;
+	}
+
+	public void setDeleteYn(boolean deleteYn) {
+		this.deleteYn = deleteYn;
+	}
+
+	public LocalDateTime getDeleteDate() {
+		return deleteDate;
+	}
+
+	public void setDeleteDate(LocalDateTime deleteDate) {
+		this.deleteDate = deleteDate;
+	}
+
 	/** 아이디 (PK) */
 	private String id;
 
@@ -115,15 +131,21 @@ public class UserDTO {
 
 	/** 관리자여부 */
 	private boolean managerYn;
+	
+	/**삭제여부 */
+	private boolean deleteYn;
 
 	/** 가입일자 */
 	private LocalDateTime regDate;
+
+	/** 삭제일자 */
+	private LocalDateTime deleteDate;
 
 	@Override
 	public String toString() {
 		return "UserDTO [id=" + id + ", pw=" + pw + ", pwHint=" + pwHint + ", email=" + email + ", userType=" + userType
 				+ ", nickname=" + nickname + ", age=" + age + ", gender=" + gender + ", managerYn=" + managerYn
-				+ ", regDate=" + regDate + "]";
+				+ ", regDate=" + regDate + ", deleteYn=" + deleteYn + ", deleteDate=" + deleteDate + "]";
 	}
 
 

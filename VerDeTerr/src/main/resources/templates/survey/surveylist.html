@@ -27,7 +27,7 @@
 		</header>
 
 
-		<form class="form-horizontal" th:action="@{/survey/surveyresult.do}" method="post" th:object="${survey}">
+		<form class="form-horizontal" th:action="@{/survey/surveyresult}" method="post" th:object="${survey}">
 
 			<div class="container px-4 px-lg-5">
 					<input type="text" style="display:none; text-align:center;" th:field="*{id}" id="id" value="${session.id}" readonly></input> 
