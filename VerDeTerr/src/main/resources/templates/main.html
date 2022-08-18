@@ -91,13 +91,13 @@
 						<div class="box">
 							<select id="boardType" onchange="if(this.value) location.href=(this.value);">
 								<option class="option" value="">Select Board Type</option>
-								<option class="option" th:value="@{/board/list}">관리자형 - ESTJ / ESFJ / ISTJ / ISFJ
+								<option class="option" th:value="@{/board/list(type='ESTJ')}">관리자형 - ESTJ / ESFJ / ISTJ / ISFJ
 								</option>
-								<option class="option" th:value="@{/board/list}">분석가형 - ENTJ / ENTP / INTJ / INTP
+								<option class="option" th:value="@{/board/list(type='ENTJ')}">분석가형 - ENTJ / ENTP / INTJ / INTP
 								</option>
-								<option class="option" th:value="@{/board/list}">외교관형 - ENFP / ENFJ / INFP / INFJ
+								<option class="option" th:value="@{/board/list(type='ENFP')}">외교관형 - ENFP / ENFJ / INFP / INFJ
 								</option>
-								<option class="option" th:value="@{/board/list}">탐험가형 - ESTP / ESFP / ISTP / ISFP
+								<option class="option" th:value="@{/board/list(type='ESTP')}">탐험가형 - ESTP / ESFP / ISTP / ISFP
 								</option>
 							</select>
 						</div>

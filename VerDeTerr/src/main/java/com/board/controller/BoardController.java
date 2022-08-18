@@ -30,7 +30,7 @@ public class BoardController extends UiUtils {
    @Autowired
    private UserService userService;
 
-   @GetMapping(value = "/board/write.do") // 그냥 내가 정하는 요청 url 이렇게 요청하면 return 경로로 갈거에요.
+   @GetMapping(value = "/board/write") // 그냥 내가 정하는 요청 url 이렇게 요청하면 return 경로로 갈거에요.
    public String openBoardWrite(@RequestParam(value="idx",required=false)Long idx,Model model, HttpSession session) 
    {    // 새로운 게시글을 등록하는 경우에는 게시글 번호(idx) 가 필요하지 않기 때문에 required 속성을 false 
       if(idx==null) {
@@ -51,7 +51,7 @@ public class BoardController extends UiUtils {
       } else { 
          BoardDTO board=boardService.getBoardDetail(idx);
          if(board==null) {
-            return "redirect:/board/list.do";
+            return "redirect:/board/list";
          }
          model.addAttribute("board", board);//addAttribute 화면으로 데이터를 전달하는메소드 
          System.out.println("board.getNoticeYn() : " + board.getNoticeYn());
@@ -59,7 +59,7 @@ public class BoardController extends UiUtils {
       return "board/write";
    }  
    
-   @PostMapping(value = "/board/register.do")
+   @PostMapping(value = "/board/register")
    public String registerBoard(HttpSession session, final BoardDTO params,Model model) {
       System.out.println("boardcontroller 입성");
       try {
@@ -75,27 +75,27 @@ public class BoardController extends UiUtils {
          System.out.println("isregistered true"+isRegistered);
          if (isRegistered == false) {
             System.out.println("isregistered false"+isRegistered);
-            return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list.do", Method.GET, null, model);
+            return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list", Method.GET, null, model);
          }
          
          
          
       } catch (DataAccessException e) {
          
-         return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list.do", Method.GET, null, model);
+         return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 
       } catch (Exception e) {
-         return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list.do", Method.GET, null, model);
+         return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
       }
 
-      return showMessageWithRedirect("게시글 등록이 완료되었습니다.", "/board/list.do", Method.GET, null, model);
+      return showMessageWithRedirect("게시글 등록이 완료되었습니다.", "/board/list", Method.GET, null, model);
    }
    
    // value 값으로 호출하면 openboardlist 함수가 실행
 
    
-   @GetMapping(value="/board/list.do")
-   public String openBoardList(@RequestParam String type, @ModelAttribute("boardCriteria") BoardDTO params,Model model) {
+   @GetMapping(value="/board/list")
+   public String openBoardList(@RequestParam(required=false) String type, @ModelAttribute("boardCriteria") BoardDTO params,Model model) {
       System.out.println("params.getTitle:"+params.getTitle());
       params.setPostType(type);
       List<BoardDTO> boardList=boardService.getBoardList(params);
@@ -104,17 +104,17 @@ public class BoardController extends UiUtils {
    }
    
    
-   @GetMapping(value = "/board/view.do")
+   @GetMapping(value = "/board/view")
    public String openBoardDetail(@RequestParam(value = "idx", required = false) Long idx, Model model) {
       if (idx == null) {
          // TODO => 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
-         return "redirect:/board/list.do";
+         return "redirect:/board/list";
       }
 
       BoardDTO board = boardService.getBoardDetail(idx);
       if (board == null || "Y".equals(board.getDeleteYn())) {
          // TODO => 없는 게시글이거나, 이미 삭제된 게시글이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
-         return "redirect:/board/list.do";
+         return "redirect:/board/list";
       }
       System.out.println("board.idx:"+board.getIdx());
       model.addAttribute("board", board);
@@ -122,26 +122,26 @@ public class BoardController extends UiUtils {
       return "board/view";
    }
    
-   @PostMapping(value = "/board/delete.do")
+   @PostMapping(value = "/board/delete")
    public String deleteBoard(@RequestParam(value = "idx", required = false) Long idx, Model model) {
       System.out.println("여기로 들어오나요?");
       if (idx == null) {
-         return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list.do", Method.GET, null, model);
+         return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);
       }
 
       try {
          boolean isDeleted = boardService.deleteBoard(idx);
          if (isDeleted == false) {
-            return showMessageWithRedirect("게시글 삭제에 실패하였습니다.", "/board/list.do", Method.GET, null, model);
+            return showMessageWithRedirect("게시글 삭제에 실패하였습니다.", "/board/list", Method.GET, null, model);
          }
       } catch (DataAccessException e) {
-         return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list.do", Method.GET, null, model);
+         return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 
       } catch (Exception e) {
-         return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list.do", Method.GET, null, model);
+         return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
       }
 
-      return showMessageWithRedirect("게시글 삭제가 완료되었습니다.", "/board/list.do", Method.GET, null, model);
+      return showMessageWithRedirect("게시글 삭제가 완료되었습니다.", "/board/list", Method.GET, null, model);
    }
 }
 
