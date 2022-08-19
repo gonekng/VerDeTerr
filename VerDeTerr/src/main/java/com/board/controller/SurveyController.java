@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,6 +59,7 @@ public class SurveyController {
 
 	}
 
+	@Async("executor")
 	@GetMapping(value = "/survey/surveyresult")
 	public String getSurveyList(Model model, HttpSession session) {
 
@@ -87,6 +89,7 @@ public class SurveyController {
 
 	private static PythonInterpreter intPre;
 
+	@Async("executor")
 	@PostMapping(value = "/survey/surveyresult")
 	public String registerSurvey(final SurveyDTO params, Model model) {
 
