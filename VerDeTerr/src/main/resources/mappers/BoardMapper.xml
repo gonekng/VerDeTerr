@@ -80,20 +80,20 @@
 			idx = #{idx}
 	</update>
 
-	<select id="selectBoardList" parameterType="BoardCriteria"  resultType="BoardDTO">
+	<select id="selectBoardList" parameterType="BoardDTO"  resultType="BoardDTO">
 		SELECT
 			<include refid="boardColumns" />
 		FROM
 			post
 		WHERE
 			deleteYn = 0
-			and postType = #{boardDTO.postType}
+			and postType = #{postType}
 		ORDER BY
 			noticeYn ASC,
 			idx DESC,
 			insertTime DESC
 		LIMIT
-			#{criteria.startPage},#{criteria.recordsPerPage}	
+			#{startPage},#{recordsPerPage}	
 			
 	<!-- 마이바티스에서 #{파라미터}는 여러 멤버를 가진 객체의 경우 Getter에 해당됩니다. 
 	startPage 는 Criteria 클래스의 getStartPage 메서드의 리턴값을 의미하는데요, 
@@ -103,7 +103,7 @@
 	즉 Limit 20,10 으로 쿼리가 실행. -->
 	</select>
 
-	<select id="selectBoardTotalCount" parameterType="BoardCriteria" resultType="int">
+	<select id="selectBoardTotalCount" parameterType="BoardDTO" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM
