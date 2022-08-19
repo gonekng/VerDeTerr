@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.board.domain.CharacterDTO;
 import com.board.domain.MailDTO;
 import com.board.domain.SurveyOutputDTO;
+import com.board.domain.TypeDTO;
 import com.board.domain.UserDTO;
+import com.board.service.CharacterService;
+import com.board.service.SurveyService;
 import com.board.service.UserService;
 
 @Controller
@@ -23,6 +27,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private SurveyService surveyService;
 
 	@GetMapping("/login")
 	public String login() {
@@ -101,6 +108,9 @@ public class UserController {
         System.out.println(params.toString());
 		model.addAttribute("nick", myNickname);
 		model.addAttribute("email", myEmail);
+		
+		TypeDTO myType = surveyService.getTypeInfo(params.getUserType());
+		model.addAttribute("category", myType.getCategory());
 		
         List<SurveyOutputDTO> testList = userService.getUserHistory(myID);
         int listCount = testList.size();
