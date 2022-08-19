@@ -45,8 +45,112 @@ public class PaginationInfo {
 
       this.criteria = criteria;
    }
+   
+   
 
-   public void setTotalRecordCount(int totalRecordCount) {
+   public Criteria getCriteria() {
+	return criteria;
+}
+
+
+
+public void setCriteria(Criteria criteria) {
+	this.criteria = criteria;
+}
+
+
+
+public int getTotalPageCount() {
+	return totalPageCount;
+}
+
+
+
+public void setTotalPageCount(int totalPageCount) {
+	this.totalPageCount = totalPageCount;
+}
+
+
+
+public int getFirstPage() {
+	return firstPage;
+}
+
+
+
+public void setFirstPage(int firstPage) {
+	this.firstPage = firstPage;
+}
+
+
+
+public int getLastPage() {
+	return lastPage;
+}
+
+
+
+public void setLastPage(int lastPage) {
+	this.lastPage = lastPage;
+}
+
+
+
+public int getFirstRecordIndex() {
+	return firstRecordIndex;
+}
+
+
+
+public void setFirstRecordIndex(int firstRecordIndex) {
+	this.firstRecordIndex = firstRecordIndex;
+}
+
+
+
+public int getLastRecordIndex() {
+	return lastRecordIndex;
+}
+
+
+
+public void setLastRecordIndex(int lastRecordIndex) {
+	this.lastRecordIndex = lastRecordIndex;
+}
+
+
+
+public boolean isHasPreviousPage() {
+	return hasPreviousPage;
+}
+
+
+
+public void setHasPreviousPage(boolean hasPreviousPage) {
+	this.hasPreviousPage = hasPreviousPage;
+}
+
+
+
+public boolean isHasNextPage() {
+	return hasNextPage;
+}
+
+
+
+public void setHasNextPage(boolean hasNextPage) {
+	this.hasNextPage = hasNextPage;
+}
+
+
+
+public int getTotalRecordCount() {
+	return totalRecordCount;
+}
+
+
+
+public void setTotalRecordCount(int totalRecordCount) {
       this.totalRecordCount = totalRecordCount;
 
       if (totalRecordCount > 0) {
