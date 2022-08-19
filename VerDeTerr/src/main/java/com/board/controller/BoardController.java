@@ -103,17 +103,20 @@ public class BoardController extends UiUtils {
 
 	@GetMapping(value = "/board/list")
 	public String openBoardList(HttpSession session, @RequestParam(required = false) String type,
-			@ModelAttribute("boardCriteria") BoardDTO params, Model model) {
+			/*ModelAttribute 를 통해서, params 라는 이름으로 list.html 단으로 보낸다. */@ModelAttribute("params") BoardDTO params, Model model) {
+		//여기서 PostType에 type를 넣어준다. 
 		params.setPostType(type);
 		List<BoardDTO> boardList = boardService.getBoardList(params);
 		model.addAttribute("boardlist", boardList);
-		model.addAttribute("type", type);
+		
 		
 		String myID = (String) session.getAttribute("id");
 		UserDTO user = userService.getUserDetail(myID);
 		if(!user.getUserType().equals(type)) {
 			model.addAttribute("isMyType", "f");
 		}
+		
+		System.out.println();
 		return "board/list";
 	}
 

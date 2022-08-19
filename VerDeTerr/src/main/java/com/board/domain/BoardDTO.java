@@ -1,7 +1,5 @@
 package com.board.domain;
 
-import java.time.LocalDateTime;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,12 +7,11 @@ import lombok.Setter;
 @Setter
 public class BoardDTO extends CommonDTO {
 
+	
 	@Override
 	public String toString() {
 		return "BoardDTO [idx=" + idx + ", title=" + title + ", content=" + content + ", writer=" + writer
-				+ ", viewCnt=" + viewCnt + ", noticeYn=" + noticeYn + ", deleteYn=" + deleteYn + ", insertTime="
-				+ insertTime + ", updateTime=" + updateTime + ", deleteTime=" + deleteTime + ", postType=" + postType
-				+ "]";
+				+ ", viewCnt=" + viewCnt + ", noticeYn=" + noticeYn + ", postType=" + postType + "]";
 	}
 
 	public Long getIdx() {
@@ -65,37 +62,8 @@ public class BoardDTO extends CommonDTO {
 		this.noticeYn = noticeYn;
 	}
 
-	public Boolean getDeleteYn() {
-		return deleteYn;
-	}
 
-	public void setDeleteYn(Boolean deleteYn) {
-		this.deleteYn = deleteYn;
-	}
-
-	public LocalDateTime getInsertTime() {
-		return insertTime;
-	}
-
-	public void setInsertTime(LocalDateTime insertTime) {
-		this.insertTime = insertTime;
-	}
-
-	public LocalDateTime getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(LocalDateTime updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	public LocalDateTime getDeleteTime() {
-		return deleteTime;
-	}
-
-	public void setDeleteTime(LocalDateTime deleteTime) {
-		this.deleteTime = deleteTime;
-	}
+	
 
 	public String getPostType() {
 		return postType;
@@ -123,18 +91,6 @@ public class BoardDTO extends CommonDTO {
 	/** 공지 여부 */
 	private Boolean noticeYn;
 
-	/** 삭제 여부 */
-	private Boolean deleteYn;
-
-	/** 등록일 */
-	private LocalDateTime insertTime;
-
-	/** 수정일 */
-	private LocalDateTime updateTime;
-
-	/** 삭제일 */
-	private LocalDateTime deleteTime;
-	
 	/** 유형 */
 	private String postType;
 
