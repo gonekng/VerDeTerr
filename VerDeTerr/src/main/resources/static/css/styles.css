@@ -2495,7 +2495,7 @@ textarea.form-control-lg {
   border-radius: 0.25em;
 }
 .form-check-input[type=radio] {
-  border-radius: 50%;
+  border-radius: 100%;
 }
 .form-check-input:active {
   filter: brightness(90%);
@@ -2513,9 +2513,11 @@ textarea.form-control-lg {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
 }
 
-.form-check-input:checked[type=radio] {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
+form-check-input:checked[type=radio] {
+  background-color: #f4623a;
+  border-color: #f4623a;
 }
+
 .form-check-input[type=checkbox]:indeterminate {
   background-color: #f4623a;
   border-color: #f4623a;
@@ -11578,4 +11580,60 @@ header.masthead h1, header.masthead .h1 {
 .box2 select option {
 	color: black;
 	background: white;
+}
+
+p.text-white-75.mb-4{
+	font-size: 2.0rem;
+}
+p.text-black-75.mb-4{
+	font-size: 2.0rem;
+}
+.radio-toggles {
+    align-items: center;
+    background: #eee;
+    border: 5px solid lightgrey;
+    border-radius: 9999px;
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 500px;
+    overflow: hidden;
+    padding: 15px;
+    position: relative;
+}
+label {
+	font-size: large;
+	font-weight:bold;
+    cursor: pointer;
+    padding: 10px 20px;
+    text-align: match-parent;
+    width: 50%;
+    z-index: 2;
+}
+.slide-item {
+    background-color : #0000;
+    border-radius: 9999px;
+    height: calc(90%);
+    left: calc(50%);
+    position: absolute;
+    width: calc(50%);
+    transition: left .5s;
+    z-index: auto;
+    
+}
+input[type="radio"] {
+    left: -9999px;
+    position: absolute;
+    z-index: -1;
+    
+}
+input[type="radio"]:nth-of-type(1):checked ~ .slide-item {
+    left: 0.11px;
+    background-color : #1111;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+input[type="radio"]:nth-of-type(2):checked ~ .slide-item {
+    left: calc(50%);
+    background-color : #1111;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
 }
