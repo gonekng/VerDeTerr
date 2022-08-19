@@ -9,6 +9,8 @@ import org.springframework.util.CollectionUtils;
 
 import com.board.domain.BoardDTO;
 import com.board.mapper.BoardMapper;
+import com.board.paging.Criteria;
+import com.board.paging.PaginationInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -113,6 +115,36 @@ class BoardMapperTests {
 			boardMapper.insertBoard(params);
 		}
 	}
+	
+	@Test
+	public void selectBoardListTest() {
+		System.out.println("test 들어옴");
+		BoardDTO boardDTO=new BoardDTO();
+		Criteria criteria=new Criteria();
+		
+		PaginationInfo pageinfo = new PaginationInfo(criteria);
+		boardDTO.setPostType("ESTJ");
+		pageinfo.setFirstRecordIndex(3);
+		boardDTO.setPaginationInfo(pageinfo);
+		
+		System.out.println("세팅완료");
+		
+		try {
+			System.out.println("매퍼실행직전 로그");
+			BoardDTO board = (BoardDTO) boardMapper.selectBoardList(boardDTO);
+			System.out.println("매퍼실행직후 로그");
+			//String boardJson = new ObjectMapper().writeValueAsString(board);
+            String boardJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(board);
+
+			System.out.println("=========================");
+			System.out.println(boardJson);
+			System.out.println("=========================");
+
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 //	@Test
 //	public void testSelectList() {

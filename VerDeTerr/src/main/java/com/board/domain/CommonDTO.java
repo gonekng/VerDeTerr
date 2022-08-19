@@ -12,6 +12,23 @@ import lombok.Setter;
 @Setter
 public class CommonDTO extends Criteria {
 
+	/** 페이징 정보 */
+	private PaginationInfo paginationInfo;
+
+	/** 삭제 여부 */
+	private Boolean deleteYn;
+
+	/** 등록일 */
+	private LocalDateTime insertTime;
+
+	/** 수정일 */
+	private LocalDateTime updateTime;
+
+	/** 삭제일 */
+	private LocalDateTime deleteTime;
+	
+	
+	
 	@Override
 	public String toString() {
 		return "CommonDTO [paginationInfo=" + paginationInfo + ", deleteYn=" + deleteYn + ", insertTime=" + insertTime
@@ -58,19 +75,6 @@ public class CommonDTO extends Criteria {
 		this.deleteTime = deleteTime;
 	}
 
-	/** 페이징 정보 */
-	private PaginationInfo paginationInfo;
 
-	/** 삭제 여부 */
-	private Boolean deleteYn;
-
-	/** 등록일 */
-	private LocalDateTime insertTime;
-
-	/** 수정일 */
-	private LocalDateTime updateTime;
-
-	/** 삭제일 */
-	private LocalDateTime deleteTime;
 
 }

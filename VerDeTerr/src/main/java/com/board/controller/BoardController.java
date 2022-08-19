@@ -43,31 +43,28 @@ public class BoardController extends UiUtils {
 		String myID = (String) session.getAttribute("id");
 		UserDTO user = userService.getUserDetail(myID);
 		// 세션에서 가져온 아이디를 기준으로 dto 정보를 getdetail 을해서 다 가져온다
-		if (user != null) {
-			if (idx == null) {
-				// addAttribute BoardDTO 객체를 "board" 라는 이름으로 뷰(화면으로) 전달
-				// 게시글 번호(idx)가 전송되지 않은 경우에는 비어있는 객체를 전달하고, 게시글번호가
-				// 전송된 경우에는 getBoardDetail 메서드의 실행결과 ,즉 게시글 정보를 포함하고 있는 객체를 전달
-				// 만약 getBoardDetail 메서드의 실행결과가 null 이면, 게시글 리스트 페이지로 리다이렉트 합니다.
-				BoardDTO dao1 = new BoardDTO();// dao1 이라는 새로운 인스턴스를 생성
-				dao1.setWriter(user.getNickname());// 그 BoardDTO 에 닮겨있는 writer 에 dao1을 통해 writer를 지정
-				System.out.println("제발 되었으면" + dao1.getWriter());
-				model.addAttribute("board", dao1); // "board" 라는 key 에 dao1의 value를 입력
 
-			} else {
-				BoardDTO board = boardService.getBoardDetail(idx);
-				if (board == null) {
-					String url = "redirect:/board/list?type=" + type;
-					return url;
-				}
-				model.addAttribute("board", board); // addAttribute 화면으로 데이터를 전달하는메소드
-				System.out.println("board.getNoticeYn() : " + board.getNoticeYn());
+		if (idx == null) {
+			// addAttribute BoardDTO 객체를 "board" 라는 이름으로 뷰(화면으로) 전달
+			// 게시글 번호(idx)가 전송되지 않은 경우에는 비어있는 객체를 전달하고, 게시글번호가
+			// 전송된 경우에는 getBoardDetail 메서드의 실행결과 ,즉 게시글 정보를 포함하고 있는 객체를 전달
+			// 만약 getBoardDetail 메서드의 실행결과가 null 이면, 게시글 리스트 페이지로 리다이렉트 합니다.
+			BoardDTO dao1 = new BoardDTO();// dao1 이라는 새로운 인스턴스를 생성
+			dao1.setWriter(user.getNickname());// 그 BoardDTO 에 닮겨있는 writer 에 dao1을 통해 writer를 지정
+			System.out.println("제발 되었으면" + dao1.getWriter());
+			model.addAttribute("board", dao1); // "board" 라는 key 에 dao1의 value를 입력
+
+		} else {
+			BoardDTO board = boardService.getBoardDetail(idx);
+			if (board == null) {
+				String url = "redirect:/board/list?type=" + type;
+				return url;
 			}
-			model.addAttribute("type", type);
-			return "board/write";
+			model.addAttribute("board", board); // addAttribute 화면으로 데이터를 전달하는메소드
+			System.out.println("board.getNoticeYn() : " + board.getNoticeYn());
 		}
-		String url = "redirect:/board/list?type=" + type;
-		return url;
+		model.addAttribute("type", type);
+		return "board/write";
 	}
 
 	@PostMapping(value = "/board/register")
@@ -106,25 +103,25 @@ public class BoardController extends UiUtils {
 
 	@GetMapping(value = "/board/list")
 	public String openBoardList(HttpSession session, @RequestParam(required = false) String type,
-			@ModelAttribute("boardCriteria") BoardDTO params, Model model) {
+			/*ModelAttribute 를 통해서, params 라는 이름으로 list.html 단으로 보낸다. */@ModelAttribute("params") BoardDTO params, Model model) {
+		//여기서 PostType에 type를 넣어준다. 
 		params.setPostType(type);
 		List<BoardDTO> boardList = boardService.getBoardList(params);
 		model.addAttribute("boardlist", boardList);
-		model.addAttribute("type", type);
-
+		
+		
 		String myID = (String) session.getAttribute("id");
 		UserDTO user = userService.getUserDetail(myID);
-		if (user != null) {
-			if (user.getUserType().equals(type)) {
-				model.addAttribute("isMyType", "t");
-			}
+		if(!user.getUserType().equals(type)) {
+			model.addAttribute("isMyType", "f");
 		}
+		
+		System.out.println();
 		return "board/list";
 	}
 
 	@GetMapping(value = "/board/view")
-	public String openBoardDetail(HttpSession session, @RequestParam(required = false) String type,
-			@RequestParam(value = "idx", required = false) Long idx, Model model) {
+	public String openBoardDetail(HttpSession session, @RequestParam(required=false) String type, @RequestParam(value = "idx", required = false) Long idx, Model model) {
 		if (idx == null) {
 			// TODO => 올바르지 않은 접근이라는 메시지를 전달하고, 게시글 리스트로 리다이렉트
 			return "redirect:/board/list";
@@ -138,19 +135,16 @@ public class BoardController extends UiUtils {
 		System.out.println("board.idx:" + board.getIdx());
 		model.addAttribute("board", board);
 		model.addAttribute("type", type);
-
+		
 		String myID = (String) session.getAttribute("id");
 		UserDTO user = userService.getUserDetail(myID);
-		if (user != null) {
-			String myNickname = user.getNickname();
-			model.addAttribute("myNickname", myNickname);
-		}
+		String myNickname = user.getNickname();
+		model.addAttribute("myNickname", myNickname);
 		return "board/view";
 	}
 
 	@PostMapping(value = "/board/delete")
-	public String deleteBoard(@RequestParam String type, @RequestParam(value = "idx", required = false) Long idx,
-			Model model) {
+	public String deleteBoard(@RequestParam String type, @RequestParam(value = "idx", required = false) Long idx, Model model) {
 		System.out.println("여기로 들어오나요?");
 		if (idx == null) {
 			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);

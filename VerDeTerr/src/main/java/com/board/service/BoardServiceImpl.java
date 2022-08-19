@@ -3,12 +3,14 @@ package com.board.service;
 import java.util.Collections;
 import java.util.List;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.board.domain.BoardDTO;
 import com.board.mapper.BoardMapper;
 import com.board.paging.Criteria;
+import com.board.paging.PaginationInfo;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -63,24 +65,21 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardDTO> getBoardList(BoardDTO params) {
-		System.out.println("함수에는 들어가나?");
+		System.out.println("params.getcriteria"+params);
 		List<BoardDTO> boardList = Collections.emptyList();
-		//생성자로 초기화 지정했던 부분 이곳에서 실행.
-		Criteria criteria=new Criteria(); 
-		
-//		boardCriteria.setBoardDTO(params);
-		
-//		int boardTotalCount = boardMapper.selectBoardTotalCount(params);
+		System.out.println("도대체 getboardlist의 param은 뭐야? 내가 보았을때는 posttype"+params);
 		int boardTotalCount = boardMapper.selectBoardTotalCount(params);
+		PaginationInfo paginationInfo = new PaginationInfo(params);
+		paginationInfo.setTotalRecordCount(boardTotalCount);
 		
-		System.out.println("boardTotalCount : " + boardTotalCount);
-		System.out.println("params.getIdx()" + params.getIdx());
+		params.setPaginationInfo(paginationInfo);
 		
 		if (boardTotalCount > 0) {
 			
 			boardList = boardMapper.selectBoardList(params);
-			System.out.println("boardlist:"+boardList);
-			System.out.println("params 뭐 나오지"+params.getIdx());
+			//System.out.println("boardlist:"+boardList);
+			//System.out.println("params 뭐 나오지"+params.getIdx());
+			System.out.println("getboardlist paginationinfo는??"+params.getPaginationInfo());
 		}
 
 		return boardList;

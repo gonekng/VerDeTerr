@@ -9,25 +9,20 @@
 		 function isMyType(){
 			let isMyType = "[[${isMyType}]]";
 			let type = "[[${type}]]";
-			if (isMyType == "t") {
-				location.href = "/board/write?type=" + type;
-			}
-			else{
+			if (isMyType == "f") {
 				alert("해당 게시판의 글 작성 권한이 없습니다.");
 				location.href = "/board/list?type=" + type;
+			}
+			else{
+				location.href = "/board/write?type=" + type;
 			}
 		};
 	</script>
 </th:block>
 
-
+ <!-- 여기서는 layout 순서 먹인걸로 가고, 이러한 레이아웃에 끼어놓은 부품을 쓴다고 정의한것 -->
 <th:block layout:fragment="search">
-	<form action="#" id="searchform-header" class="searchform js__toggle active pull-right">
-		<input type="search" placeholder="Search..." class="input-search">
-		<button class="mdi mdi-magnify button-search" type="submit">
-			<i class="fa fa-search" aria-hidden="true"></i>
-		</button>
-	</form>
+	<div th:replace="board/fragments/common :: search"></div>
 </th:block>
 
 <th:block layout:fragment="content">
@@ -46,10 +41,10 @@
 				<tr th:if="${not #lists.isEmpty( boardlist )}" th:each="row : ${boardlist}">
 					<td scope="row" th:text="${#strings.equals( row.NoticeYn, true ) ? '&#8251공지&#8251' : row.idx}">
 					</td>
-					<td class="text-left">
-						<a th:href="@{/board/view( idx=${row.idx}, type=${type} )}"
-								th:text="${row.title}"></a>
-					</td>
+					<td class="text-left"><a th:href="|@{/board/view}${params.makeQueryString(params.currentPageNo)}&idx=${row.idx}|" th:text="${row.title}"></a>
+
+
+
 					<td th:text="${row.writer}"></td>
 					<td th:text="${#temporals.format( row.insertTime, 'yyyy-MM-dd' )}"></td>
 					<td th:text="${row.viewCnt}"></td>
@@ -65,20 +60,44 @@
 		</div>
 
 		<th:block layout:fragment="paging">
-			<nav aria-label="Page navigation" class="text-center">
-				<ul class="pagination">
-					<li><a href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-						</a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-						</a></li>
-				</ul>
-			</nav>
-		</th:block>
+				<nav th:replace="board/fragments/common :: pagination"></nav>
+				
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+
+			function movePage(uri, queryString) {
+				location.href = uri + queryString;
+			}
+			
+			function searchBoard(form) {
+				/*[- 드롭다운이 아닌 메인 검색 키워드로 검색했을 때 -]*/
+				if (isEmpty(form) == true) {
+					var searchKeyword = document.getElementById("mainSearchKeyword");
+					if (isEmpty(searchKeyword.value) == true) {
+						alert("키워드를 입력해 주세요.");
+						searchKeyword.focus();
+						return false;
+					}
+
+					form = document.getElementById("searchForm");
+					form.searchKeyword.value = searchKeyword.value;
+					form.submit();
+				}
+
+				if (isEmpty(form.searchKeyword.value) == true) {
+					alert("키워드를 입력해 주세요.");
+					form.searchKeyword.focus();
+					return false;
+				}
+			}
+
+
+			/*]]>*/
+		</script>
+	</th:block>
+
+			</th:block>
+
 	</div>
 </th:block>
 
