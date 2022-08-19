@@ -9,12 +9,12 @@
 		 function isMyType(){
 			let isMyType = "[[${isMyType}]]";
 			let type = "[[${type}]]";
-			if (isMyType == "f") {
-				alert("해당 게시판의 글 작성 권한이 없습니다.");
-				location.href = "/board/list?type=" + type;
+			if (isMyType == "t") {
+				location.href = "/board/write?type=" + type;
 			}
 			else{
-				location.href = "/board/write?type=" + type;
+				alert("해당 게시판의 글 작성 권한이 없습니다.");
+				location.href = "/board/list?type=" + type;
 			}
 		};
 	</script>
@@ -46,8 +46,10 @@
 				<tr th:if="${not #lists.isEmpty( boardlist )}" th:each="row : ${boardlist}">
 					<td scope="row" th:text="${#strings.equals( row.NoticeYn, true ) ? '&#8251공지&#8251' : row.idx}">
 					</td>
-					<td class="text-left"><a th:href="@{/board/view( idx=${row.idx}, type=${type} )}"
-							th:text="${row.title}"></a></td>
+					<td class="text-left">
+						<a th:href="@{/board/view( idx=${row.idx}, type=${type} )}"
+								th:text="${row.title}"></a>
+					</td>
 					<td th:text="${row.writer}"></td>
 					<td th:text="${#temporals.format( row.insertTime, 'yyyy-MM-dd' )}"></td>
 					<td th:text="${row.viewCnt}"></td>

@@ -23,7 +23,7 @@
 			이메일 : <span th:text="${email}">여기는 이메일입니다.</span>
 		</div>
 
-		<div class="table-responsive clearfix" style="padding: 40px;">
+		<div class="table-responsive clearfix" style="padding: 200px;">
 			<table class="table table-hover"
 				style="margin-left: auto; margin-right: auto; text-align: center;">
 				<thead>
@@ -38,9 +38,9 @@
 						th:each="row, i : ${testList}">
 						<td scope="row" th:text="${listCount - i.index}"></td>
 						<td class="text-left"><a
-							th:text="${#temporals.format( row.testdate, 'yyyy-MM-dd' )}"></a>
+							th:text="${#temporals.format( row.testdate, 'yyyy-MM-dd HH:mm' )}"></a>
 						</td>
-						<td th:text="${row.usertype}"></td>
+						<td th:text="|${row.usertype} (${category})|"></td>
 					</tr>
 					<tr th:unless="${not #lists.isEmpty( testList )}">
 						<td colspan="5">조회된 결과가 없습니다.</td>

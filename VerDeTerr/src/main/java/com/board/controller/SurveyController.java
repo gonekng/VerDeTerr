@@ -50,9 +50,13 @@ public class SurveyController {
 			if (survey == null) {
 				survey = new SurveyDTO(myID);
 			}
+			model.addAttribute("survey", survey);
 			UserDTO user = userService.getUserDetail(myID);
 			model.addAttribute("type", user.getUserType());
-			model.addAttribute("survey", survey);
+			if(user.getUserType()!=null) {
+				TypeDTO myType = surveyService.getTypeInfo(user.getUserType());
+				model.addAttribute("category", myType.getCategory());
+			}
 			return "survey/surveylist";
 		}
 
