@@ -21,9 +21,6 @@
 <th:block layout:fragment="content">
 <div
 		class="container px-4 px-lg-5 h-100 align-items-center justify-content-center">
-		<br>
-		<br>
-		<br>
 		<h1 style="text-align: center; padding: 40px;">비밀번호 찾기</h1>
 		<form th:action="@{/findPw_proc}" method="post">
 			<div class="form-group" style="margin-top: 10px;">
@@ -32,8 +29,8 @@
 					th:for="userpwhint">비밀번호 힌트</label> <input type="text"
 					name="pwHint" class="form-control" placeholder="나의 보물 1호는?">
 			</div>
-			<button type="submit" class="btn btn-primary"
-				style="margin-top: 20px;">비밀번호 찾기</button>
+			<button type="submit" class="btn btn-primary" style="margin-top: 20px;">비밀번호 찾기</button>
+			<button type="button" class="btn btn-secondary" style="margin-top: 20px;" onclick="history.back()">뒤로 가기</button>
 		</form>
 </div> 
 	
