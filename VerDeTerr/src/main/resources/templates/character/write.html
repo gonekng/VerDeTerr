@@ -14,8 +14,7 @@
 	<br>
 	<h2 style="padding: 40px 40px 0px 40px;">캐릭터 등록</h2>
 	<div class="card-content">
-		<form id="saveForm" class="form-horizontal" th:action="@{/character/register}" th:object="${character}" method="post"
-			onsubmit="return saveCharacter(this);">
+		<form id="saveForm" class="form-horizontal" th:action="@{/character/register}" th:object="${character}" method="post" onsubmit="return saveCharacter(this);">
 		    <!--/* 기존 게시글 수정인 경우, 서버로 전달할 게시글 번호(id) */-->
             <input type="hidden" th:field="*{idx}" th:if="*{idx != null and idx > 0}" />
 			
@@ -47,7 +46,14 @@
 						class="form-control" maxlength="50" placeholder="분류를 입력해 주세요." />
 				</div>
 			</div>
-			
+			<form method="post" enctype="multipart/form-data">
+			    <div class="button">
+			        <label for="chooseFile">
+			            👉 CLICK HERE! 👈
+			        </label>
+			    </div>
+			    <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+			</form>
 			<div class="btn_wrap text-center">
 				<a th:href="@{/character/list}"
 					class="btn btn-default waves-effect waves-light">뒤로가기</a>

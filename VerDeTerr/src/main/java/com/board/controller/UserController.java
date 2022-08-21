@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.board.domain.CharacterDTO;
 import com.board.domain.MailDTO;
 import com.board.domain.SurveyOutputDTO;
 import com.board.domain.TypeDTO;
 import com.board.domain.UserDTO;
-import com.board.service.CharacterService;
 import com.board.service.SurveyService;
 import com.board.service.UserService;
 
@@ -77,23 +75,19 @@ public class UserController {
 		return "redirect:/main";
 	}
 
-	@GetMapping(value = "/main")
-	public String openMainpage(HttpSession session, Model model) {
-		UserDTO params = new UserDTO();
-		String myID = (String) session.getAttribute("id");
-		params = userService.getUserDetail(myID);
-<<<<<<< HEAD
-		if(params!=null) {
-=======
-		if (params != null) {
-			System.out.println(params.isManagerYn());
->>>>>>> 170b68cfe7ce3e093a56d700a660a501dd473a3e
-			model.addAttribute("isManager", params.isManagerYn());
-		} else {
-			model.addAttribute("isManager", false);
-		}
-		return "main";
-	}
+   @GetMapping(value = "/main")
+   public String openMainpage(HttpSession session, Model model) {
+      UserDTO params = new UserDTO();
+      String myID = (String) session.getAttribute("id");
+      params = userService.getUserDetail(myID);
+      if (params != null) {
+         System.out.println(params.isManagerYn());
+         model.addAttribute("isManager", params.isManagerYn());
+      } else {
+         model.addAttribute("isManager", false);
+      }
+      return "main";
+   }
 
 	@GetMapping(value = "/mypage")
 	public String openMypage(HttpSession session, Model model) {
