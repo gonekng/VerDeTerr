@@ -2,6 +2,8 @@ package com.board.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Service;
 
 import com.board.domain.BoardDTO;

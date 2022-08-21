@@ -44,6 +44,9 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardDTO getBoardDetail(Long idx) {
+			//조회수 늘리는것   
+			boardMapper.updateViewcnt(idx);
+			
 		return boardMapper.selectBoardDetail(idx);
 	}
 
