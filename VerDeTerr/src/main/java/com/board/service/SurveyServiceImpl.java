@@ -1,12 +1,8 @@
 package com.board.service;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.board.domain.BoardDTO;
 import com.board.domain.SurveyDTO;
 import com.board.domain.SurveyOutputDTO;
 import com.board.domain.TypeDTO;

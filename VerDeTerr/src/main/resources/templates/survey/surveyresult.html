@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="survey/layout/basic">
+	layout:decorate="main/layout/basic">
 <th:block layout:fragment="title">
 	<title>This page is a survey result page</title>
 </th:block>
@@ -49,8 +49,10 @@
 
 						<div class="col-lg-8 align-self-baseline">
 							<p class="text-white-75 mb-5">다시 테스트 하시겠습니까?</p>
-							<br> <a class="btn btn-primary btn-xl" href="surveylist.do">다시
-								테스트하러 가기</a>
+
+							<a class="btn btn-secondary btn-xl" style="margin:5px;" href="surveylist">다시 테스트하기</a>
+							<a class="btn btn-primary btn-xl" style="margin:5px;"  href="mypage">마이페이지</a>
+
 						</div>
 					</div>
 				</div>
