@@ -10,11 +10,11 @@ public interface CharacterMapper {
 
 	public int insertCharacter(CharacterDTO params);
 
-	public CharacterDTO selectCharacterDetail(String name);
+	public CharacterDTO selectCharacterDetail(Long idx);
 
 	public int updateCharacter(CharacterDTO params);
 
-	public int deleteCharacter(String name);
+	public int deleteCharacter(Long idx);
 
 	public List<CharacterDTO> selectCharacterList(String type);
 

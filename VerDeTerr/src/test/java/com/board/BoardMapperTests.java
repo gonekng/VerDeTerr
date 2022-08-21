@@ -1,22 +1,26 @@
 package com.board;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.util.CollectionUtils;
 
 import com.board.domain.BoardDTO;
+import com.board.domain.CommentDTO;
 import com.board.mapper.BoardMapper;
 import com.board.paging.Criteria;
 import com.board.paging.PaginationInfo;
+import com.board.service.CommentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+
+
 @SpringBootTest
 class BoardMapperTests {
+	@Autowired
+	private CommentService commentService;
+
 
 	@Autowired
 	private BoardMapper boardMapper;
@@ -145,6 +149,34 @@ class BoardMapperTests {
 		}
 	}
 	
+	// commenttest 따로만드니까 안되서 임시로 boarTest 에서~ 
+	@Test
+	public void registerComments() {
+			
+			CommentDTO params = new CommentDTO();
+			for(int i=0; i<=10;i++) {
+			params.setBoardIdx((long) 4); // 댓글을 추가할 게시글 번호
+			params.setContent("번 댓글을 추가합니다!");
+			params.setWriter("won9914_ENFP");
+			commentService.registerComment(params);
+			}	
+
+	}
+
+	@Test
+	public void deleteComment() {
+		commentService.deleteComment((long) 12); // 삭제할 댓글 번호
+
+		getCommentList();
+	}
+
+	@Test
+	public void getCommentList() {
+		CommentDTO params = new CommentDTO();
+		params.setBoardIdx((long) 2); // 댓글을 추가할 게시글 번호
+
+		commentService.getCommentList(params);
+	}
 	
 //	@Test
 //	public void testSelectList() {

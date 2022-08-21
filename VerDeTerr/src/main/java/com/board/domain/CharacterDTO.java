@@ -16,7 +16,7 @@ public class CharacterDTO {
 	
 	private String title;
 	
-	private String Category;
+	private String category;
 	
 	private String userType;
 	
@@ -47,11 +47,11 @@ public class CharacterDTO {
 	}
 
 	public String getCategory() {
-		return Category;
+		return category;
 	}
 
 	public void setCategory(String category) {
-		Category = category;
+		this.category = category;
 	}
 
 	public String getUserType() {
@@ -72,7 +72,7 @@ public class CharacterDTO {
 
 	@Override
 	public String toString() {
-		return "CharacterDTO [idx=" + idx + ", name=" + name + ", title=" + title + ", Category=" + Category
+		return "CharacterDTO [idx=" + idx + ", name=" + name + ", title=" + title + ", category=" + category
 				+ ", userType=" + userType + ", regDate=" + regDate + "]";
 	}
 

@@ -8,7 +8,7 @@
 		, name
 		, title
 		, category
-		, usertype
+		, userType
 		, regdate
 	</sql>
 
@@ -20,32 +20,35 @@
 		, #{name}
 		, #{title}
 		, #{category}
-		, #{usertype}
+		, #{userType}
 		, NOW()
 		)
 	</insert>
 
-	<select id="selectCharacterDetail" parameterType="String"
+	<select id="selectCharacterDetail" parameterType="Long"
 		resultType="CharacterDTO">
 		SELECT
 		<include refid="characterColumns" />
 		FROM
 		`Character`
 		WHERE
-		name = #{name}
+		idx = #{idx}
 	</select>
 
 	<update id="updateCharacter" parameterType="CharacterDTO">
 		UPDATE `Character`
 		SET
-		usertype = IFNULL(#{usertype}, usertype)
+		name = ifnull(#{name},name)
+		, title = ifnull(#{title},title)
+		, category = ifnull(#{category},category)
+		, userType = ifnull(#{userType},userType)
 		WHERE
-		name = #{name}
+		idx = #{idx}
 	</update>
 
-	<delete id="deleteCharacter" parameterType="String" >
+	<delete id="deleteCharacter" parameterType="Long" >
 		DELETE FROM `Character`
-		WHERE name = #{name}
+		WHERE idx = #{idx}
 	</delete>
 
 	<select id="selectCharacterList" parameterType="String" resultType="CharacterDTO">

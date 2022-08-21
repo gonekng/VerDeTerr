@@ -24,7 +24,8 @@ public interface BoardMapper {
 	
 	public int restore(BoardDTO params);
 	
-	
+	// 조회수증가, 여기서 params는 idx가 들어가야 한다.
+	public int updateViewcnt(Long idx);
 	
 
 }
