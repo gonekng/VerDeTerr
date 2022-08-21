@@ -72,12 +72,13 @@ public class UserController {
 
 	@GetMapping(value = "/main")
 	public String openMainpage(HttpSession session, Model model) {
-		
 		UserDTO params = new UserDTO();
 		String myID = (String) session.getAttribute("id");
-		if(myID!=null) {
-			params = userService.getUserDetail(myID);
+		params = userService.getUserDetail(myID);
+		if(params!=null) {
 			model.addAttribute("isManager", params.isManagerYn());
+		} else {
+			model.addAttribute("isManager", false);
 		}
 		return "main";
 	}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="survey/layout/basic">
+
+<th:block layout:fragment="title">
+	<title>Manager page</title>
+	<link href="css/styles.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</th:block>
+
+<th:block layout:fragment="content">
+	<br>
+	<br>
+	<h2 style="padding: 40px 40px 0px 40px;">캐릭터 등록</h2>
+	<div class="card-content">
+		<form id="saveForm" class="form-horizontal" th:action="@{/character/register}" th:object="${character}" method="post"
+			onsubmit="return saveCharacter(this);">
+		    <!--/* 기존 게시글 수정인 경우, 서버로 전달할 게시글 번호(id) */-->
+            <input type="hidden" th:field="*{idx}" th:if="*{idx != null and idx > 0}" />
+			
+			<div class="form-group">
+				<label for="name" class="col-sm-2 control-label">이름</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{name}" class="form-control"
+						maxlength="50" placeholder="이름을 입력해 주세요." />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="title" class="col-sm-2 control-label">제목</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{title}" class="form-control"
+						maxlength="50" placeholder="제목을 입력해 주세요." />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="category" class="col-sm-2 control-label">카테고리</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{category}"
+						class="form-control" maxlength="50" placeholder="카테고리를 입력해 주세요." />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="userType" class="col-sm-2 control-label">유형</label>
+				<div class="col-sm-10">
+					<input type="text" th:field="*{userType}"
+						class="form-control" maxlength="50" placeholder="분류를 입력해 주세요." />
+				</div>
+			</div>
+			
+			<div class="btn_wrap text-center">
+				<a th:href="@{/character/list}"
+					class="btn btn-default waves-effect waves-light">뒤로가기</a>
+                <button type="submit" class="btn btn-primary waves-effect waves-light">저장하기</button>
+			</div>
+		</div>
+</th:block>
+    <th:block layout:fragment="script">
+      	<script th:src="@{/scripts/common.js}"></script>
+        <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        	//  캐릭터 저장
+            function saveCharacter(form) {
+        		var result = (
+        				isValid(form.name, "이름", null, null)
+        				&&isValid(form.title, "제목", null, null)
+        				&&isValid(form.category, "카테고리", null, null)
+        				&&isValid(form.type, "유형", null, null)
+        			);
+        		if(result == false){
+        			return false;
+        		}
+        	}
+    
+        /*]]>*/
+        </script>
+    </th:block>
+</html>
