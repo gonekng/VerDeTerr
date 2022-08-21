@@ -11,11 +11,11 @@ public interface CharacterService {
 
 	public int registerCharacter(CharacterDTO params);
 
-	public CharacterDTO getCharacterDetail(String name);
+	public CharacterDTO getCharacterDetail(Long idx);
 	
 	public int updateCharacter(CharacterDTO params);
 
-	public int deleteCharacter(String name);
+	public int deleteCharacter(Long idx);
 
 	public List<CharacterDTO> getCharacterList(String type);
 

@@ -121,4 +121,12 @@
 		    <!-- and postType = #{boardDTO.postType}  Post_type 별로 출력 해주고 싶을때 --> 
 	</select>
 
+
+	<update id="updateViewcnt" parameterType="BoardDTO">
+		UPDATE post
+		SET
+			viewcnt=viewcnt+1
+		WHERE
+			idx=#{idx}	
+	</update>
 </mapper>

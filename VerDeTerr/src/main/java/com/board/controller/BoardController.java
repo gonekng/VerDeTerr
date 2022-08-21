@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.constant.Method;
 import com.board.domain.BoardDTO;
+import com.board.domain.CommentDTO;
 import com.board.domain.UserDTO;
 import com.board.service.BoardService;
 import com.board.service.UserService;
@@ -63,6 +64,7 @@ public class BoardController extends UiUtils {
 				}
 				model.addAttribute("board", board); // addAttribute 화면으로 데이터를 전달하는메소드
 				System.out.println("board.getNoticeYn() : " + board.getNoticeYn());
+
 			}
 			model.addAttribute("type", type);
 			return "board/write";
@@ -102,6 +104,7 @@ public class BoardController extends UiUtils {
 			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 		}
 		String url = "/board/list?type=" + params.getPostType();
+		System.out.println("url 잘찍히는지 이게 안되서 당연히 그런거다."+url);
 		return showMessageWithRedirect("게시글 등록이 완료되었습니다.", url, Method.GET, null, model);
 	}
 
@@ -109,13 +112,16 @@ public class BoardController extends UiUtils {
 
 	@GetMapping(value = "/board/list")
 	public String openBoardList(HttpSession session, @RequestParam(required = false) String type,
-			/*ModelAttribute 를 통해서, params 라는 이름으로 list.html 단으로 보낸다. */@ModelAttribute("params") BoardDTO params, Model model) {
+		/*ModelAttribute 를 통해서, params 라는 이름으로 list.html 단으로 보낸다. */@ModelAttribute("params") BoardDTO params, Model model) {
 		//여기서 PostType에 type를 넣어준다. 
+		System.out.println("board/list controller에 들어오고, type은 잘가져오는지"+type);
 		params.setPostType(type);
+		System.out.println("그렇다면 params에 잘 넣는지 여기가 중요하다"+params);
 		List<BoardDTO> boardList = boardService.getBoardList(params);
 		model.addAttribute("boardlist", boardList);
-		model.addAttribute("type", type);
 		
+		//type 으로 list.html 로 보내야한다. 그러면 거기서 isMytype을 통해서 write를 쓸때 type 을 전달해준다. 
+		model.addAttribute("type",type);
 		
 		String myID = (String) session.getAttribute("id");
 		UserDTO user = userService.getUserDetail(myID);

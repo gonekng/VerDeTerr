@@ -21,8 +21,8 @@ public class CharacterServiceImpl implements CharacterService{
 	};
 
 	@Override
-	public CharacterDTO getCharacterDetail(String name) {
-		return characterMapper.selectCharacterDetail(name);
+	public CharacterDTO getCharacterDetail(Long idx) {
+		return characterMapper.selectCharacterDetail(idx);
 	};
 	
 	@Override
@@ -31,8 +31,8 @@ public class CharacterServiceImpl implements CharacterService{
 	};
 
 	@Override
-	public int deleteCharacter(String name) {
-		return characterMapper.deleteCharacter(name);
+	public int deleteCharacter(Long idx) {
+		return characterMapper.deleteCharacter(idx);
 	};
 
 	@Override

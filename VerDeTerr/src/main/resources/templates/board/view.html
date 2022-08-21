@@ -90,31 +90,17 @@
 				<!-- /.box-title -->
 			</div>
 
-			<form class="form-horizontal form-view">
-				<div class="input-group margin-bottom-20">
-					<input type="email" class="form-control" placeholder="">
-					<div class="input-group-btn"><button type="button" class="btn waves-effect waves-light"><i
-								class="fa fa-commenting" aria-hidden="true"></i></button></div>
-					<!-- /.input-group-btn -->
+	<form class="form-horizontal form-view">
+		<div class="input-group margin-bottom-20">
+			<input type="text" id="content" class="form-control" />
+				<div class="input-group-btn">
+					<button type="button" class="btn waves-effect waves-light" th:onclick="insertComment([[ ${board.idx} ]])">
+					등록
+					</button>
 				</div>
-				<ul class="notice-list">
-					<li>
-						<span class="name">활력가형 엘사</span>
-						<span class="desc">와 저도 취업하고 싶네요ㅜㅜ 축하드려요!!</span>
-						<span class="time">2019.03.26</span>
-						<button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close"
-								aria-hidden="true"></i></button>
-					</li>
-					<li>
-						<span class="name">우주비행가형 버즈</span>
-						<span class="desc">멋있으십니다!! 저도 삼성 취직하고 싶네요!!</span>
-						<span class="time">2019.03.15</span>
-						<button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close"
-								aria-hidden="true"></i></button>
-					</li>
-				</ul>
-			</form>
 		</div>
+	<ul class="notice-list"></ul>
+	</form>
 		<!-- /.card-content -->
 	</div>
 	<!-- /.box-content -->
@@ -141,6 +127,70 @@
 			/*[- end of function -]*/
 
 		/*]]>*/
+		
+		$(function() {
+		printCommentList();
+	});
+	/* 게시판에 써놓은 댓글 출력하는 함수 */
+	function printCommentList() {
+
+		var uri = /*[[ @{/comments/} + ${board.idx} ]]*/;
+
+		$.get(uri, function(response) {
+			if (isEmpty(response) == false) {
+				var commentsHtml = "";
+
+				$(response.commentList).each(function(idx, comment) {
+					commentsHtml += `
+						<li>
+							<span class="name">${comment.writer}</span>
+							<span class="desc">${comment.content}</span>
+							<span class="time">${moment(comment.insertTime).format('YYYY-MM-DD HH:mm:ss')}</span>
+							<button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close" aria-hidden="true"></i></button>
+						</li>
+					`;
+				});
+
+				$(".notice-list").html(commentsHtml);
+			}
+		}, "json");
+	}
+	/*[- end of function -]*/
+	function insertComment(boardIdx) {
+	
+	var content = document.getElementById("content");
+	if (isEmpty(content.value) == true) {
+		content.setAttribute("placeholder", "댓글을 입력해 주세요.");
+		content.focus();
+		return false;
+	}
+
+	var uri = /*[[ @{/comments} ]]*/;
+	var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
+	var params = {"boardIdx": boardIdx, "content": content.value, "writer": params.writer};
+	console.log(params);
+	$.ajax({
+		url: uri,
+		type: "POST",
+		headers: headers,
+		dataType: "json",
+		data: JSON.stringify(params),
+		success: function(response) {
+			if (response.result == false) {
+				alert("댓글 등록에 실패하였습니다.");
+				return false;
+			}
+
+			printCommentList();
+			content.value = "";
+		},
+		error: function(xhr, status, error) {
+			alert("에러가 발생하였습니다.");
+			return false;
+		}
+	});
+}
+	
 	</script>
 </th:block>
 

@@ -47,8 +47,10 @@ public class SignUpController {
 		if (result == 1) {
 			session.setAttribute("id", myID);
 			model.addAttribute("msgSignupSuccess", "회원가입 되었습니다. " + myID + "님, 환영합니다!");
-            MailDTO dto = signUpService.createMailContent(params.getEmail());
-            signUpService.mailSend(dto);
+			/*
+			 * MailDTO dto = signUpService.createMailContent(params.getEmail());
+			 * signUpService.mailSend(dto);
+			 */
 		} else {
 			model.addAttribute("msgSignupError", "회원가입 오류");
 			return "signup";

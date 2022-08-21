@@ -11619,7 +11619,18 @@ header.masthead h1, header.masthead .h1 {
         min-width: 500px;
     }
   
-  p.text-black-75.mb-4{
+  label {
+    padding: 10px 10px;
+    text-align: left;
+    width: 50%;
+    z-index: 2;
+    font-size: large;
+    font-weight: bold;
+    
+}
+  
+/*surveylist radio-toggles option  */
+p.text-black-75.mb-4{
 	font-size: 2.0rem;
 }
 
@@ -11642,7 +11653,7 @@ p.text-white-75.mb-4{
     position: relative;
 }
 
-label {
+label.answer {
     cursor: pointer;
     padding: 10px 10px;
     text-align: left;
@@ -11650,6 +11661,8 @@ label {
     z-index: 2;
     font-size: large;
     font-weight: bold;
+    display: inline-block;
+    
 }
 
 .slide-item {
@@ -11665,7 +11678,7 @@ label {
 
 input[type="radio"] {
     left: -9999px;
-    position: absolute;
+    position: relative;
     z-index: -1;
 }
 input[type="radio"]:nth-of-type(1):checked ~ .slide-item {
