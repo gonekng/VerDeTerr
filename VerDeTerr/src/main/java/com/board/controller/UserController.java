@@ -82,12 +82,8 @@ public class UserController {
 		UserDTO params = new UserDTO();
 		String myID = (String) session.getAttribute("id");
 		params = userService.getUserDetail(myID);
-<<<<<<< HEAD
-		if(params!=null) {
-=======
 		if (params != null) {
 			System.out.println(params.isManagerYn());
->>>>>>> 170b68cfe7ce3e093a56d700a660a501dd473a3e
 			model.addAttribute("isManager", params.isManagerYn());
 		} else {
 			model.addAttribute("isManager", false);

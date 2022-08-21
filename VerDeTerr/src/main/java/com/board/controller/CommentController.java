@@ -3,11 +3,8 @@ package com.board.controller;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.board.adapter.GsonLocalDateTimeAdapter;
-import com.board.domain.BoardDTO;
 import com.board.domain.CommentDTO;
-import com.board.domain.UserDTO;
 import com.board.service.CommentService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -29,14 +24,13 @@ import com.google.gson.JsonObject;
 
 @RestController
 public class CommentController {
+
 	@Autowired
 	private CommentService commentService;
 
-
 	@RequestMapping(value = { "/comments", "/comments/{idx}" }, method = { RequestMethod.POST, RequestMethod.PATCH })
 	public JsonObject registerComment(@PathVariable(value = "idx", required = false) Long idx, @RequestBody final CommentDTO params) {
-		
-		
+
 		JsonObject jsonObj = new JsonObject();
 
 		try {

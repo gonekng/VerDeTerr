@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.constant.Method;
 import com.board.domain.BoardDTO;
-import com.board.domain.CommentDTO;
 import com.board.domain.UserDTO;
 import com.board.service.BoardService;
 import com.board.service.UserService;
@@ -55,11 +54,7 @@ public class BoardController extends UiUtils {
 			model.addAttribute("board", dao1); // "board" 라는 key 에 dao1의 value를 입력
 
 		} else {
-			CommentDTO params=new CommentDTO();
-			BoardDTO dao1 = new BoardDTO();// dao1 이라는 새로운 인스턴스를 생성
-			dao1.setWriter(user.getNickname());// 그 BoardDTO 에 닮겨있는 writer 에 dao1을 통해 writer를 지정
-			params.setWriter(dao1.getWriter());
-			model.addAttribute("params",params);
+			
 			BoardDTO board = boardService.getBoardDetail(idx);
 			if (board == null) {
 				String url = "redirect:/board/list?type=" + type;
@@ -123,10 +118,13 @@ public class BoardController extends UiUtils {
 		
 		String myID = (String) session.getAttribute("id");
 		UserDTO user = userService.getUserDetail(myID);
-		if(!user.getUserType().equals(type)) {
-			model.addAttribute("isMyType", "f");
+		//user가 있을떄(로그인된 상태)
+		if(user!=null) {
+			if(!user.getUserType().equals(type)) {
+				model.addAttribute("isMyType", "f");
+			}
 		}
-		
+		// 없으면 if문 거치지않고 바로 리턴.
 		System.out.println();
 		return "board/list";
 	}
@@ -149,8 +147,13 @@ public class BoardController extends UiUtils {
 		
 		String myID = (String) session.getAttribute("id");
 		UserDTO user = userService.getUserDetail(myID);
+		if(user!=null) {
 		String myNickname = user.getNickname();
 		model.addAttribute("myNickname", myNickname);
+	
+		}
+		
+		
 		return "board/view";
 	}
 

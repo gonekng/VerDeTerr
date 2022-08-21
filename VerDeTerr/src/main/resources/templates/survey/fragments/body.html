@@ -32,7 +32,8 @@
 		</div>
 	</nav>
 	<!-- /.fixed-navbar -->
-
+	
+	
 	<div id="wrapper">
 		<div class="main-content">
 			<div class="row row-inline-block small-spacing">
@@ -42,7 +43,7 @@
 						<!-- //.clearfix -->
 						<br><br>
 						<!-- layout으로 부품을 끼어넣어주기 -->
-						<th:block layout:fragment="search"></th:block>
+						<!-- <th:block layout:fragment="search"></th:block> -->
 						
 						<th:block layout:fragment="content"></th:block>
 
@@ -50,8 +51,8 @@
 					</div>
 					<!-- /.box-content -->
 
-					<th:block layout:fragment="add-content"></th:block>
-
+						<th:block layout:fragment="add-content"></th:block>
+						<th:block layout:fragment="search"></th:block>
 				</div>
 				<!-- /.col-xs-12 -->
 			</div>
