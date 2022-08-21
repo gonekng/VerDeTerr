@@ -11644,8 +11644,8 @@ p.text-white-75.mb-4{
 
 label {
     cursor: pointer;
-    padding: 10px 20px;
-    text-align: center;
+    padding: 10px 10px;
+    text-align: left;
     width: 50%;
     z-index: 2;
     font-size: large;

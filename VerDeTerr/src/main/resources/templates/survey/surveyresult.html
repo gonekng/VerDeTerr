@@ -35,10 +35,12 @@
 									<tr>
 										<td class="text-center">추천 직업 : <a th:text="${typeJob}"></a></td>
 									</tr>
-									<tr><td class="text-center">--------------------------------------</td></tr>
+									<tr>
+										<td class="text-center">--------------------------------------</td>
+									</tr>
 									<tr th:if="${not #lists.isEmpty( character )}" th:each="row : ${character}">
-										<td class="text-center"></a>캐릭터 : <a
-												th:text="|${row.name} (${row.title})|"></a></td>
+										<td class="text-center"></a>캐릭터 : <a th:text="|${row.name} (${row.title})|"></a>
+										</td>
 									</tr>
 									<tr th:unless="${not #lists.isEmpty( character )}">
 										<td colspan="5"> 해당하는 캐릭터가 없습니다.</td>
@@ -51,7 +53,7 @@
 							<p class="text-white-75 mb-5">다시 테스트 하시겠습니까?</p>
 
 							<a class="btn btn-secondary btn-xl" style="margin:5px;" href="surveylist">다시 테스트하기</a>
-							<a class="btn btn-primary btn-xl" style="margin:5px;"  href="mypage">마이페이지</a>
+							<a class="btn btn-primary btn-xl" style="margin:5px;" th:href="@{/identify}">마이페이지</a>
 
 						</div>
 					</div>

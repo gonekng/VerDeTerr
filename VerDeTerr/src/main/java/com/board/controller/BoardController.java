@@ -44,28 +44,34 @@ public class BoardController extends UiUtils {
 		UserDTO user = userService.getUserDetail(myID);
 		// 세션에서 가져온 아이디를 기준으로 dto 정보를 getdetail 을해서 다 가져온다
 
-		if (idx == null) {
-			// addAttribute BoardDTO 객체를 "board" 라는 이름으로 뷰(화면으로) 전달
-			// 게시글 번호(idx)가 전송되지 않은 경우에는 비어있는 객체를 전달하고, 게시글번호가
-			// 전송된 경우에는 getBoardDetail 메서드의 실행결과 ,즉 게시글 정보를 포함하고 있는 객체를 전달
-			// 만약 getBoardDetail 메서드의 실행결과가 null 이면, 게시글 리스트 페이지로 리다이렉트 합니다.
-			BoardDTO dao1 = new BoardDTO();// dao1 이라는 새로운 인스턴스를 생성
-			dao1.setWriter(user.getNickname());// 그 BoardDTO 에 닮겨있는 writer 에 dao1을 통해 writer를 지정
-			System.out.println("제발 되었으면" + dao1.getWriter());
-			model.addAttribute("board", dao1); // "board" 라는 key 에 dao1의 value를 입력
+		if(user!=null) {
+			if (idx == null) {
+				// addAttribute BoardDTO 객체를 "board" 라는 이름으로 뷰(화면으로) 전달
+				// 게시글 번호(idx)가 전송되지 않은 경우에는 비어있는 객체를 전달하고, 게시글번호가
+				// 전송된 경우에는 getBoardDetail 메서드의 실행결과 ,즉 게시글 정보를 포함하고 있는 객체를 전달
+				// 만약 getBoardDetail 메서드의 실행결과가 null 이면, 게시글 리스트 페이지로 리다이렉트 합니다.
+				BoardDTO dao1 = new BoardDTO();// dao1 이라는 새로운 인스턴스를 생성
+				dao1.setWriter(user.getNickname());// 그 BoardDTO 에 닮겨있는 writer 에 dao1을 통해 writer를 지정
+				System.out.println("제발 되었으면" + dao1.getWriter());
+				model.addAttribute("board", dao1); // "board" 라는 key 에 dao1의 value를 입력
 
-		} else {
-			BoardDTO board = boardService.getBoardDetail(idx);
-			if (board == null) {
-				String url = "redirect:/board/list?type=" + type;
-				return url;
+			} else {
+				BoardDTO board = boardService.getBoardDetail(idx);
+				if (board == null) {
+					String url = "redirect:/board/list?type=" + type;
+					return url;
+				}
+				model.addAttribute("board", board); // addAttribute 화면으로 데이터를 전달하는메소드
+				System.out.println("board.getNoticeYn() : " + board.getNoticeYn());
 			}
-			model.addAttribute("board", board); // addAttribute 화면으로 데이터를 전달하는메소드
-			System.out.println("board.getNoticeYn() : " + board.getNoticeYn());
+			model.addAttribute("type", type);
+			return "board/write";
 		}
-		model.addAttribute("type", type);
-		return "board/write";
-	}
+		System.out.println("type : " + type);
+		String url = "redirect:/board/list?type=" + type;
+		System.out.println("url : " + url);
+	    return url;
+}
 
 	@PostMapping(value = "/board/register")
 	public String registerBoard(RedirectAttributes redirectAttributes, HttpSession session, final BoardDTO params,
@@ -108,12 +114,15 @@ public class BoardController extends UiUtils {
 		params.setPostType(type);
 		List<BoardDTO> boardList = boardService.getBoardList(params);
 		model.addAttribute("boardlist", boardList);
+		model.addAttribute("type", type);
 		
 		
 		String myID = (String) session.getAttribute("id");
 		UserDTO user = userService.getUserDetail(myID);
-		if(!user.getUserType().equals(type)) {
-			model.addAttribute("isMyType", "f");
+		if(user!=null) {
+			if(!user.getUserType().equals(type)) {
+				model.addAttribute("isMyType", "f");
+			}
 		}
 		
 		System.out.println();

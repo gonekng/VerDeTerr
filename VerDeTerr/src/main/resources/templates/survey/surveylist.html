@@ -26,7 +26,7 @@
 		</header>
 
 
-		<form class="form-horizontal" th:action="@{/survey/surveyresult}" method="post" th:object="${survey}">
+		<form class="form-horizontal" th:action="@{/survey/surveydone}" method="post" th:object="${survey}">
 
 			<div class="container px-4 px-lg-5">
 				<input type="text" style="display: none; text-align: center;" th:field="*{id}" id="id" value="${session.id}" readonly></input>
@@ -340,7 +340,7 @@
 	<!-- Call to action_origin-->
 	<section class="page-section bg-dark text-white" id="result">
 		<div class="container px-4 px-lg-5 text-center">
-			<h2 class="mb-4">결과 확인하기!</h2>
+			<h2 class="mb-4">결과 확인하기</h2>
 			<button type="submit" class="btn btn-light btn-xl">RESULT</button>
 		</div>
 	</section>
