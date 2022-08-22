@@ -63,7 +63,6 @@ public class SurveyController {
 
 	}
 
-	@Async("executor")
 	@GetMapping(value = "/survey/surveyresult")
 	public String getSurveyList(Model model, HttpSession session) {
 

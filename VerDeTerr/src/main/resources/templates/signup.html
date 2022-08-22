@@ -41,13 +41,20 @@
 				<label th:for="age">나이</label> 
 				<input type="text" class="form-control" id="age" name="age" placeholder="나이 입력해주세요">
 			</div>
+			<br>
 
-			<div class="form-group" style="margin-top: 10px;">
-				<label th:for="gender">성별</label> 
-				<input type="radio" class="form-check-input" name="gender" value="남자" id="male" checked />남자 
-				<input type="radio" class="form-check-input" name="gender" value="여자" id="female" checked />여자
-			</div>
-
+    			<label class="choose">성별을 선택해주세요</label>
+    			<br>
+     				 <div class="dropdown">
+          					<span class="form-control" style="font-size:large">Select Gender</span>
+         					<i class="fa fa-chevron-left"></i>
+        				<input type="hidden" name="gender" id="gender">
+        				<ul class="dropdown-menu">
+          					<li id="남자" value="남자">남자</li>
+          					<li id="여자" value="여자">여자</li>
+        				</ul>
+     	 			</div>
+     	 			
 			<div class="btn_wrap text-center" style="margin-top: 20px;">
 				<button type="button" id="signupbtn" class="btn btn-primary" onClick="signup()">회원가입</button>
 				<button type="button" class="btn btn-secondary" onClick="location.href='main'">취소하기</button>
@@ -135,8 +142,7 @@
           let pwHint = document.getElementById('pwHint').value;
      	  let checkemail = document.getElementById('checkemail').value;
      	  let age = document.getElementById('age').value;
-      	  let male = document.getElementById('male');
-      	  let female = document.getElementById('female');
+      	  let gender = document.getElementById('gender').value;
 
         	 if(checkid=="false"){
         		 alert('아이디 중복검사를 해주세요.');
@@ -162,11 +168,27 @@
         		 alert('나이를 입력해주세요.');
             	 return ;
         	 };
-        	 if(!male.checked&&!female.checked){
-        		 alert("성별을 선택해주세요.")
-        	 }
+        	 if(gender==""){
+        		 alert("성별을 선택해주세요.");
+        		 return ; 
+        	 };
         	 document.signup.submit();
          }
+         
+         /*Dropdown Menu*/
+         $('.dropdown').click(function () {
+                 $(this).attr('tabindex', 1).focus();
+                 $(this).toggleClass('active');
+                 $(this).find('.dropdown-menu').slideToggle(300);
+             });
+             $('.dropdown').focusout(function () {
+                 $(this).removeClass('active');
+                 $(this).find('.dropdown-menu').slideUp(300);
+             });
+             $('.dropdown .dropdown-menu li').click(function () {
+                 $(this).parents('.dropdown').find('span').text($(this).text());
+                 $(this).parents('.dropdown').find('input').attr('value', $(this).attr('id'));
+             });
      
    </script>
 </body>
