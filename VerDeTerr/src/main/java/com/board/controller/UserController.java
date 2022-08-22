@@ -113,7 +113,6 @@ public class UserController {
 		if(myType != null) {
 			model.addAttribute("category", myType.getCategory());
 		}
-
 		List<SurveyOutputDTO> testList = userService.getUserHistory(myID);
 		int listCount = testList.size();
 		model.addAttribute("testList", testList);
