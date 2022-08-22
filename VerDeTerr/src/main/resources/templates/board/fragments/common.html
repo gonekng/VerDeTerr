@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-	<nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">
+	<nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="nav justify-content-center">
 		<ul class="pagination">
 		
 			<li th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(1)} ]])">
@@ -25,7 +25,7 @@
 		</ul>
 	</nav>
 	<!-- th:fragment ->부품을정의 -->
-	<div th:fragment="search" id="adv-search" class="input-group">
+	<div th:fragment="search" id="adv-search" class="input-group" style="float:right; margin-right: 100px;">
 		<input type="text" id="mainSearchKeyword" class="form-control" th:value="${params.searchKeyword}" placeholder="키워드를 입력해 주세요." />
 		<div class="input-group-btn">
 			<div class="btn-group" role="group">
@@ -56,11 +56,11 @@
 								<label for="contain">키워드</label>
 								<input type="text" name="searchKeyword" class="form-control" th:value="${params.searchKeyword}" />
 							</div>
-							<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+							<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true">검색</span></button>
 						</form>
 					</div>
 				</div>
-				<button type="button" class="btn btn-primary" onclick="searchBoard(null)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+				<button type="button" class="btn btn-primary" onclick="searchBoard(null)"><span class="glyphicon glyphicon-search" aria-hidden="true">검색</span></button>
 			</div>
 		</div>
 	</div>
