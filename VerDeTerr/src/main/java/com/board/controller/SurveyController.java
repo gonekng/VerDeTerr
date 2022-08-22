@@ -2,7 +2,6 @@ package com.board.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,12 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.board.domain.CharacterDTO;
 import com.board.domain.SurveyDTO;
-import com.board.domain.SurveyOutputDTO;
 import com.board.domain.TypeDTO;
 import com.board.domain.UserDTO;
-import com.board.service.CharacterService;
 import com.board.service.SurveyService;
 import com.board.service.UserService;
 
@@ -34,9 +30,6 @@ public class SurveyController {
 
 	@Autowired
 	private UserService userService;
-	
-	@Autowired	
-	private CharacterService characterService;
 
 	@GetMapping(value = "/survey/surveylist")
 	public String openSurveyWrite(RedirectAttributes redirectAttributes, HttpSession session, Model model) {
@@ -62,39 +55,12 @@ public class SurveyController {
 		}
 
 	}
-
-	@GetMapping(value = "/survey/surveyresult")
-	public String getSurveyList(Model model, HttpSession session) {
-
-		String myID = (String) session.getAttribute("id");
-		SurveyOutputDTO surveyList = surveyService.getSurveyList(myID);
-		System.out.println("***********" + surveyList);
-		model.addAttribute("surveyList", surveyList);
-		
-		UserDTO user = userService.getUserDetail(myID);
-		System.out.println("***********" + user);
-		
-		userService.updateUserDetail(user);
-		user = userService.getUserDetail(myID);
-		System.out.println("***********" + user);
-		
-		String myType = user.getUserType();
-		TypeDTO typeInfo = surveyService.getTypeInfo(user.getUserType());
-		System.out.println("***********" + typeInfo);
-		model.addAttribute("typeFeature", typeInfo.getFeature());
-		model.addAttribute("typeJob", typeInfo.getJob());
-		
-		List<CharacterDTO> characterList = characterService.getCharacterList(myType);
-		model.addAttribute("character", characterList);
-		System.out.println("***********" + characterList);
-		return "survey/surveyresult";
-	}
-
+	
 	private static PythonInterpreter intPre;
 
 	@Async("executor")
-	@PostMapping(value = "/survey/surveyresult")
-	public String registerSurvey(final SurveyDTO params, Model model) {
+	@PostMapping(value = "/survey/surveydone")
+	public String registerSurvey(final SurveyDTO params, Model model, HttpSession session) {
 
 		try {
 			System.out.println("Controller surveyresult 시작");
@@ -125,6 +91,7 @@ public class SurveyController {
 			}
 
 			intPre.close();
+			
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			System.out.println("데이터베이스 처리과정 문제");
@@ -134,7 +101,7 @@ public class SurveyController {
 			System.out.println("시스템 문제 발생");
 		}
 
-		return "redirect:/survey/surveyresult";
+		return "survey/surveyresult";
 	}
 
 }
