@@ -146,7 +146,7 @@
 							<span class="name">${comment.writer}</span>
 							<span class="desc">${comment.content}</span>
 							<span class="time">${moment(comment.insertTime).format('YYYY-MM-DD HH:mm:ss')}</span>
-							<button type="button" class="btn btn-xs btn-circle"><i class="fa fa-close" aria-hidden="true"></i></button>
+							<button type="button" onclick="openModal(${comment.idx}, '${comment.writer}', '${comment.content}' )" class="btn btn-xs btn-circle">수정</button>
 						</li>
 					`;
 				});
@@ -156,40 +156,42 @@
 		}, "json");
 	}
 	/*[- end of function -]*/
+		
+
 	function insertComment(boardIdx) {
-	
-	var content = document.getElementById("content");
-	if (isEmpty(content.value) == true) {
-		content.setAttribute("placeholder", "댓글을 입력해 주세요.");
-		content.focus();
-		return false;
-	}
 
-	var uri = /*[[ @{/comments} ]]*/;
-	var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
-	var params = {"boardIdx": boardIdx, "content": content.value, "writer": params.writer};
-	console.log(params);
-	$.ajax({
-		url: uri,
-		type: "POST",
-		headers: headers,
-		dataType: "json",
-		data: JSON.stringify(params),
-		success: function(response) {
-			if (response.result == false) {
-				alert("댓글 등록에 실패하였습니다.");
-				return false;
+				var content = document.getElementById("content");
+				if (isEmpty(content.value) == true) {
+					content.setAttribute("placeholder", "댓글을 입력해 주세요.");
+					content.focus();
+					return false;
+				}
+
+				var uri = /*[[ @{/comments} ]]*/;
+				var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
+				var params = {"boardIdx": boardIdx, "content": content.value, "writer": /*[[${myNickname}]]*/};
+				console.log(params);
+				$.ajax({
+					url: uri,
+					type: "POST",
+					headers: headers,
+					dataType: "json",
+					data: JSON.stringify(params),
+					success: function(response) {
+						if (response.result == false) {
+							alert("댓글 등록에 실패하였습니다.");
+							return false;
+						}
+
+						printCommentList();
+						content.value = "";
+					},
+					error: function(xhr, status, error) {
+						alert("에러가 발생하였습니다.");
+						return false;
+					}
+				});
 			}
-
-			printCommentList();
-			content.value = "";
-		},
-		error: function(xhr, status, error) {
-			alert("에러가 발생하였습니다.");
-			return false;
-		}
-	});
-}
 	
 	</script>
 </th:block>

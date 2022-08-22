@@ -154,12 +154,12 @@ class BoardMapperTests {
 	public void registerComments() {
 			
 			CommentDTO params = new CommentDTO();
-			for(int i=0; i<=10;i++) {
-			params.setBoardIdx((long) 4); // 댓글을 추가할 게시글 번호
-			params.setContent("번 댓글을 추가합니다!");
-			params.setWriter("won9914_ENFP");
+			
+			params.setBoardIdx((long) 3); // 댓글을 추가할 게시글 번호
+			params.setContent("도오대체 왜되는 것이냐");
+			params.setWriter("won9914_ESTJ");
 			commentService.registerComment(params);
-			}	
+			
 
 	}
 

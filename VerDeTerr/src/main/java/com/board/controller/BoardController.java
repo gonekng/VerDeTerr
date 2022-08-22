@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.constant.Method;
 import com.board.domain.BoardDTO;
-import com.board.domain.CommentDTO;
 import com.board.domain.UserDTO;
 import com.board.service.BoardService;
 import com.board.service.UserService;
@@ -125,12 +124,13 @@ public class BoardController extends UiUtils {
 		
 		String myID = (String) session.getAttribute("id");
 		UserDTO user = userService.getUserDetail(myID);
+		//user가 있을떄(로그인된 상태)
 		if(user!=null) {
 			if(!user.getUserType().equals(type)) {
 				model.addAttribute("isMyType", "f");
 			}
 		}
-		
+		// 없으면 if문 거치지않고 바로 리턴.
 		System.out.println();
 		return "board/list";
 	}
@@ -157,6 +157,7 @@ public class BoardController extends UiUtils {
 			String myNickname = user.getNickname();
 			model.addAttribute("myNickname", myNickname);
 		}
+		
 		return "board/view";
 	}
 
