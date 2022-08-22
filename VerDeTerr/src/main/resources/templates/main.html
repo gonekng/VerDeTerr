@@ -87,7 +87,7 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ms-auto my-2 my-lg-0">
-					<li class="nav-item"><a class="nav-link" th:href="@{/survey/surveylist}">성격유형 테스트</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/survey/surveylist}">성격유형 테스트</a></li >
 					<li class="nav-item"><a class="nav-link" th:href="@{/board/select}">게시판</a></li>
 					<li class="nav-item">
 						<a class="nav-link" th:if="${session.id}==null" th:href="@{/signup}">회원가입</a>
@@ -117,7 +117,10 @@
 						Join us and take an Interesting test,<br>And you can use our
 						community service!
 					</p>
-					<a class="btn btn-primary btn-xl" th:href="@{/signup}">Join Us</a>
+					<li class="nav-item" th:if="${session.id}==null">
+					<a class="btn btn-primary btn-xl" th:href="@{/signup}">Join Us</a></li>
+					<li class="nav-item" th:if="${session.id}!=null">
+					<a class="btn btn-primary btn-xl" th:href="@{/survey/surveylist}">Join Us</a></li>
 				</div>
 			</div>
 		</div>
@@ -273,6 +276,7 @@
 			</div>
 		</div>
 		<!-- Login -->
+		<li class="nav-item" th:if="${session.id}==null">
 		<section class="page-section bg-dark text-white" id="login">
 			<div class="container px-4 px-lg-5 h-100 align-items-center justify-content-center">
 				<h1 style="text-align: center;">Log In</h1>
@@ -297,6 +301,7 @@
 				<br />
 			</div>
 		</section>
+		</li>
 
 		<!-- Footer-->
 		<footer class="bg-light py-5">
