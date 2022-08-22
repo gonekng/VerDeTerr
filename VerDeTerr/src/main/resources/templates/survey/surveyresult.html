@@ -22,28 +22,21 @@
 							<table style="margin: auto; text-align: left;" class="text-white-75 mb-5">
 
 								<tbody>
-									<tr th:if="${not #lists.isEmpty( surveyList )}" th:each="row : ${surveyList}">
-										<td class="text-center"><a th:text="${row.id}"></a>님의 유형은 <a
-												th:text="${row.usertype}"></a> 입니다</td>
+									<tr th:if="${not #lists.isEmpty( surveyList )}">
+										<td class="text-center"><a th:text="${session.id}"></a>님의 유형은 :</td>
+									</tr>
+									<tr><td><br></td></tr>
+									<tr>
+										<td class="text-center"><a th:text="${#strings.replace(typeInfo.feature, '유형', '')}"></a></td>
+									</tr>
+									<tr th:if="${not #lists.isEmpty( character )}" th:each="row : ${character}">
+										<td class="text-center"><h4 th:text="|${row.name} (${row.title})|"></h4>	</td>
+									</tr>
+									<tr th:if="${not #lists.isEmpty( character )}" th:each="row : ${character}">
+										<td class="text-center"><img th:src="@{|/assets/img/mbti/${row.userType}.png|}" width=30%></td>
 									</tr>
 									<tr th:unless="${not #lists.isEmpty( surveyList )}">
 										<td colspan="5">조회된 결과가 없습니다.</td>
-									</tr>
-									<tr>
-										<td class="text-center"><a th:text="${typeFeature}"></a></td>
-									</tr>
-									<tr>
-										<td class="text-center">추천 직업 : <a th:text="${typeJob}"></a></td>
-									</tr>
-									<tr>
-										<td class="text-center">--------------------------------------</td>
-									</tr>
-									<tr th:if="${not #lists.isEmpty( character )}" th:each="row : ${character}">
-										<td class="text-center"></a>캐릭터 : <a th:text="|${row.name} (${row.title})|"></a>
-										</td>
-									</tr>
-									<tr th:unless="${not #lists.isEmpty( character )}">
-										<td colspan="5"> 해당하는 캐릭터가 없습니다.</td>
 									</tr>
 								</tbody>
 							</table>

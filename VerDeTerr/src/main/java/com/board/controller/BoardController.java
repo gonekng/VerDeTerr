@@ -182,4 +182,23 @@ public class BoardController extends UiUtils {
 		String url = "/board/list?type=" + type;
 		return showMessageWithRedirect("게시글 삭제가 완료되었습니다.", url, Method.GET, null, model);
 	}
+	
+	@GetMapping(value = "/board/mylist")
+	public String openBoardMyList(HttpSession session, @ModelAttribute("params") BoardDTO params,  Model model) {
+		String myID = (String) session.getAttribute("id");
+		UserDTO user = userService.getUserDetail(myID);
+		
+		//user가 있을떄(로그인된 상태)
+		if(user!=null) {
+			model.addAttribute("type", user.getUserType());
+			
+			params.setWriter(user.getNickname());
+			System.out.println("@@@@@@@@@params : " + params);
+			List<BoardDTO> boardList = boardService.getBoardList(params);
+			model.addAttribute("boardlist", boardList);
+			model.addAttribute("listCount", boardList.size());
+			System.out.println("@@@@@@@@@" + boardList);
+		}
+		return "board/mylist";
+	}
 }
