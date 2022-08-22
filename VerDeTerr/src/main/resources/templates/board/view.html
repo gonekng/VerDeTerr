@@ -33,7 +33,7 @@
 </th:block>
 
 <th:block layout:fragment="content">
-	<div class="card-content">
+	<div class="card-content" style="margin-top: 10px; margin-left:10%; margin-right:10%; margin-right:10%;">
 		<form class="form-horizontal form-view" th:object="${board}">
 			<div class="form-group">
 				<label for="inp-type-1" class="col-sm-2 control-label">제목</label>
@@ -72,7 +72,7 @@
 		</form>
 
 		<div class="btn_wrap text-center">
-			<a th:href="@{/board/list(type=${type})}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
+			<a th:href="@{/board/list(type=${type})}" class="btn btn-secondary waves-effect waves-light">뒤로가기</a>
 			<button th:onclick="isMyPost_mod([[ ${board.idx} ]])"
 				class="btn btn-primary waves-effect waves-light">수정하기</button>
 			<button type="button" class="btn btn-danger waves-effect waves-light"
@@ -81,9 +81,9 @@
 	</div>  <!-- /.card-content -->
 </th:block>
 
-<th:block layout:fragment="add-content">
-	<div class="box-content">
-		<div class="card-content">
+<th:block layout:fragment="add-content" >
+	<div class="box-content" style="margin-top: 10px; margin-left:10%; margin-right:10%;">
+		<div class="card-content" >
 			<div class="clearfix">
 				<h4 class="box-title pull-left">Comment</h4>
 				<!-- /.box-title -->
@@ -92,19 +92,14 @@
 	<ul class="notice-list"></ul>
 	
 	<form class="form-horizontal form-view">
-		<div class="input-group margin-bottom-20">
-			<input type="text" id="content" class="form-control" />
-				<div class="input-group-btn">
-					<button type="button" class="btn waves-effect waves-light" th:onclick="insertComment([[ ${board.idx} ]])">
-					등록
-					</button>
-				</div>
-		</div>
+			<input type="text" id="content" class="form-control" style="margin-top: 10px; margin-right:20%;"/><br>
+			<input type="button" class="btn btn-primary waves-effect waves-light" th:onclick="insertComment([[ ${board.idx} ]])" value="등록">
 	
 	</form>
 		<!-- /.card-content -->
 	</div>
 	<!-- /.box-content -->
+	</div>
 </th:block>
 
 <th:block layout:fragment="script">
