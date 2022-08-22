@@ -154,11 +154,9 @@ public class BoardController extends UiUtils {
 		String myID = (String) session.getAttribute("id");
 		UserDTO user = userService.getUserDetail(myID);
 		if(user!=null) {
-		String myNickname = user.getNickname();
-		model.addAttribute("myNickname", myNickname);
-	
+			String myNickname = user.getNickname();
+			model.addAttribute("myNickname", myNickname);
 		}
-		
 		
 		return "board/view";
 	}

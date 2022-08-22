@@ -11656,7 +11656,7 @@ p.text-white-75.mb-4{
 label.answer {
     cursor: pointer;
     padding: 10px 10px;
-    text-align: left;
+    text-align: center;
     width: 50%;
     z-index: 2;
     font-size: large;
