@@ -87,7 +87,8 @@
 			post
 		WHERE
 			deleteYn = 0
-			and postType = #{postType}
+			and postType Like IFNULL(#{postType}, '%')
+			and writer  Like IFNULL(#{writer}, '%')
 			<include refid="CommonMapper.search" />
 			
 		ORDER BY
@@ -113,7 +114,8 @@
 			post
 		WHERE
 			deleteYn = 0
-			and postType = #{postType}
+			and postType Like IFNULL(#{postType}, '%')
+			and writer  Like IFNULL(#{writer}, '%')
 			<include refid="CommonMapper.search" />
 
 

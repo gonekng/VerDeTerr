@@ -39,20 +39,22 @@ public class SurveyResultController {
 		
 		UserDTO user = userService.getUserDetail(myID);
 		System.out.println("***********" + user);
-		
-		userService.updateUserDetail(user);
-		user = userService.getUserDetail(myID);
-		System.out.println("***********" + user);
-		
-		String myType = user.getUserType();
-		TypeDTO typeInfo = surveyService.getTypeInfo(user.getUserType());
-		System.out.println("***********" + typeInfo);
-		model.addAttribute("typeFeature", typeInfo.getFeature());
-		model.addAttribute("typeJob", typeInfo.getJob());
-		
-		List<CharacterDTO> characterList = characterService.getCharacterList(myType);
-		model.addAttribute("character", characterList);
-		System.out.println("***********" + characterList);
+		if(user!=null) {
+
+			userService.updateUserDetail(user);
+			user = userService.getUserDetail(myID);
+			System.out.println("***********" + user);
+			
+			String myType = user.getUserType();
+			TypeDTO typeInfo = surveyService.getTypeInfo(user.getUserType());
+			System.out.println("***********" + typeInfo);
+			model.addAttribute("typeInfo", typeInfo);
+
+			List<CharacterDTO> characterList = characterService.getCharacterList(myType);
+			model.addAttribute("character", characterList);
+			System.out.println("***********" + characterList);
+			
+		}
 		return "survey/surveyresult";
 	}	
 }
