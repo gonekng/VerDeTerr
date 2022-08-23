@@ -45,6 +45,8 @@ dependencies {
 	implementation group: 'org.python', name: 'jython', version: '2.7.2'
 	implementation 'org.springframework.session:spring-session-core'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	// 파일처리 관련 의존성 주입
+	implementation 'commons-io:commons-io:2.6'
 }
 
 tasks.named('test') {

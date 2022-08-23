@@ -1,6 +1,9 @@
 package com.board.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.board.domain.CharacterDTO;
 import com.board.service.CharacterService;
@@ -23,8 +27,21 @@ public class CharacterController extends UiUtils {
 
 	@GetMapping(value = "/character/list")
 	public String openCharacterList(Model model) {
-		List<CharacterDTO> characterList = characterService.getCharacterList(null);
-		int listCount = characterList.size();
+		List<CharacterDTO> list = characterService.getCharacterList(null);
+		int listCount = list.size();
+		
+		List<List<CharacterDTO>> characterList = new ArrayList<>();
+		for(int i=0; i<listCount-3; i++) {
+			if(i%4==0) {
+				List<CharacterDTO> rows = new ArrayList<>();
+				rows.add(list.get(i));
+				rows.add(list.get(i+1));
+				rows.add(list.get(i+2));
+				rows.add(list.get(i+3));
+				characterList.add(rows);
+			}
+		}
+		
 		model.addAttribute("characterList", characterList);
 		model.addAttribute("listCount", listCount);
 		return "character/list";
@@ -32,56 +49,68 @@ public class CharacterController extends UiUtils {
 
 	// 캐릭터 등록 & 수정 페이지
 	@GetMapping("/character/write")
-	public String openCharacterWrite(@RequestParam(value="idx",required=false)Long idx, Model model, HttpSession session) {
+	public String openCharacterWrite(@RequestParam(value = "idx", required = false) Long idx, Model model,
+			HttpSession session) {
 		CharacterDTO character = new CharacterDTO();
-		if(idx!=null) {
+		if (idx != null) {
 			character = characterService.getCharacterDetail(idx);
 			System.out.println(character);
-			if(character==null) {
+			if (character == null) {
 				return "redirect:/character/list";
-			} 
+			}
 		}
-
 		model.addAttribute("character", character);
 		return "character/write";
 	}
 
 	// 신규 캐릭터 등록
-	 @PostMapping("/character/register") 
-	 public String saveCharacter(@RequestParam(value="idx",required=false)Long idx, CharacterDTO params) {
-		 System.out.println("***** idx : " + idx + ", params : " + params);
-		 if(idx==null) {
-			 characterService.registerCharacter(params);
-			 return "redirect:/character/list"; 
-		 }
-		 characterService.updateCharacter(params);
+	@PostMapping("/character/register")
+	public String saveCharacter(@RequestParam(value = "idx", required = false) Long idx, CharacterDTO params,
+			@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+		System.out.println("***** idx : " + idx + ", params : " + params);
+		System.out.println("***** file : " + file);
+		String projectpath = System.getProperty("user.dir") + "/src/main/resources/static/assets/img/character"; // user.dir은 프로젝트 경로를
+																									// 담아줌
+		UUID uuid = UUID.randomUUID(); // 랜덤으로 이름 생성
+		if (!file.getOriginalFilename().isEmpty()) {
+			String filename = uuid + "_" + file.getOriginalFilename(); // 파일 이름은 UUID에 있는 랜덤값 + 원래 파일 이름으로 설정된다.
+			File saveFile = new File(projectpath, filename); // 위에 적힌 경로에 name으로 저장
+			file.transferTo(saveFile);
+			params.setFilename(filename);
+			params.setFilepath("/assets/img/character/" + filename);
+		}
+		if (idx == null) {
+			characterService.registerCharacter(params);
+		} else {
+			characterService.updateCharacter(params);
+		}
 
-		 return "redirect:/character/list";
-	  }
-	 
-	 // 게시글 내용 보기
-	   @GetMapping(value = "/character/view")
-	   public String openCharacterDetail(@RequestParam(value = "idx", required = false) Long idx, Model model) {
-	      if (idx == null) {
-	         return "redirect:/character/list";
-	      }
+		return "redirect:/character/list";
+	}
 
-	      CharacterDTO character = characterService.getCharacterDetail(idx);
-	      if (character == null) {
-	       
-	         return "redirect:/character/list";
-	      }
-	      System.out.println("character.idx:"+character.getIdx());
-	      model.addAttribute("character", character);
+	// 게시글 내용 보기
+	@GetMapping(value = "/character/view")
+	public String openCharacterDetail(@RequestParam(value = "idx", required = false) Long idx, Model model) {
+		if (idx == null) {
+			return "redirect:/character/list";
+		}
 
-	      return "character/view";
-	   }
-	 
-	  // 게시글 삭제하기
-	   @PostMapping("/character/delete")
-	   public String deleteCharacterList(@RequestParam(value = "idx", required = false) Long idx) {
-		   characterService.deleteCharacter(idx);
-		   return "redirect:/character/list";
-	   }
+		CharacterDTO character = characterService.getCharacterDetail(idx);
+		if (character == null) {
+
+			return "redirect:/character/list";
+		}
+		System.out.println("character : " + character);
+		model.addAttribute("character", character);
+
+		return "character/view";
+	}
+
+	// 게시글 삭제하기
+	@PostMapping("/character/delete")
+	public String deleteCharacterList(@RequestParam(value = "idx", required = false) Long idx) {
+		characterService.deleteCharacter(idx);
+		return "redirect:/character/list";
+	}
 
 }
