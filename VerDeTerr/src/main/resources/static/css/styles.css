@@ -2188,7 +2188,7 @@ progress {
 
 .form-control {
   display: block;
-  width: 80%;
+  width: 90%;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -11701,7 +11701,7 @@ span.choose {
 }
 
 /*Styling Gender Selectbox*/
-.signup-dropdown {
+.signup-dropdown{
   width: 300px;
   display: inline-block;
   background-color: #fff;
@@ -11714,12 +11714,12 @@ span.choose {
   height: 100%;
   text-align: left
 }
-.signup-dropdown .select {
+.signup-dropdown.select {
     cursor: pointer;
     display: block;
     padding: 10px
 }
-.signup-dropdown .select > i {
+.signup-dropdown.select > i {
     font-size: 13px;
     color: #888;
     cursor: pointer;
@@ -11739,10 +11739,10 @@ span.choose {
     border-radius: 2px 2px 0 0;
     background-color: #f8f8f8
 }
-.signup-dropdown.active .select > i {
+.signup-dropdown.active.select > i {
     transform: rotate(-90deg)
 }
-.signup-dropdown .dropdown-menu {
+.signup-dropdown.dropdown-menu {
     position: absolute;
     background-color: #fff;
     width: 100%;
@@ -11756,19 +11756,19 @@ span.choose {
     overflow-y: auto;
     z-index: 9
 }
-.signup-dropdown .dropdown-menu li {
+.signup-dropdown.dropdown-menu li {
     padding: 10px;
     transition: all .2s ease-in-out;
     cursor: pointer
 } 
-.signup-dropdown .dropdown-menu {
+.signup-dropdown.dropdown-menu {
     padding: 0;
     list-style: none
 }
-.signup-dropdown .dropdown-menu li:hover {
+.signup-dropdown.dropdown-menu li:hover {
     background-color: #f2f2f2
 }
-.signup-dropdown .dropdown-menu li:active {
+.signup-dropdown.dropdown-menu li:active {
     background-color: #e2e2e2
 }
 
