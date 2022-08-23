@@ -25,7 +25,7 @@
 <!-- 여기서는 layout 순서 먹인걸로 가고, 이러한 레이아웃에 끼어놓은 부품을 쓴다고 정의한것 -->
 
 <th:block layout:fragment="content">
-	<h1 style="text-align: center; padding: 40px;" th:text="|${type} 게시판|"></h1>
+	<h1 style="text-align: center; padding: 40px;" th:text="|${charName} 게시판|"></h1>
 	<th:block layout:fragment="search">
 		<div th:replace="board/fragments/common :: search"></div>
 	</th:block>

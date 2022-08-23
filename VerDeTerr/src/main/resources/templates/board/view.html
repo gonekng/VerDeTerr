@@ -34,7 +34,7 @@
 
 <th:block layout:fragment="content">
 
-	<h1 style="text-align: center; padding: 40px;" th:text="|${type} 게시판|"></h1>
+	<h1 style="text-align: center; padding: 40px;" th:text="|${charName} 게시판|"></h1>
 	<div class="card-content" style="margin-top: 10px; margin-left:10%; margin-right:10%; margin-right:10%;">
 		<form class="form-horizontal form-view" th:object="${board}">
 			<div class="form-group">
@@ -94,7 +94,7 @@
 	<ul class="notice-list"></ul>
 	
 	<form class="form-horizontal form-view">
-			<input type="text" id="content" class="form-control" style="margin-top: 10px; margin-right:20%;"/><br>
+			<input type="text" th:unless="${isSurvey} == 'false'"  id="content" class="form-control" style="margin-top: 10px; margin-right:20%;"/><br>
 			<input type="button" th:unless="${isSurvey} == 'false'" class="btn btn-primary waves-effect waves-light" th:onclick="insertComment([[ ${board.idx} ]])" value="등록">
 	
 	</form>

@@ -16,8 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.constant.Method;
 import com.board.domain.BoardDTO;
+import com.board.domain.CharacterDTO;
 import com.board.domain.UserDTO;
 import com.board.service.BoardService;
+import com.board.service.CharacterService;
 import com.board.service.UserService;
 import com.board.util.UiUtils;
 
@@ -29,6 +31,9 @@ public class BoardController extends UiUtils {
 
    @Autowired
    private UserService userService;
+
+   @Autowired
+   private CharacterService characterService;
 
    @GetMapping(value = "/board/select")
    public String selectBoardType() {
@@ -122,6 +127,10 @@ public class BoardController extends UiUtils {
 		//type 으로 list.html 로 보내야한다. 그러면 거기서 isMytype을 통해서 write를 쓸때 type 을 전달해준다. 
 		model.addAttribute("type",type);
 		
+		List<CharacterDTO> charList = characterService.getCharacterList(type);
+		CharacterDTO character = charList.get(charList.size()-1);
+		model.addAttribute("charName",  character.getName());
+		
 		String myID = (String) session.getAttribute("id");
 		UserDTO user = userService.getUserDetail(myID);
 		//user가 있을떄(로그인된 상태)
@@ -158,7 +167,7 @@ public class BoardController extends UiUtils {
       }
       
       String myID = (String) session.getAttribute("id");
-		UserDTO user = userService.getUserDetail(myID);
+      UserDTO user = userService.getUserDetail(myID);
       
       if(user.getUserType()==null) {	//로그인한 유저의 타입이 없다면 == 테스트를 안했다면
 			System.out.println("user.getUserType()12121221"+user.getUserType());
@@ -172,6 +181,11 @@ public class BoardController extends UiUtils {
 		System.out.println("board.idx:" + board.getIdx());
 		model.addAttribute("board", board);
 		model.addAttribute("type", type);
+		
+		
+		List<CharacterDTO> charList = characterService.getCharacterList(type);
+		CharacterDTO character = charList.get(charList.size()-1);
+		model.addAttribute("charName",  character.getName());
 		
 		if(user!=null) {
 			String myNickname = user.getNickname();

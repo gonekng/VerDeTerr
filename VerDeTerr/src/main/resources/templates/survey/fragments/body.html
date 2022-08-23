@@ -5,8 +5,11 @@
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav2">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" th:href="@{/main}">Main</a><a th:if="${session.id}!=null"
-				th:text="|Hello, ${session.id}!|" style="color: #ff8040"></a>
+			<a class="navbar-brand" th:href="@{/main}">Main</a>
+			<a th:if="${session.id}!=null and ${myChar}!=null"
+				th:text="|Hello, ${session.id} (${myChar})|" style="color: #ff8040"></a>
+			<a th:if="${session.id}!=null and ${myChar}==null"
+				th:text="|Hello, ${session.id}|" style="color: #ff8040"></a>
 			<a th:if="${session.id}==null" style="color: #ff8040">Please Log in!</a>
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
 				data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"

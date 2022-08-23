@@ -40,12 +40,13 @@ public class SurveyResultController {
 		UserDTO user = userService.getUserDetail(myID);
 		System.out.println("***********" + user);
 		if(user!=null) {
-
+			
 			userService.updateUserDetail(user);
 			user = userService.getUserDetail(myID);
 			System.out.println("***********" + user);
 			
 			String myType = user.getUserType();
+			System.out.println("***********" + myType);
 			TypeDTO typeInfo = surveyService.getTypeInfo(user.getUserType());
 			System.out.println("***********" + typeInfo);
 			model.addAttribute("typeInfo", typeInfo);
