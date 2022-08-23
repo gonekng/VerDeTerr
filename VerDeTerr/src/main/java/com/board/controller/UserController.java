@@ -75,6 +75,7 @@ public class UserController {
 		return "redirect:/main";
 	}
 
+<<<<<<< HEAD
    @GetMapping(value = "/main")
    public String openMainpage(HttpSession session, Model model) {
       UserDTO params = new UserDTO();
@@ -88,6 +89,21 @@ public class UserController {
       }
       return "main";
    }
+=======
+	@GetMapping(value = "/main")
+	public String openMainpage(HttpSession session, Model model) {
+		UserDTO params = new UserDTO();
+		String myID = (String) session.getAttribute("id");
+		params = userService.getUserDetail(myID);
+		if (params != null) {
+			System.out.println(params.isManagerYn());
+			model.addAttribute("isManager", params.isManagerYn());
+		} else {
+			model.addAttribute("isManager", false);
+		}
+		return "main";
+	}
+>>>>>>> e490e2bcf0c0c283033ab9183474de7d073a03e8
 
 	@GetMapping(value = "/mypage")
 	public String openMypage(HttpSession session, Model model) {
@@ -108,8 +124,9 @@ public class UserController {
 		model.addAttribute("email", myEmail);
 
 		TypeDTO myType = surveyService.getTypeInfo(params.getUserType());
-		model.addAttribute("category", myType.getCategory());
-
+		if(myType != null) {
+			model.addAttribute("category", myType.getCategory());
+		}
 		List<SurveyOutputDTO> testList = userService.getUserHistory(myID);
 		int listCount = testList.size();
 		model.addAttribute("testList", testList);
