@@ -10,6 +10,8 @@
 		, category
 		, userType
 		, regdate
+		, filename
+		, filepath
 	</sql>
 
 	<insert id="insertCharacter" parameterType="CharacterDTO">
@@ -22,6 +24,8 @@
 		, #{category}
 		, #{userType}
 		, NOW()
+		, #{filename}
+		, #{filepath}
 		)
 	</insert>
 
@@ -42,6 +46,8 @@
 		, title = ifnull(#{title},title)
 		, category = ifnull(#{category},category)
 		, userType = ifnull(#{userType},userType)
+		, filename = ifnull(#{filename}, filename)
+		, filepath = ifnull(#{filepath}, filepath)
 		WHERE
 		idx = #{idx}
 	</update>

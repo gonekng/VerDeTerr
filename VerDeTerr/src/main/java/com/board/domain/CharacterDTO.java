@@ -11,7 +11,7 @@ public class CharacterDTO {
 
 	/**Character Table*/
 	private int idx;
-	
+
 	private String name;
 	
 	private String title;
@@ -21,6 +21,10 @@ public class CharacterDTO {
 	private String userType;
 	
 	private LocalDateTime regDate;
+	
+	private String filename;
+	
+	private String filepath;
 
 	public int getIdx() {
 		return idx;
@@ -70,10 +74,29 @@ public class CharacterDTO {
 		this.regDate = regDate;
 	}
 
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+	
+	public String getFilepath() {
+		return filepath;
+	}
+
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "CharacterDTO [idx=" + idx + ", name=" + name + ", title=" + title + ", category=" + category
-				+ ", userType=" + userType + ", regDate=" + regDate + "]";
+				+ ", userType=" + userType + ", regDate=" + regDate + ", filename=" + filename + ", filepath="
+				+ filepath + "]";
 	}
+
 
 }
