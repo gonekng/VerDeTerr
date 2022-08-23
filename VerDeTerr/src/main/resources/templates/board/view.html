@@ -33,6 +33,8 @@
 </th:block>
 
 <th:block layout:fragment="content">
+
+	<h1 style="text-align: center; padding: 40px;" th:text="|${type} 게시판|"></h1>
 	<div class="card-content" style="margin-top: 10px; margin-left:10%; margin-right:10%; margin-right:10%;">
 		<form class="form-horizontal form-view" th:object="${board}">
 			<div class="form-group">

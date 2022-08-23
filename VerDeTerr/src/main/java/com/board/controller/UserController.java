@@ -239,12 +239,14 @@ public class UserController {
 		UserDTO params = userService.findLoginPw(id, pwHint);
 		if (params == null) {
 			model.addAttribute("msgFindPW", "정보를 잘못입력하셨습니다.");
-		} else
-			model.addAttribute("msgFindPW", "가입하신 이메일로 임시 비밀번호가 전송되었습니다.");
-		MailDTO dto = userService.createMailContent(params.getEmail());
-		userService.mailSend(dto);
-		userService.newPassword(dto.getStr(), id);
-		return "/login";
+			return "/findPw";
+		} else {
+			MailDTO dto = userService.createMailContent(params.getEmail());
+//		userService.mailSend(dto);
+			userService.newPassword(dto.getStr(), id);
+			model.addAttribute("msgFindPW", "임시 비밀번호는 " + dto.getStr() + " 입니다.");
+			return "/login";
+		}
 	}
 
 }

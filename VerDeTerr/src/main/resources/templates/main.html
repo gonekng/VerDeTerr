@@ -89,13 +89,11 @@
 				<ul class="navbar-nav ms-auto my-2 my-lg-0">
 					<li class="nav-item"><a class="nav-link" th:href="@{/survey/surveylist}">성격유형 테스트</a></li >
 					<li class="nav-item"><a class="nav-link" th:href="@{/board/select}">게시판</a></li>
-					<li class="nav-item">
-						<a class="nav-link" th:if="${session.id}==null" th:href="@{/signup}">회원가입</a>
+					<li class="nav-item" th:if="${session.id}==null">
+						<a class="nav-link" th:href="@{/signup}">회원가입</a>
 					</li>
-					<li class="nav-item" th:if="${session.id}!=null and ${isManager}==true"><a class="nav-link"
-							onclick="isManager()">Manager</a>
-					<li class="nav-item" th:if="${session.id}!=null and ${isManager}==false"> <a class="nav-link"
-							th:href="@{/identify}">Mypage</a>
+					<li class="nav-item" th:if="${session.id}!=null">
+						<a class="nav-link" th:href="@{/identify}">Mypage</a>
 					</li>
 					<li class="nav-item" th:if="${session.id}==null"><a class="nav-link" href="#login">로그인</a></li>
 					<li class="nav-item" th:if="${session.id}!=null"><a class="nav-link" th:href="@{/logout}">로그아웃</a>
