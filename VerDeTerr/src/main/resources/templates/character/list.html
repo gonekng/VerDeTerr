@@ -7,6 +7,14 @@
 	<title>Manager page</title>
 	<link href="css/styles.css" rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+	<script>
+	  	let msgChar = "[[${msgChar}]]";
+	  	if(msgChar != ""){
+			alert(msgChar);
+			msgChar = "";
+			systimeout(window.location.href('list'), 5000);
+		}
+	</script>
 </th:block>
 
 <th:block layout:fragment="content">
@@ -18,12 +26,13 @@
 		<div class="row" th:each="rows, i : ${characterList}">
 			<div class="col-3" th:each="row : ${rows}">
 				<div class="card" style="text-align:center; border:solid gray 0.5px;">
-					<img th:src="@{${row.filepath}}" alt="" style="padding:10px;"/>
+					<img th:src="@{${row.filepath}}" alt="" style="padding:10px;" width=100%/>
 					<div class="card-body" style="padding-bottom: 5px;">
 						<p class="card-title">
 							<a th:href="@{/character/view(idx=${row.idx})}"
-								th:text="${row.name}"></a><a th:text="| (${row.title})|"></a>
+								th:text="${row.name}"></a>
 						</p>
+						<p class="card-content"><a th:text="${row.title}"></a></p>
 						<p th:text="${#temporals.format( row.regDate, 'yyyy-MM-dd' )}"></p>
 					</div>
 				</div>

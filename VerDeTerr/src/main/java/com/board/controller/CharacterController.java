@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.domain.CharacterDTO;
 import com.board.service.CharacterService;
@@ -66,11 +67,10 @@ public class CharacterController extends UiUtils {
 	// 신규 캐릭터 등록
 	@PostMapping("/character/register")
 	public String saveCharacter(@RequestParam(value = "idx", required = false) Long idx, CharacterDTO params,
-			@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+			@RequestParam(value = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes) throws Exception {
 		System.out.println("***** idx : " + idx + ", params : " + params);
 		System.out.println("***** file : " + file);
-		String projectpath = System.getProperty("user.dir") + "/src/main/resources/static/assets/img/character"; // user.dir은 프로젝트 경로를
-																									// 담아줌
+		String projectpath = System.getProperty("user.dir") + "/src/main/resources/static/assets/img/character"; // user.dir은 프로젝트 경로를 담아줌
 		UUID uuid = UUID.randomUUID(); // 랜덤으로 이름 생성
 		if (!file.getOriginalFilename().isEmpty()) {
 			String filename = uuid + "_" + file.getOriginalFilename(); // 파일 이름은 UUID에 있는 랜덤값 + 원래 파일 이름으로 설정된다.
@@ -81,10 +81,11 @@ public class CharacterController extends UiUtils {
 		}
 		if (idx == null) {
 			characterService.registerCharacter(params);
+			redirectAttributes.addFlashAttribute("msgChar", "캐릭터 등록이 완료되었습니다.");
 		} else {
 			characterService.updateCharacter(params);
+			redirectAttributes.addFlashAttribute("msgChar", "캐릭터 수정이 완료되었습니다.");
 		}
-
 		return "redirect:/character/list";
 	}
 
