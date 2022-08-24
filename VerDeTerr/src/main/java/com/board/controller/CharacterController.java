@@ -28,37 +28,79 @@ public class CharacterController extends UiUtils {
 	@Autowired
 	private CharacterService characterService;
 
-	@Autowired
-	private UserService userService;
-
 	@GetMapping(value = "/character/list")
 	public String openCharacterList(HttpSession session, Model model) {
 		List<CharacterDTO> list = characterService.getCharacterList(null);
 		int listCount = list.size();
+		System.out.println(listCount);
 		
 		List<List<CharacterDTO>> characterList = new ArrayList<>();
-		for(int i=0; i<listCount-3; i++) {
+		CharacterDTO noCharacter = new CharacterDTO();
+		for(int i=0; i<listCount; i++) {
 			if(i%4==0) {
 				List<CharacterDTO> rows = new ArrayList<>();
 				rows.add(list.get(i));
+				if(i+1>=listCount) {
+					rows.add(noCharacter);
+					rows.add(noCharacter);
+					rows.add(noCharacter);
+					characterList.add(rows);
+					break;
+				}
 				rows.add(list.get(i+1));
+				if(i+2>=listCount) {
+					rows.add(noCharacter);
+					rows.add(noCharacter);
+					characterList.add(rows);
+					break;
+				}
 				rows.add(list.get(i+2));
+				if(i+3>=listCount) {
+					rows.add(noCharacter);
+					characterList.add(rows);
+					break;
+				}
 				rows.add(list.get(i+3));
 				characterList.add(rows);
 			}
 		}
-		
+		System.out.println(characterList);
 		model.addAttribute("characterList", characterList);
 		model.addAttribute("listCount", listCount);
-		
-		String myID = (String) session.getAttribute("id");
-		UserDTO user = userService.getUserDetail(myID);
+
+		UserDTO user = (UserDTO) session.getAttribute("user");
 		if(user!=null) {
 			boolean isManager = user.isManagerYn();
 			model.addAttribute("isManager", isManager);
 		}
 		return "character/list";
 	};
+
+	// 게시글 내용 보기
+	@GetMapping(value = "/character/view")
+	public String openCharacterDetail(HttpSession session, @RequestParam(value = "idx", required = false) Long idx, Model model) {
+		if (idx == null) {
+			return "redirect:/character/list";
+		}
+
+		CharacterDTO character = characterService.getCharacterDetail(idx);
+		if (character == null) {
+
+			return "redirect:/character/list";
+		}
+		System.out.println("character : " + character);
+		model.addAttribute("character", character);
+
+		UserDTO user = (UserDTO) session.getAttribute("user");
+		if(user!=null) {
+			if(user.isManagerYn()) {
+				model.addAttribute("isManager", "true");
+			}
+		}
+
+		return "character/view";
+	}
+
 
 	// 캐릭터 등록 & 수정 페이지
 	@GetMapping("/character/write")
@@ -100,32 +142,6 @@ public class CharacterController extends UiUtils {
 		}
 		return "redirect:/character/list";
 	}
-
-	// 게시글 내용 보기
-	@GetMapping(value = "/character/view")
-	public String openCharacterDetail(HttpSession session, @RequestParam(value = "idx", required = false) Long idx, Model model) {
-		if (idx == null) {
-			return "redirect:/character/list";
-		}
-
-		CharacterDTO character = characterService.getCharacterDetail(idx);
-		if (character == null) {
-
-			return "redirect:/character/list";
-		}
-		System.out.println("character : " + character);
-		model.addAttribute("character", character);
-		
-		String myID = (String) session.getAttribute("id");
-		UserDTO user = userService.getUserDetail(myID);
-		if(user!=null) {
-			boolean isManager = user.isManagerYn();
-			model.addAttribute("isManager", isManager);
-		}
-
-		return "character/view";
-	}
-
 	// 게시글 삭제하기
 	@PostMapping("/character/delete")
 	public String deleteCharacterList(@RequestParam(value = "idx", required = false) Long idx) {

@@ -30,10 +30,7 @@ public class UserController {
 
 	@Autowired
 	private SurveyService surveyService;
-
-	@Autowired
-	private CharacterService characterService;
-
+	
 	@GetMapping("/login")
 	public String login() {
 		return "login";
@@ -50,7 +47,7 @@ public class UserController {
 		return "findId";
 	}
 
-	@GetMapping("findPw")
+	@GetMapping("/findPw")
 	public String findPw() {
 		return "findPw";
 	}
@@ -69,13 +66,12 @@ public class UserController {
 		String myID = params.getId();
 		String myPW = params.getPw();
 		UserDTO user = userService.loginCheck(myID, myPW);
+		System.out.println("!!!!!!!" + user);
 		if (user == null) {
 			redirectAttributes.addFlashAttribute("msgLoginError", "아이디 혹은 비밀번호 오류");
-			return "redirect:/main";
-
 		} else {
 			redirectAttributes.addFlashAttribute("msgLoginSuccess", "로그인되었습니다. " + myID + "님, 환영합니다!");
-			session.setAttribute("id", myID);
+			session.setAttribute("user", user);
 		}
 		return "redirect:/main";
 	}
@@ -83,49 +79,20 @@ public class UserController {
 
 	@GetMapping(value = "/main")
 	public String openMainpage(HttpSession session, Model model) {
-		UserDTO user = new UserDTO();
-		String myID = (String) session.getAttribute("id");
-		user = userService.getUserDetail(myID);
-		if (user != null) {
-			System.out.println(user.isManagerYn());
-			model.addAttribute("isManager", user.isManagerYn());
-			
-			String myType = user.getUserType();
-			if(myType != null) {
-				List<CharacterDTO> myCharList = characterService.getCharacterList(myType);
-				CharacterDTO myChar = myCharList.get(myCharList.size()-1);
-				model.addAttribute("myChar",  myChar.getName());
-			}
-			
-		} else {
-			model.addAttribute("isManager", false);
-		}
 		return "main";
+	}
+
+	@GetMapping("/identify")
+	public String identify(HttpSession session, Model model) {
+		return "identify";
 	}
 
 	@GetMapping(value = "/mypage")
 	public String openMypage(HttpSession session, Model model) {
 
-		UserDTO params = new UserDTO();
-		String myID = (String) session.getAttribute("id");
-		String myNickname = "";
-		String myEmail = "";
-
-		if (myID != null) {
-			params = userService.getUserDetail(myID);
-			myNickname = params.getNickname();
-			myEmail = params.getEmail();
-		}
-
-		System.out.println(params.toString());
-		model.addAttribute("nick", myNickname);
-		model.addAttribute("email", myEmail);
-
-		TypeDTO myType = surveyService.getTypeInfo(params.getUserType());
-		if(myType != null) {
-			model.addAttribute("category", myType.getCategory());
-		}
-		List<SurveyOutputDTO> testList = userService.getUserHistory(myID);
+		UserDTO user = (UserDTO) session.getAttribute("user");
+		
+		List<SurveyOutputDTO> testList = userService.getUserHistory(user.getId());
 		int listCount = testList.size();
 		model.addAttribute("testList", testList);
 		model.addAttribute("listCount", listCount);
@@ -134,21 +101,7 @@ public class UserController {
 
 	@GetMapping(value = "/managerpage")
 	public String openManagerpage(HttpSession session, Model model) {
-
-		UserDTO params = new UserDTO();
-		String myID = (String) session.getAttribute("id");
-		String myNickname = "";
-		String myEmail = "";
-
-		if (myID != null) {
-			params = userService.getUserDetail(myID);
-			myNickname = params.getNickname();
-			myEmail = params.getEmail();
-		}
-		System.out.println(params.toString());
-		model.addAttribute("nick", myNickname);
-		model.addAttribute("email", myEmail);
-
+		
 		List<UserDTO> userList = userService.getUserList();
 		int listCount = userList.size();
 		model.addAttribute("userList", userList);
@@ -157,13 +110,8 @@ public class UserController {
 		return "managerpage";
 	}
 
-	@GetMapping("/identify")
-	public String identify(Model model) {
-		return "identify";
-	}
-
 	@GetMapping("/modify")
-	public String modify(Model model) {
+	public String modify(HttpSession session, Model model) {
 		return "modify";
 	}
 
@@ -179,7 +127,7 @@ public class UserController {
 	@PostMapping("/identify_proc")
 	public String identifyProcess(HttpServletRequest request, UserDTO params, Model model) {
 		HttpSession session = request.getSession(true);
-		UserDTO user = userService.getUserDetail((String) session.getAttribute("id"));
+		UserDTO user = (UserDTO) session.getAttribute("user");
 		if (!passwordEncoder.matches(params.getPw(), user.getPw())) {
 			model.addAttribute("msgIden", "비밀번호가 틀렸습니다.");
 			return "identify";
@@ -201,7 +149,7 @@ public class UserController {
 	 */
 	@PostMapping("/modify_proc")
 	public String modifyProcess(HttpSession session, String pw, String pw2, Model model) {
-		UserDTO user = userService.getUserDetail((String) session.getAttribute("id"));
+		UserDTO user = (UserDTO) session.getAttribute("user");
 		if (!passwordEncoder.matches(pw, user.getPw())) {
 			model.addAttribute("msgMod", "현재 비밀번호가 틀렸습니다.");
 			return "modify";
@@ -209,6 +157,7 @@ public class UserController {
 		} else if (pw.equals(pw2)) {
 			model.addAttribute("msgMod", "현재 비밀번호와 같은 비밀번호로 변경할 수 없습니다.");
 			return "modify";
+			
 		} else {
 			user.setPw(passwordEncoder.encode(pw2));
 			userService.updateUserDetail(user);

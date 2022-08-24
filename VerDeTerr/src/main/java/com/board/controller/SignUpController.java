@@ -45,7 +45,8 @@ public class SignUpController {
 		}
 
 		if (result == 1) {
-			session.setAttribute("id", myID);
+			UserDTO user = userService.getUserDetail(myID);
+			session.setAttribute("user", user);
 			model.addAttribute("msgSignupSuccess", "회원가입 되었습니다. " + myID + "님, 환영합니다!");
 			
 			/*
@@ -131,7 +132,7 @@ public class SignUpController {
 			System.out.println("탈퇴정보잘넣음");
 			int deleteUser = signUpService.delete(myID);
 			System.out.println("탈퇴됨." + deleteUser);
-			session.removeAttribute("id");
+			session.removeAttribute("user");
 			model.addAttribute("msgDeleteUser", myID + "님. 그 동안 저희 서비스를 이용해주셔서 감사합니다.");
 			return "main";
 		}

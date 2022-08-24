@@ -31,7 +31,6 @@
 			let msgLogout = "[[${msgLogout}]]";
 			let msgMod = "[[${msgMod}]]";
 			let surveyError = "[[${surveyError}]]";
-			let isManager = "[[${isManager}]]";
 			let msgDeleteUser = "[[${msgDeleteUser}]]";
 
 			if (msgLoginSuccess != "") {
@@ -61,15 +60,6 @@
 				alert(msgDeleteUser);
 			}
 		})
-
-		function isManager() {
-			if (isManager) {
-				location.href = '/identify';
-			}
-			else {
-				alert("관리자만 접근 가능합니다.");
-			}
-		}
 	</script>
 </head>
 
@@ -78,11 +68,11 @@
 	<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
 		<div class="container px-4 px-lg-5">
 			<a class="navbar-brand" th:href="@{/main}">Main</a>
-			<a th:if="${session.id}!=null and ${myChar}!=null"
-				th:text="|Hello, ${session.id} (${myChar})|" style="color: #ff8040"></a>
-			<a th:if="${session.id}!=null and ${myChar}==null"
-				th:text="|Hello, ${session.id}|" style="color: #ff8040"></a>
-			<a th:if="${session.id}==null" style="color: #ff8040">Please Log in!</a>
+			<a th:if="${session.user}!=null"
+				th:text="|Hello, ${session.user.getId()}! /|" style="color: #ff8040"></a>
+			<a th:if="${session.user}!=null and ${session.user.userCharacter}!=null"
+				th:text="| / ${session.user.userCharacter.getName()}(${session.user.userCharacter.getTitle()})|" style="color: #ff8040"></a>
+			<a th:if="${session.user}==null" style="color: #ff8040">Please Log in!</a>
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
 				data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
 				aria-label="Toggle navigation">
@@ -93,14 +83,14 @@
 					<li class="nav-item"><a class="nav-link" th:href="@{/survey/surveylist}">성격유형 테스트</a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/board/select}">게시판</a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/character/list}">캐릭터 </a>	</li>
-					<li class="nav-item" th:if="${session.id}==null">
+					<li class="nav-item" th:if="${session.user}==null">
 						<a class="nav-link" th:href="@{/signup}">회원가입</a>
 					</li>
-					<li class="nav-item" th:if="${session.id}!=null">
+					<li class="nav-item" th:if="${session.user}!=null">
 						<a class="nav-link" th:href="@{/identify}">마이페이지</a>
 					</li>
-					<li class="nav-item" th:if="${session.id}==null"><a class="nav-link" href="#login">로그인</a></li>
-					<li class="nav-item" th:if="${session.id}!=null"><a class="nav-link" th:href="@{/logout}">로그아웃</a>
+					<li class="nav-item" th:if="${session.user}==null"><a class="nav-link" href="#login">로그인</a></li>
+					<li class="nav-item" th:if="${session.user}!=null"><a class="nav-link" th:href="@{/logout}">로그아웃</a>
 					</li>
 				</ul>
 			</div>
@@ -119,10 +109,10 @@
 						Join us and take an Interesting test,<br>And you can use our
 						community service!
 					</p>
-					<li class="nav-item" th:if="${session.id}==null">
+					<li class="nav-item" th:if="${session.user}==null">
 						<a class="btn btn-primary btn-xl" th:href="@{/signup}">Join Us</a>
 					</li>
-					<li class="nav-item" th:if="${session.id}!=null">
+					<li class="nav-item" th:if="${session.user}!=null">
 						<a class="btn btn-primary btn-xl" th:href="@{/survey/surveylist}">Join Us</a>
 					</li>
 				</div>
@@ -280,7 +270,7 @@
 			</div>
 		</div>
 		<!-- Login -->
-		<li class="nav-item" th:if="${session.id}==null">
+		<li class="nav-item" th:if="${session.user}==null">
 			<section class="page-section bg-dark text-white" id="login">
 				<div class="container px-4 px-lg-5 h-100 align-items-center justify-content-center">
 					<h1 style="text-align: center;">Log In</h1>

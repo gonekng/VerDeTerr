@@ -58,8 +58,8 @@
 
 		<div class="btn_wrap text-center" style="margin-top: 40px; margin-right: 30%;">
 			<a th:href="@{/character/list}" class="btn btn-secondary waves-effect waves-light">뒤로가기</a>
-			<a th:href="@{/character/write( idx=${character.idx} )}" th:if="${isManager}!=null" class="btn btn-primary waves-effect waves-light">수정하기</a>
-			<button type="button" th:if="${isManager}!=null" class="btn btn-danger waves-effect waves-light" th:onclick="deleteCharacter([[ ${character.idx} ]])">삭제하기</button>
+			<a th:href="@{/character/write( idx=${character.idx} )}" th:if="${isManager}=='true'" class="btn btn-primary waves-effect waves-light">수정하기</a>
+			<button type="button" th:if="${isManager}=='true'" class="btn btn-danger waves-effect waves-light" th:onclick="deleteCharacter([[ ${character.idx} ]])">삭제하기</button>
 		</div>
 	</div>
 	<!-- /.card-content -->
