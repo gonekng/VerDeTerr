@@ -17,15 +17,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.board.constant.Method;
 import com.board.domain.BoardDTO;
 import com.board.domain.CharacterDTO;
+import com.board.domain.TypeDTO;
 import com.board.domain.UserDTO;
 import com.board.service.BoardService;
 import com.board.service.CharacterService;
-import com.board.service.UserService;
+import com.board.service.SurveyService;
 import com.board.util.UiUtils;
 
 @Controller // 해당 클래스가 사용자의 요청과 응답을 처리하는 , 즉 UI를 담당하는 컨트롤러 클래스임을 의미.
 public class BoardController extends UiUtils {
-
+	
 	@Autowired
 	private BoardService boardService;
 
@@ -56,11 +57,13 @@ public class BoardController extends UiUtils {
 		List<CharacterDTO> charList = characterService.getCharacterList(type);
 		CharacterDTO character = charList.get(charList.size() - 1);
 		model.addAttribute("charName", character.getName());
+		model.addAttribute("charImg", character.getFilepath());
 
 		UserDTO user = (UserDTO) session.getAttribute("user");
 		// user가 있을떄(로그인된 상태)
 
 		if (user != null) { // 로그인이 되었다면0
+			model.addAttribute("isManager", user.isManagerYn());
 			System.out.println(user.getUserType());
 			if (user.getUserType() == null) { // 로그인한 유저의 타입이 없다면 == 테스트를 안했다면
 				model.addAttribute("isSurvey", "false");
@@ -76,7 +79,7 @@ public class BoardController extends UiUtils {
 				model.addAttribute("isMyType", "f");
 			}
 		}
-
+		
 		// 로그인이 안됐으면바로 리턴.
 		return "board/list";
 	}
@@ -91,9 +94,10 @@ public class BoardController extends UiUtils {
 
 		UserDTO user = (UserDTO) session.getAttribute("user");
 		if(user != null) {
+			model.addAttribute("isManager", user.isManagerYn());
 			model.addAttribute("myNickname", user.getNickname());
-			if (user.getUserType() == null) { // 로그인한 유저의 타입이 없다면 == 테스트를 안했다면
-				model.addAttribute("isSurvey", "false");
+			if (user.getUserType() != null) { // 로그인한 유저의 타입이 없다면 == 테스트를 안했다면
+				model.addAttribute("isSurvey", "true");
 			}
 		}
 		BoardDTO board = boardService.getBoardDetail(idx);

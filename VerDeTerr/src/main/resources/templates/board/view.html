@@ -17,13 +17,19 @@
 				location.href = "/board/write?idx=" + idx + "&type=" + type;
 			}
 		};
-		
+
 		function isMyPost_del(idx) {
+			let isManager = "[[${isManager}]]";
 			let myNickname = "[[${myNickname}]]";
 			let type = "[[${type}]]";
-			if (myNickname != "[[ ${board.writer} ]]") {
-				alert("해당 게시판의 글 삭제 권한이 없습니다.");
-				location.href = "/board/view?idx=" + idx + "&type=" + type;
+			if (isManager != "true") {
+				if (myNickname != "[[ ${board.writer} ]]") {
+					alert("해당 게시판의 글 삭제 권한이 없습니다.");
+					location.href = "/board/view?idx=" + idx + "&type=" + type;
+				}
+				else {
+					deleteBoard(idx);
+				}
 			}
 			else {
 				deleteBoard(idx);
@@ -34,7 +40,7 @@
 
 <th:block layout:fragment="content">
 
-	<h1 style="text-align: center; padding: 40px;" th:text="|${charName} 게시판|"></h1>
+	<h1 style="text-align: center; padding: 40px;">  </h1>
 	<div class="card-content" style="margin: 0 10% 0 30%">
 		<form class="form-horizontal form-view" th:object="${board}">
 			<div class="form-group">
@@ -80,7 +86,7 @@
 			<button type="button" class="btn btn-danger waves-effect waves-light"
 				th:onclick="isMyPost_del([[ ${board.idx} ]])">삭제하기</button>
 		</div>
-	</div>  <!-- /.card-content -->
+	</div> <!-- /.card-content -->
 </th:block>
 
 <th:block layout:fragment="add-content">
@@ -91,16 +97,18 @@
 				<!-- /.box-title -->
 			</div>
 
-	<ul class="notice-list"></ul>
-	
-	<form class="form-horizontal form-view" style="margin-right: 16%">
-			<input type="text" th:unless="${isSurvey} == 'false'"  id="content" class="form-control" style="margin-top: 10px; margin-right:10%;"/><br>
-			<input type="button" th:unless="${isSurvey} == 'false'" class="btn btn-primary waves-effect waves-light" th:onclick="insertComment([[ ${board.idx} ]])" value="등록">
-	
-	</form>
-		<!-- /.card-content -->
-	</div>
-	<!-- /.box-content -->
+			<ul class="notice-list"></ul>
+
+			<form class="form-horizontal form-view" style="margin-right: 16%">
+				<input type="text" th:unless="${isSurvey} == 'false'" id="content" class="form-control"
+					style="margin-top: 10px; margin-right:10%;" /><br>
+				<input type="button" th:unless="${isSurvey} == 'false'" class="btn btn-primary waves-effect waves-light"
+					th:onclick="insertComment([[ ${board.idx} ]])" value="등록">
+
+			</form>
+			<!-- /.card-content -->
+		</div>
+		<!-- /.box-content -->
 	</div>
 </th:block>
 
@@ -122,22 +130,22 @@
 				document.dataForm.submit();
 			}
 		}
-			/*[- end of function -]*/
+		/*[- end of function -]*/
 
 		/*]]>*/
-		
-		$(function() {
-		printCommentList();
-	});
-	/* 게시판에 써놓은 댓글 출력하는 함수 */
-	function printCommentList() {
-		var uri = /*[[ @{/comments/} + ${board.idx} ]]*/;
 
-		$.get(uri, function(response) {
-			var commentsHtml = "";
+		$(function () {
+			printCommentList();
+		});
+		/* 게시판에 써놓은 댓글 출력하는 함수 */
+		function printCommentList() {
+			var uri = /*[[ @{/comments/} + ${board.idx} ]]*/;
 
-			$(response.commentList).each(function(idx, comment) {
-				commentsHtml += `
+			$.get(uri, function (response) {
+				var commentsHtml = "";
+
+				$(response.commentList).each(function (idx, comment) {
+					commentsHtml += `
 					<li>
 						<span class="name">${comment.writer}</span>
 						<span class="desc">${comment.content}</span>
@@ -146,90 +154,91 @@
 						<button type="button" onclick="deleteComment(${comment.idx})" class="btn btn-xs btn-circle">삭제</button>
 					</li>
 				`;
-			});
-
-			$(".notice-list").html(commentsHtml);
-
-		}, "json");
-	}
-	/*[- end of function -]*/
- 
-
-	function insertComment(boardIdx) {
-
-				var content = document.getElementById("content");
-				if (isEmpty(content.value) == true) {
-					content.setAttribute("placeholder", "댓글을 입력해 주세요.");
-					content.focus();
-					return false;
-				}
-
-				var uri = /*[[ @{/comments} ]]*/;
-				var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
-				/* db로들어갈떄는 id로 들어가주어야한다 */
-				var params = {"boardIdx": boardIdx, "content": content.value, "writer": /*[[ ${myNickname} ]]*/};
-				
-				console.log(params);
-				$.ajax({
-					url: uri,
-					type: "POST",
-					headers: headers,
-					dataType: "json",
-					data: JSON.stringify(params),
-					success: function(response) {
-						if (response.result == false) {
-							alert("댓글 등록에 실패하였습니다.");
-							return false;
-						}
-
-						printCommentList();
-						content.value = "";
-					},
-					error: function(xhr, status, error) {
-						alert("에러가 발생하였습니다.");
-						return false;
-					}
 				});
-			}
-	
-	function updateComment(idx) {
 
-		/* var writer = "[[ ${board.writer} ]]";
-		var content = document.getElementById("modalContent");
+				$(".notice-list").html(commentsHtml);
 
-		var uri = [[ @{/comments/} ]] + idx;
-		var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "PATCH"};
-		var params = {"idx": idx, "writer": writer.value, "content": content.value};
+			}, "json");
+		}
+		/*[- end of function -]*/
 
-		$.ajax({
-			url: uri,
-			type: "PATCH",
-			headers: headers,
-			dataType: "json",
-			data: JSON.stringify(params),
-			success: function(response) {
-				if (response.result == false) {
-					alert("댓글 수정에 실패하였습니다.");
-					return false;
-				}
 
-				printCommentList();
-				$("#commentModal").modal("hide");
-			},
-			error: function(xhr, status, error) {
-				alert("에러가 발생하였습니다.");
+		function insertComment(boardIdx) {
+
+			var content = document.getElementById("content");
+			if (isEmpty(content.value) == true) {
+				content.setAttribute("placeholder", "댓글을 입력해 주세요.");
+				content.focus();
 				return false;
 			}
-		}); */
-	}
-	
-	function deleteComment(idx) {
 
-		if (!confirm('댓글을 삭제하시겠어요?')) {
-			return false;
+			var uri = /*[[ @{/comments} ]]*/;
+			var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
+			/* db로들어갈떄는 id로 들어가주어야한다 */
+			var params = {"boardIdx": boardIdx, "content": content.value, "writer": /*[[ ${myNickname} ]]*/};
+
+			console.log(params);
+			$.ajax({
+				url: uri,
+				type: "POST",
+				headers: headers,
+				dataType: "json",
+				data: JSON.stringify(params),
+				success: function (response) {
+					if (response.result == false) {
+						alert("댓글 등록에 실패하였습니다.");
+						return false;
+					}
+
+					printCommentList();
+					content.value = "";
+				},
+				error: function (xhr, status, error) {
+					alert("에러가 발생하였습니다.");
+					return false;
+				}
+			});
 		}
 
-		var uri = [[ @{/comments/} ]] + idx;
+		function updateComment(idx) {
+
+			/* var writer = "[[ ${board.writer} ]]";
+			var content = document.getElementById("modalContent");
+	
+			var uri = [[ @{/comments/} ]] + idx;
+			var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "PATCH"};
+			var params = {"idx": idx, "writer": writer.value, "content": content.value};
+	
+			$.ajax({
+				url: uri,
+				type: "PATCH",
+				headers: headers,
+				dataType: "json",
+				data: JSON.stringify(params),
+				success: function(response) {
+					if (response.result == false) {
+						alert("댓글 수정에 실패하였습니다.");
+						return false;
+					}
+	
+					printCommentList();
+					$("#commentModal").modal("hide");
+				},
+				error: function(xhr, status, error) {
+					alert("에러가 발생하였습니다.");
+					return false;
+				}
+			}); */
+		}
+
+		function deleteComment(idx) {
+
+			if (!confirm('댓글을 삭제하시겠어요?')) {
+				return false;
+			}
+
+			var uri = [[ @{/comments/
+		} ]]+ idx;
 		var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "DELETE"};
 
 		$.ajax({
@@ -237,7 +246,7 @@
 			type: "DELETE",
 			headers: headers,
 			dataType: "json",
-			success: function(response) {
+			success: function (response) {
 				if (response.result == false) {
 					alert("댓글 삭제에 실패하였습니다.");
 					return false;
@@ -245,13 +254,13 @@
 				alert("댓글 삭제 완료하였습니다.")
 				printCommentList();
 			},
-			error: function(xhr, status, error) {
+			error: function (xhr, status, error) {
 				alert("에러가 발생하였습니다.");
 				return false;
 			}
 		});
 	}
-	
+
 	</script>
 </th:block>
 

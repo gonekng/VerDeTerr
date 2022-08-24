@@ -27,9 +27,6 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-
-	@Autowired
-	private SurveyService surveyService;
 	
 	@GetMapping("/login")
 	public String login() {
