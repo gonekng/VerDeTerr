@@ -77,8 +77,11 @@
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
 		<div class="container px-4 px-lg-5">
-			<a class="navbar-brand" th:href="@{/main}">Main</a><a th:if="${session.id}!=null"
-				th:text="|Hello, ${session.id}!|" style="color: #ff8040"></a>
+			<a class="navbar-brand" th:href="@{/main}">Main</a>
+			<a th:if="${session.id}!=null and ${myChar}!=null"
+				th:text="|Hello, ${session.id} (${myChar})|" style="color: #ff8040"></a>
+			<a th:if="${session.id}!=null and ${myChar}==null"
+				th:text="|Hello, ${session.id}|" style="color: #ff8040"></a>
 			<a th:if="${session.id}==null" style="color: #ff8040">Please Log in!</a>
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
 				data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
@@ -87,13 +90,14 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ms-auto my-2 my-lg-0">
-					<li class="nav-item"><a class="nav-link" th:href="@{/survey/surveylist}">성격유형 테스트</a></li >
+					<li class="nav-item"><a class="nav-link" th:href="@{/survey/surveylist}">성격유형 테스트</a></li>
 					<li class="nav-item"><a class="nav-link" th:href="@{/board/select}">게시판</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/character/list}">캐릭터 </a>	</li>
 					<li class="nav-item" th:if="${session.id}==null">
 						<a class="nav-link" th:href="@{/signup}">회원가입</a>
 					</li>
 					<li class="nav-item" th:if="${session.id}!=null">
-						<a class="nav-link" th:href="@{/identify}">Mypage</a>
+						<a class="nav-link" th:href="@{/identify}">마이페이지</a>
 					</li>
 					<li class="nav-item" th:if="${session.id}==null"><a class="nav-link" href="#login">로그인</a></li>
 					<li class="nav-item" th:if="${session.id}!=null"><a class="nav-link" th:href="@{/logout}">로그아웃</a>
@@ -116,9 +120,11 @@
 						community service!
 					</p>
 					<li class="nav-item" th:if="${session.id}==null">
-					<a class="btn btn-primary btn-xl" th:href="@{/signup}">Join Us</a></li>
+						<a class="btn btn-primary btn-xl" th:href="@{/signup}">Join Us</a>
+					</li>
 					<li class="nav-item" th:if="${session.id}!=null">
-					<a class="btn btn-primary btn-xl" th:href="@{/survey/surveylist}">Join Us</a></li>
+						<a class="btn btn-primary btn-xl" th:href="@{/survey/surveylist}">Join Us</a>
+					</li>
 				</div>
 			</div>
 		</div>
@@ -275,30 +281,32 @@
 		</div>
 		<!-- Login -->
 		<li class="nav-item" th:if="${session.id}==null">
-		<section class="page-section bg-dark text-white" id="login">
-			<div class="container px-4 px-lg-5 h-100 align-items-center justify-content-center">
-				<h1 style="text-align: center;">Log In</h1>
-				<hr class="divider divider-light" />
-				<form th:action="@{/login_proc}" method="post">
-					<div class="form-group" style="margin-top: 10px;">
-						<label class="text-white" th:for="username">아이디</label> <input type="text" name="id"
-							class="form-control" placeholder="아이디를 입력해주세요">
-					</div>
-					<div class="form-group" style="margin-top: 10px;">
-						<label class="text-white" th:for="password">비밀번호</label> <input type="password"
-							class="form-control" name="pw" placeholder="비밀번호를 입력해주세요">
-					</div>
-					<div class="btn_wrap text-center" style="margin-top: 20px;">
-						<button type="submit" class="btn btn-primary">로그인</button>
-						<button type="button" class="btn btn-primary" onClick="location.href='signup'">회원 가입</button>
-						<button type="button" class="btn btn-secondary" onClick="location.href='findId'">아이디 찾기</button>
-						<button type="button" class="btn btn-secondary" onClick="location.href='findPw'">비밀번호
-							찾기</button>
-					</div>
-				</form>
-				<br />
-			</div>
-		</section>
+			<section class="page-section bg-dark text-white" id="login">
+				<div class="container px-4 px-lg-5 h-100 align-items-center justify-content-center">
+					<h1 style="text-align: center;">Log In</h1>
+					<hr class="divider divider-light" />
+					<form th:action="@{/login_proc}" method="post">
+						<div class="form-group" style="margin-top: 10px;">
+							<label class="text-white" th:for="username">아이디</label> <input type="text" name="id"
+								class="form-control" placeholder="아이디를 입력해주세요">
+						</div>
+						<div class="form-group" style="margin-top: 10px;">
+							<label class="text-white" th:for="password">비밀번호</label> <input type="password"
+								class="form-control" name="pw" placeholder="비밀번호를 입력해주세요">
+						</div>
+						<div class="btn_wrap text-center" style="margin-top: 20px;">
+							<button type="submit" class="btn btn-primary">로그인</button>
+							<button type="button" class="btn btn-primary" onClick="location.href='signup'">회원
+								가입</button>
+							<button type="button" class="btn btn-secondary" onClick="location.href='findId'">아이디
+								찾기</button>
+							<button type="button" class="btn btn-secondary" onClick="location.href='findPw'">비밀번호
+								찾기</button>
+						</div>
+					</form>
+					<br />
+				</div>
+			</section>
 		</li>
 
 		<!-- Footer-->

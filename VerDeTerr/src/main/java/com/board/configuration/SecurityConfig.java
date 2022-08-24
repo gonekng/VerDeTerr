@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/login", "/login_proc", "/logout", "/deleteUser", "/deleteUser_proc",
 						"/findId", "/findPw", "/findId_proc", "/findPw_proc",
 						"/identify", "/identify_proc", "/mypage", "/managerpage",
-						"/modify", "/modify_proc", "/character/list",
+						"/modify", "/modify_proc", "/character/**",
 						"/css/**", "/assets/**", "/js/**" , "/scripts/**", "/plugin/**",
 						"/survey/surveylist", "/survey/surveyresult", "/survey/surveydone",
 						"/board/list", "/board/write", "/board/register", "/board/view", "/board/delete",

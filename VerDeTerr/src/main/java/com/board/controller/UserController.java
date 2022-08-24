@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.board.domain.CharacterDTO;
 import com.board.domain.MailDTO;
 import com.board.domain.SurveyOutputDTO;
 import com.board.domain.TypeDTO;
 import com.board.domain.UserDTO;
+import com.board.service.CharacterService;
 import com.board.service.SurveyService;
 import com.board.service.UserService;
 
@@ -28,6 +30,9 @@ public class UserController {
 
 	@Autowired
 	private SurveyService surveyService;
+
+	@Autowired
+	private CharacterService characterService;
 
 	@GetMapping("/login")
 	public String login() {
@@ -78,12 +83,20 @@ public class UserController {
 
 	@GetMapping(value = "/main")
 	public String openMainpage(HttpSession session, Model model) {
-		UserDTO params = new UserDTO();
+		UserDTO user = new UserDTO();
 		String myID = (String) session.getAttribute("id");
-		params = userService.getUserDetail(myID);
-		if (params != null) {
-			System.out.println(params.isManagerYn());
-			model.addAttribute("isManager", params.isManagerYn());
+		user = userService.getUserDetail(myID);
+		if (user != null) {
+			System.out.println(user.isManagerYn());
+			model.addAttribute("isManager", user.isManagerYn());
+			
+			String myType = user.getUserType();
+			if(myType != null) {
+				List<CharacterDTO> myCharList = characterService.getCharacterList(myType);
+				CharacterDTO myChar = myCharList.get(myCharList.size()-1);
+				model.addAttribute("myChar",  myChar.getName());
+			}
+			
 		} else {
 			model.addAttribute("isManager", false);
 		}

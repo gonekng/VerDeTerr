@@ -18,7 +18,7 @@
 						<span class="text-white font-weight-bold" th:text="|${session.id}님의|"></span>
 						<span class="text-white font-weight-bold" th:if="${type}!=null">현재 유형은</span>
 						<h4 class="text-white font-weight-bold" style="margin: 10px 0px 10px 0px" th:if="${type}!=null"
-							th:text="|${type} (${category}) 입니다.|"></h4>
+							th:text="|${myChar.name} (${myChar.title}) 입니다.|"></h4>
 						<span class="text-white font-weight-bold" th:if="${type}==null"
 							th:text="|성격 유형을 확인하세요!|"></span>
 					</div>

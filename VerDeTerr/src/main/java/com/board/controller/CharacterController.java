@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.domain.CharacterDTO;
+import com.board.domain.UserDTO;
 import com.board.service.CharacterService;
+import com.board.service.UserService;
 import com.board.util.UiUtils;
 
 @Controller
@@ -25,8 +28,11 @@ public class CharacterController extends UiUtils {
 	@Autowired
 	private CharacterService characterService;
 
+	@Autowired
+	private UserService userService;
+
 	@GetMapping(value = "/character/list")
-	public String openCharacterList(Model model) {
+	public String openCharacterList(HttpSession session, Model model) {
 		List<CharacterDTO> list = characterService.getCharacterList(null);
 		int listCount = list.size();
 		
@@ -44,6 +50,13 @@ public class CharacterController extends UiUtils {
 		
 		model.addAttribute("characterList", characterList);
 		model.addAttribute("listCount", listCount);
+		
+		String myID = (String) session.getAttribute("id");
+		UserDTO user = userService.getUserDetail(myID);
+		if(user!=null) {
+			boolean isManager = user.isManagerYn();
+			model.addAttribute("isManager", isManager);
+		}
 		return "character/list";
 	};
 
@@ -66,11 +79,10 @@ public class CharacterController extends UiUtils {
 	// 신규 캐릭터 등록
 	@PostMapping("/character/register")
 	public String saveCharacter(@RequestParam(value = "idx", required = false) Long idx, CharacterDTO params,
-			@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+			@RequestParam(value = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes) throws Exception {
 		System.out.println("***** idx : " + idx + ", params : " + params);
 		System.out.println("***** file : " + file);
-		String projectpath = System.getProperty("user.dir") + "/src/main/resources/static/assets/img/character"; // user.dir은 프로젝트 경로를
-																									// 담아줌
+		String projectpath = System.getProperty("user.dir") + "/src/main/resources/static/assets/img/character"; // user.dir은 프로젝트 경로를 담아줌
 		UUID uuid = UUID.randomUUID(); // 랜덤으로 이름 생성
 		if (!file.getOriginalFilename().isEmpty()) {
 			String filename = uuid + "_" + file.getOriginalFilename(); // 파일 이름은 UUID에 있는 랜덤값 + 원래 파일 이름으로 설정된다.
@@ -81,16 +93,17 @@ public class CharacterController extends UiUtils {
 		}
 		if (idx == null) {
 			characterService.registerCharacter(params);
+			redirectAttributes.addFlashAttribute("msgChar", "캐릭터 등록이 완료되었습니다.");
 		} else {
 			characterService.updateCharacter(params);
+			redirectAttributes.addFlashAttribute("msgChar", "캐릭터 수정이 완료되었습니다.");
 		}
-
 		return "redirect:/character/list";
 	}
 
 	// 게시글 내용 보기
 	@GetMapping(value = "/character/view")
-	public String openCharacterDetail(@RequestParam(value = "idx", required = false) Long idx, Model model) {
+	public String openCharacterDetail(HttpSession session, @RequestParam(value = "idx", required = false) Long idx, Model model) {
 		if (idx == null) {
 			return "redirect:/character/list";
 		}
@@ -102,6 +115,13 @@ public class CharacterController extends UiUtils {
 		}
 		System.out.println("character : " + character);
 		model.addAttribute("character", character);
+		
+		String myID = (String) session.getAttribute("id");
+		UserDTO user = userService.getUserDetail(myID);
+		if(user!=null) {
+			boolean isManager = user.isManagerYn();
+			model.addAttribute("isManager", isManager);
+		}
 
 		return "character/view";
 	}

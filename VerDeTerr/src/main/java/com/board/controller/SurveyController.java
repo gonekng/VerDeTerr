@@ -2,6 +2,7 @@ package com.board.controller;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,9 +17,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.board.domain.CharacterDTO;
 import com.board.domain.SurveyDTO;
-import com.board.domain.TypeDTO;
 import com.board.domain.UserDTO;
+import com.board.service.CharacterService;
 import com.board.service.SurveyService;
 import com.board.service.UserService;
 
@@ -30,6 +32,9 @@ public class SurveyController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private CharacterService characterService;
 
 	@GetMapping(value = "/survey/surveylist")
 	public String openSurveyWrite(RedirectAttributes redirectAttributes, HttpSession session, Model model) {
@@ -48,8 +53,9 @@ public class SurveyController {
 			UserDTO user = userService.getUserDetail(myID);
 			model.addAttribute("type", user.getUserType());
 			if(user.getUserType()!=null) {
-				TypeDTO myType = surveyService.getTypeInfo(user.getUserType());
-				model.addAttribute("category", myType.getCategory());
+				List<CharacterDTO> myCharList = characterService.getCharacterList(user.getUserType());
+				CharacterDTO myChar = myCharList.get(myCharList.size()-1);
+				model.addAttribute("myChar",  myChar);
 			}
 			return "survey/surveylist";
 		}
