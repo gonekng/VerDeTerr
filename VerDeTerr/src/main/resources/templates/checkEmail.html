@@ -31,8 +31,9 @@
 				document.getElementById("email").value = emailInput;
 			}
 			let message = "[[${msgCheckEmail}]]";
-			if (message != "") {
-				let result = confirm(message);
+			if(message!=""){
+			let result = confirm(message);
+			if (message == "사용 가능합니다.") {
 				if (result == true){
 					opener.document.getElementById("email").value = document.getElementById("email").value;
 					// 자식창에서 부모창으로 값 전달하기 : 오프너.부모창 id = 자식창 id;
@@ -41,6 +42,7 @@
 					window.close();
 				}
 			} else {
+			}
 			}
 		})
 		function Close(){
