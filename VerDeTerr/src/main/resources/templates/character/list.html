@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="survey/layout/basic">
 
 <th:block layout:fragment="title">
@@ -8,11 +7,16 @@
 	<link href="css/styles.css" rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 	<script>
-	  	let msgChar = "[[${msgChar}]]";
-	  	if(msgChar != ""){
+		let msgChar = "[[${msgChar}]]";
+		if (msgChar != "") {
 			alert(msgChar);
 			msgChar = "";
-			systimeout(window.location.href('list'), 5000);
+		}
+		window.onload = function () {
+			if (!window.location.hash) {
+				window.location = window.location + '#loaded';
+				setTimeout("location.reload()", 2000);
+			}
 		}
 	</script>
 </th:block>
@@ -20,62 +24,30 @@
 <th:block layout:fragment="content">
 	<br>
 	<br>
-	<h2 style="padding: 0px 100px;">캐릭터 목록</h2>
+	<h1 style="text-align:center; padding: 0px 100px;">캐릭터 목록</h1>
 	<br>
 	<div class="container" th:if="${not #lists.isEmpty( characterList )}">
 		<div class="row" th:each="rows, i : ${characterList}">
 			<div class="col-3" th:each="row : ${rows}">
 				<div class="card" style="text-align:center; border:solid gray 0.5px;">
-					<img th:src="@{${row.filepath}}" alt="" style="padding:10px;" width=100%/>
+					<img th:src="@{${row.filepath}}" alt="" style="padding:10px;" width=100% />
 					<div class="card-body" style="padding-bottom: 5px;">
 						<p class="card-title">
-							<a th:href="@{/character/view(idx=${row.idx})}"
-								th:text="${row.name}"></a>
+							<a th:href="@{/character/view(idx=${row.idx})}" th:text="${row.name}"></a>
 						</p>
 						<p class="card-content"><a th:text="${row.title}"></a></p>
-						<p th:text="${#temporals.format( row.regDate, 'yyyy-MM-dd' )}"></p>
+						<p class="card-content" th:text="${#temporals.format( row.regDate, 'yyyy-MM-dd' )}"></p>
 					</div>
 				</div>
 			</div>
 			<div><br></div>
 		</div>
+		<br>
 	</div>
 
-	<!-- 	<div class="table-responsive clearfix"
-		style="text-align: center; padding: 10px 40px 40px 40px;">
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>이름</th>
-					<th>제목</th>
-					<th>분류</th>
-					<th>유형</th>
-					<th>등록일자</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:if="${not #lists.isEmpty( characterList )}"
-					th:each="row, i : ${characterList}">
-					<td scope="row" th:text="${listCount - i.index}"></td>
-					<td class="text-left"><a
-						th:href="@{/character/view(idx=${row.idx})}" th:text="${row.name}"></a>
-					</td>
-					<td th:text="${row.title}"></td>
-					<td th:text="${row.category}"></td>
-					<td th:text="${row.userType}"></td>
-					<td class="text-left"><a
-						th:text="${#temporals.format( row.regDate, 'yyyy-MM-dd' )}"></a></td>
-				</tr>
-				<tr th:unless="${not #lists.isEmpty( characterList )}">
-					<td colspan="5">조회된 결과가 없습니다.</td>
-				</tr>
-			</tbody>
-		</table>
-	</div> -->
-
 	<div class="btn_wrap text-center">
-		<a th:href="@{/character/write}"
+		<button onclick="history.back();" class="btn btn-secondary waves-effect waves-light">뒤로 가기</button>
+		<a th:href="@{/character/write}" th:if="${isManager}==true"
 			class="btn btn-primary waves-effect waves-light">등록하기</a>
 	</div>
 

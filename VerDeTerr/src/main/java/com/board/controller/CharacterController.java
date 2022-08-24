@@ -17,7 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.domain.CharacterDTO;
+import com.board.domain.UserDTO;
 import com.board.service.CharacterService;
+import com.board.service.UserService;
 import com.board.util.UiUtils;
 
 @Controller
@@ -26,8 +28,11 @@ public class CharacterController extends UiUtils {
 	@Autowired
 	private CharacterService characterService;
 
+	@Autowired
+	private UserService userService;
+
 	@GetMapping(value = "/character/list")
-	public String openCharacterList(Model model) {
+	public String openCharacterList(HttpSession session, Model model) {
 		List<CharacterDTO> list = characterService.getCharacterList(null);
 		int listCount = list.size();
 		
@@ -45,6 +50,13 @@ public class CharacterController extends UiUtils {
 		
 		model.addAttribute("characterList", characterList);
 		model.addAttribute("listCount", listCount);
+		
+		String myID = (String) session.getAttribute("id");
+		UserDTO user = userService.getUserDetail(myID);
+		if(user!=null) {
+			boolean isManager = user.isManagerYn();
+			model.addAttribute("isManager", isManager);
+		}
 		return "character/list";
 	};
 
@@ -91,7 +103,7 @@ public class CharacterController extends UiUtils {
 
 	// 게시글 내용 보기
 	@GetMapping(value = "/character/view")
-	public String openCharacterDetail(@RequestParam(value = "idx", required = false) Long idx, Model model) {
+	public String openCharacterDetail(HttpSession session, @RequestParam(value = "idx", required = false) Long idx, Model model) {
 		if (idx == null) {
 			return "redirect:/character/list";
 		}
@@ -103,6 +115,13 @@ public class CharacterController extends UiUtils {
 		}
 		System.out.println("character : " + character);
 		model.addAttribute("character", character);
+		
+		String myID = (String) session.getAttribute("id");
+		UserDTO user = userService.getUserDetail(myID);
+		if(user!=null) {
+			boolean isManager = user.isManagerYn();
+			model.addAttribute("isManager", isManager);
+		}
 
 		return "character/view";
 	}

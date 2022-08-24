@@ -35,7 +35,7 @@
 <th:block layout:fragment="content">
 
 	<h1 style="text-align: center; padding: 40px;" th:text="|${charName} 게시판|"></h1>
-	<div class="card-content" style="margin-top: 10px; margin-left:10%; margin-right:10%; margin-right:10%;">
+	<div class="card-content" style="margin: 0 10% 0 30%">
 		<form class="form-horizontal form-view" th:object="${board}">
 			<div class="form-group">
 				<label for="inp-type-1" class="col-sm-2 control-label">제목</label>
@@ -73,7 +73,7 @@
 			</div>
 		</form>
 
-		<div class="btn_wrap text-center">
+		<div class="btn_wrap text-center" style="margin-right: 30%;">
 			<a th:href="@{/board/list(type=${type})}" class="btn btn-secondary waves-effect waves-light">뒤로가기</a>
 			<button th:onclick="isMyPost_mod([[ ${board.idx} ]])"
 				class="btn btn-primary waves-effect waves-light">수정하기</button>
@@ -83,9 +83,9 @@
 	</div>  <!-- /.card-content -->
 </th:block>
 
-<th:block layout:fragment="add-content" >
-	<div class="box-content" style="margin-top: 10px; margin-left:10%; margin-right:10%;">
-		<div class="card-content" >
+<th:block layout:fragment="add-content">
+	<div class="box-content">
+		<div class="card-content" style="margin: 40px 10% 0 30%">
 			<div class="clearfix">
 				<h4 class="box-title pull-left">Comment</h4>
 				<!-- /.box-title -->
@@ -93,8 +93,8 @@
 
 	<ul class="notice-list"></ul>
 	
-	<form class="form-horizontal form-view">
-			<input type="text" th:unless="${isSurvey} == 'false'"  id="content" class="form-control" style="margin-top: 10px; margin-right:20%;"/><br>
+	<form class="form-horizontal form-view" style="margin-right: 16%">
+			<input type="text" th:unless="${isSurvey} == 'false'"  id="content" class="form-control" style="margin-top: 10px; margin-right:10%;"/><br>
 			<input type="button" th:unless="${isSurvey} == 'false'" class="btn btn-primary waves-effect waves-light" th:onclick="insertComment([[ ${board.idx} ]])" value="등록">
 	
 	</form>

@@ -10,8 +10,8 @@
 <th:block layout:fragment="content">
 	<br>
 	<br>
-	<h2 style="padding: 0px 100px;">캐릭터 조회</h2>
-	<div class="card-content" style="padding: 40px 100px;">
+	<h1 style="text-align: center; padding: 40px;">캐릭터 조회</h1>
+	<div class="card-content" style="margin: 0 10% 0 30%">
 		<form class="form-horizontal form-view" th:object="${character}" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="inp-type-1" class="col-sm-2 control-label">이름</label>
@@ -50,16 +50,16 @@
 			<div class="form-group">
 				<label for="inp-type-5" class="col-sm-2 control-label">이미지</label>
 				<div class="col-sm-10">
-					<img th:src="@{*{filepath}}"/>
+					<img th:src="@{*{filepath}}", width=50%/>
 				</div>
 			</div>
 
 		</form>
 
-		<div class="btn_wrap text-center">
-			<a th:href="@{/character/list}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
-			<a th:href="@{/character/write( idx=${character.idx} )}" class="btn btn-primary waves-effect waves-light">수정하기</a>
-			<button type="button" class="btn btn-danger waves-effect waves-light" th:onclick="deleteCharacter([[ ${character.idx} ]])">삭제하기</button>
+		<div class="btn_wrap text-center" style="margin-top: 40px; margin-right: 30%;">
+			<a th:href="@{/character/list}" class="btn btn-secondary waves-effect waves-light">뒤로가기</a>
+			<a th:href="@{/character/write( idx=${character.idx} )}" th:if="${isManager}!=null" class="btn btn-primary waves-effect waves-light">수정하기</a>
+			<button type="button" th:if="${isManager}!=null" class="btn btn-danger waves-effect waves-light" th:onclick="deleteCharacter([[ ${character.idx} ]])">삭제하기</button>
 		</div>
 	</div>
 	<!-- /.card-content -->
@@ -71,7 +71,7 @@
 		
 		function deleteCharacter(idx) {
 			
-			if (confirm(idx + "번 게시글을 삭제할까요?")) {
+			if (confirm(idx + "번 캐릭터를 삭제할까요?")) {
 				var uri = /*[[ @{/character/delete} ]]*/null;
 				var html = ""
 				html += '<form name="dataForm" action="' + uri + '" method="post">';

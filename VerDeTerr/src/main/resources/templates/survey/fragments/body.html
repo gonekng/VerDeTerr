@@ -18,19 +18,17 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ms-auto my-2 my-lg-0">
-					<li class="nav-item"><a class="nav-link" th:href="@{/survey/surveylist}">Survey</a></li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/board/select}">Board</a></li>
-					<li class="nav-item">
-						<a class="nav-link" th:if="${session.id}==null" th:href="@{/signup}">SignUp</a>
+					<li class="nav-item"><a class="nav-link" th:href="@{/survey/surveylist}">성격유형 테스트</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/board/select}">게시판</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/character/list}">캐릭터 </a>	</li>
+					<li class="nav-item" th:if="${session.id}==null">
+						<a class="nav-link" th:href="@{/signup}">회원가입</a>
 					</li>
-					<li class="nav-item" th:if="${session.id}!=null and ${isManager}==true"><a class="nav-link"
-							onclick="isManager()">Manager</a>
-					<li class="nav-item" th:if="${session.id}!=null and ${isManager}!=true"> <a class="nav-link"
-							th:href="@{/identify}">Mypage</a>
+					<li class="nav-item" th:if="${session.id}!=null">
+						<a class="nav-link" th:href="@{/identify}">마이페이지</a>
 					</li>
-					<li class="nav-item" th:if="${session.id}==null"><a class="nav-link" th:href="@{/login}">LogIn</a>
-					</li>
-					<li class="nav-item" th:if="${session.id}!=null"><a class="nav-link" th:href="@{/logout}">LogOut</a>
+					<li class="nav-item" th:if="${session.id}==null"><a class="nav-link" th:href="@{/login}">로그인</a></li>
+					<li class="nav-item" th:if="${session.id}!=null"><a class="nav-link" th:href="@{/logout}">로그아웃</a>
 					</li>
 				</ul>
 			</div>
