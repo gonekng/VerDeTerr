@@ -10,19 +10,34 @@
 </th:block>
 
 <th:block layout:fragment="content">
-		<h1 style="text-align: center; padding: 40px;">관리자 페이지</h1>
+		<h1 style="text-align: center; padding: 40px;">My Page</h1>
 
-		<div style="text-align: center; padding: 5px;">
-			아이디 : <span th:text="${session.user.getId()}">여기는 아이디입니다.</span>
-		</div>
-		<div style="text-align: center; padding: 5px;">
-			닉네임 : <span th:text="${session.user.getNickname()}">여기는 닉네임입니다.</span>
-		</div>
-		<div style="text-align: center; padding: 5px;">
-			이메일 : <span th:text="${session.user.getEmail()}">여기는 이메일입니다.</span>
+		<div class="row text-white-25" style="text-align: left; margin: 0px 200px;">
+			<div class="col-lg-7 col-md-3">
+				<h2 style="text-align: left; margin: 20px 0px 40px 0px">Personal Info</h2>
+				<h5 style="text-align: left; margin: 10px"
+					 th:text="|* 아이디 : ${session.user.getId()} (관리자)|">여기는 아이디입니다.</h5>
+				<h5 style="text-align: left; margin: 10px"
+					 th:text="|* 닉네임 : ${session.user.getNickname()}|">여기는 닉네임입니다.
+				</h5>
+				<h5 style="text-align: left; margin: 10px"
+					 th:text="|* 이메일 : ${session.user.getEmail()}|">여기는 이메일입니다.</h5>
+				<br>
+				<div class="btn_wrap"  style="margin: 10px" >
+					<a th:href="@{/board/mylist}" class="btn btn-primary waves-effect waves-light">내가 쓴 글 보기</a>
+					<a th:href="@{/modify(id=${session.user.getId()})}"
+						class="btn btn-primary waves-effect waves-light">비밀번호 변경</a>
+					<a th:href="@{/deleteUser(id=${session.user.getId()})}"
+						class="btn btn-secondary waves-effect waves-light">회원탈퇴</a>
+				</div>
+			</div>
+			<div class="col-lg-5 col-md-3" style="text-align: center;">
+				<img th:src="${session.user.getUserCharacter().getFilepath()}" width=90%>
+			</div>
 		</div>
 
-		<div class="table-responsive clearfix" style="padding: 40px;">
+	<div class="table-responsive clearfix" style="margin: 40px 200px 40px 200px;">
+		<h2 style="text-align: left; margin:10px">Member List</h2>
 			<table class="table table-hover"
 				style="margin-left: auto; margin-right: auto; text-align: center;">
 				<thead>
@@ -46,7 +61,8 @@
 						<td th:text="${row.id}"></td>
 						<td th:text="${row.gender}"></td>
 						<td th:text="${row.age}"></td>
-						<td th:text="${row.userType}"></td>
+						<td th:if="${row.userCharacter}!=null" th:text="|${row.userCharacter.getName()}|"></td>
+						<td th:if="${row.userCharacter}==null" th:text="."></td>
 						<td th:text="${row.email}"></td>
 						<td class="text-left"><a
 							th:text="${#temporals.format( row.regDate, 'yyyy-MM-dd' )}"></a>

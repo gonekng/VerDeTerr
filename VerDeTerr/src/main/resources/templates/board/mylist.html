@@ -12,14 +12,16 @@
 
 <th:block layout:fragment="content">
 
-	<h1 style="text-align: center; padding: 40px;">나의 게시글 목록</h1>
+	<h1 style="text-align: center; padding: 40px 200px;"> </h1>
 	<th:block layout:fragment="search">
 		<div th:replace="board/fragments/common :: search2"></div>
 	</th:block>
 	
 	<br>
-	<div class="table-responsive clearfix" style="margin: 20px 100px 40px 100px;">
-		<table class="table table-hover">
+	<div class="table-responsive clearfix" style="margin: 40px 200px 40px 200px;">
+		<h1 style="text-align: left; margin:10px">My Post</h1>
+		<br>
+		<table class="table table-hover" style="text-align: center;">
 			<thead>
 				<tr>
 					<th>번호</th>
@@ -30,18 +32,18 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:if="${not #lists.isEmpty( boardlist )}" th:each="row, i : ${boardlist}">
-					<td scope="row" th:text="${#strings.equals( row.NoticeYn, true ) ? '&#8251공지&#8251' : listCount - i.index}">
+				<tr th:if="${not #lists.isEmpty( boardList )}" th:each="i : ${#numbers.sequence(1,listCount)}">
+					<td scope="row" th:text="${#strings.equals( boardList.get(i).getNoticeYn(), true ) ? '&#8251공지&#8251' : listCount - i +1}">
 					</td>
 					<td class="text-left"><a
-							th:href="|@{/board/view}${params.makeQueryString(params.currentPageNo)}&idx=${row.idx}|"
-							th:text="${row.title}"></a>
+							th:href="|@{/board/view}${params.makeQueryString(params.currentPageNo)}&idx=${boardList.get(i).getIdx()}|"
+							th:text="${boardList.get(i).getTitle()}"></a>
 
 
 
-					<td th:text="${row.postType}"></td>
-					<td th:text="${#temporals.format( row.insertTime, 'yyyy-MM-dd' )}"></td>
-					<td th:text="${row.viewCnt}"></td>
+					<td th:text="|${charList.get(i).getName()} (${charList.get(i).getTitle()})|"></td>
+					<td th:text="${#temporals.format( boardList.get(i).getInsertTime(), 'yyyy-MM-dd' )}"></td>
+					<td th:text="${boardList.get(i).getViewCnt()}"></td>
 				</tr>
 				<tr th:unless="${not #lists.isEmpty( boardlist )}">
 					<td colspan="5">조회된 결과가 없습니다.</td>

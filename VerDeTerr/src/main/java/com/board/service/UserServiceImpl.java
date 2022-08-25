@@ -87,6 +87,10 @@ public class UserServiceImpl implements UserService {
 		int userCount = userMapper.selectUserTotalCount();
 		if(userCount > 0) {
 			userList = userMapper.selectUserList();
+			for(int i=0; i<userList.size(); i++) {
+				UserDTO user = userList.get(i);
+				user.setUserCharacter(userMapper.selectUserCharacter(user.getId()));
+			}
 		}
 		return userList;
 	};

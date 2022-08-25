@@ -1,5 +1,6 @@
 package com.board.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -109,10 +110,6 @@ public class BoardController extends UiUtils {
 		model.addAttribute("board", board);
 		model.addAttribute("type", type);
 
-		List<CharacterDTO> charList = characterService.getCharacterList(type);
-		CharacterDTO character = charList.get(charList.size() - 1);
-		model.addAttribute("charName", character.getName());
-
 		return "board/view";
 	}
 
@@ -217,9 +214,19 @@ public class BoardController extends UiUtils {
 			params.setWriter(user.getNickname());
 			System.out.println("@@@@@@@@@params : " + params);
 			List<BoardDTO> boardList = boardService.getBoardList(params);
-			model.addAttribute("boardlist", boardList);
-			model.addAttribute("listCount", boardList.size());
+			model.addAttribute("boardList", boardList);
+			
+			int listCount = boardList.size();
+			model.addAttribute("listCount", listCount);
 			System.out.println("@@@@@@@@@" + boardList);
+			
+			List<CharacterDTO> charList = new ArrayList<>();
+			for(int i=0; i<listCount; i++) {
+				List<CharacterDTO> tempList = characterService.getCharacterList(boardList.get(i).getPostType());
+				CharacterDTO character = tempList.get(tempList.size() - 1);
+				charList.add(character);
+			}
+			model.addAttribute("charList", charList);
 		}
 		return "board/mylist";
 	}

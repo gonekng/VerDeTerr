@@ -1,5 +1,6 @@
 package com.board.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private CharacterService characterService;
 	
 	@GetMapping("/login")
 	public String login() {
@@ -93,6 +97,15 @@ public class UserController {
 		int listCount = testList.size();
 		model.addAttribute("testList", testList);
 		model.addAttribute("listCount", listCount);
+		
+		List<CharacterDTO> charList = new ArrayList<>();
+		for(int i=0; i<listCount; i++) {
+			List<CharacterDTO> tempList = characterService.getCharacterList(testList.get(i).getUsertype());
+			CharacterDTO character = tempList.get(tempList.size() - 1);
+			charList.add(character);
+		}
+		model.addAttribute("charList", charList);
+		
 		return "mypage";
 	}
 

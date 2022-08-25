@@ -26,8 +26,8 @@
 		, #{pw}
 		, #{pwHint}
 		, #{email}
-		, null
 		, CONCAT(#{id}, '_', #{userType})
+		, #{id}
 		, #{age}
 		, #{gender}
 		, 0

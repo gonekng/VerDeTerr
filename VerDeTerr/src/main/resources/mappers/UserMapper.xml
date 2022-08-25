@@ -35,8 +35,7 @@
 		, #{pwHint}
 		, #{email}
 		, null
-		, CONCAT(#{id}, '_',
-		#{userType})
+		, #{id}
 		, #{age}
 		, #{gender}
 		, 0
@@ -87,8 +86,7 @@
 		MAX(TestDate)
 		from Mbti_ML_Output
 		where id = #{id}))
-		, nickname =
-		CONCAT(id, '_', userType)
+		, nickname = id
 		WHERE
 		id = #{id}
 	</update>

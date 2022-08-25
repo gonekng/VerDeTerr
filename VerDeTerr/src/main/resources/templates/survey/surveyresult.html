@@ -22,7 +22,7 @@
 							<table style="margin: auto; text-align: left;" class="text-white-75 mb-5">
 
 								<tbody>
-									<tr th:if="${session.user.getUserCharacter()}!=null">
+									<tr th:if="${session.user.getUserCharacter()}!=null" bgcolor="white">
 										<td class="text-center"><img th:src="@{|/assets/img/mbti/${session.user.getUserCharacter().getUserType()}.png|}" width=30%></td>
 									</tr>
 									<tr>
