@@ -142,6 +142,12 @@ public class BoardController extends UiUtils {
 
 			}
 			model.addAttribute("type", type);
+			
+			List<CharacterDTO> charList = characterService.getCharacterList(type);
+			CharacterDTO character = charList.get(charList.size() - 1);
+			model.addAttribute("charName", character.getName());
+			model.addAttribute("charTitle", character.getTitle());
+			
 			return "board/write";
 		}
 		System.out.println("type : " + type);

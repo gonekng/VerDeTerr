@@ -5,13 +5,13 @@
 	<title>Loading</title>
       <script>
          window.onload = function () {
-            var sec = 6;
+            var sec = 9;
             setInterval(function () {
                document.getElementById("timer").innerHTML = sec;
                sec--;
             }, 1000);
          };
-		setTimeout("location.href='surveyresult'", 7000);
+		setTimeout("location.href='surveyresult'", 10000);
 	</script>
 </th:block>
 
@@ -31,7 +31,7 @@
 
 						<div class="col-lg-8 align-self-baseline">
 							<h3 class="text-white-75 mb-5">현재 분석 중입니다.</h3>
-							<span id="timer" class="text-white-75 mb-5">7</span>
+							<span id="timer" class="text-white-75 mb-5">10</span>
 							<span class="text-white-75 mb-5">초 후에 결과 페이지로 이동합니다.</span>
 						</div>
 					</div>
