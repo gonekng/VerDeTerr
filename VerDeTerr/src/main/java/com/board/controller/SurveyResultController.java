@@ -25,35 +25,25 @@ public class SurveyResultController {
 
 	@Autowired
 	private UserService userService;
-	
-	@Autowired	
-	private CharacterService characterService;
-	
+		
 	@GetMapping(value = "/survey/surveyresult")
 	public String getSurveyList(Model model, HttpSession session) {
 
-		String myID = (String) session.getAttribute("id");
-		SurveyOutputDTO surveyList = surveyService.getSurveyList(myID);
+		UserDTO user = (UserDTO) session.getAttribute("user");
+		SurveyOutputDTO surveyList = surveyService.getSurveyList(user.getId());
 		System.out.println("***********" + surveyList);
 		model.addAttribute("surveyList", surveyList);
-		
-		UserDTO user = userService.getUserDetail(myID);
-		System.out.println("***********" + user);
+
 		if(user!=null) {
 			
 			userService.updateUserDetail(user);
-			user = userService.getUserDetail(myID);
+			user = userService.getUserDetail(user.getId());
+			session.setAttribute("user", user);
 			System.out.println("***********" + user);
 			
-			String myType = user.getUserType();
-			System.out.println("***********" + myType);
 			TypeDTO typeInfo = surveyService.getTypeInfo(user.getUserType());
 			System.out.println("***********" + typeInfo);
 			model.addAttribute("typeInfo", typeInfo);
-
-			List<CharacterDTO> characterList = characterService.getCharacterList(myType);
-			model.addAttribute("character", characterList);
-			System.out.println("***********" + characterList);
 			
 		}
 		return "survey/surveyresult";

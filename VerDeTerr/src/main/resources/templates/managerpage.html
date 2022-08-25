@@ -13,13 +13,13 @@
 		<h1 style="text-align: center; padding: 40px;">관리자 페이지</h1>
 
 		<div style="text-align: center; padding: 5px;">
-			아이디 : <span th:text="${session.id}">여기는 아이디입니다.</span>
+			아이디 : <span th:text="${session.user.getId()}">여기는 아이디입니다.</span>
 		</div>
 		<div style="text-align: center; padding: 5px;">
-			닉네임 : <span th:text="${nick}">여기는 닉네임입니다.</span>
+			닉네임 : <span th:text="${session.user.getNickname()}">여기는 닉네임입니다.</span>
 		</div>
 		<div style="text-align: center; padding: 5px;">
-			이메일 : <span th:text="${email}">여기는 이메일입니다.</span>
+			이메일 : <span th:text="${session.user.getEmail()}">여기는 이메일입니다.</span>
 		</div>
 
 		<div class="table-responsive clearfix" style="padding: 40px;">

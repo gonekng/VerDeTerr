@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.board.domain.CharacterDTO;
 import com.board.domain.SurveyOutputDTO;
 import com.board.domain.UserDTO;
 
@@ -13,6 +14,8 @@ public interface UserMapper {
 	public int insertUser(UserDTO params);
 
 	public UserDTO selectUserDetail(String id);
+	
+	public CharacterDTO selectUserCharacter(String id);
 
 	public int updateUser(UserDTO params);
 

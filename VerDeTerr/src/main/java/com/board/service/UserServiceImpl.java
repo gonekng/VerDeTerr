@@ -34,13 +34,18 @@ public class UserServiceImpl implements UserService {
 		} else {
 			System.out.println(pw);
 			System.out.println(loginMember.getPw());
+			loginMember.setUserCharacter(userMapper.selectUserCharacter(id));
 			return loginMember;
 		}
 	}
 
 	@Override
 	public UserDTO getUserDetail(String ID) {
-		return userMapper.selectUserDetail(ID);
+		UserDTO user = userMapper.selectUserDetail(ID);
+		if(user!=null) {
+			user.setUserCharacter(userMapper.selectUserCharacter(ID));
+		}
+		return user;
 	}
 
 	@Override

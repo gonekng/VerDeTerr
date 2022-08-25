@@ -57,6 +57,23 @@
 		and deleteYn = 0
 	</select>
 
+	<select id="selectUserCharacter" parameterType="String"
+		resultType="CharacterDTO">
+		SELECT
+		 c.Idx
+		, c.Name
+		, c.Title
+		, c.Category
+		, c.UserType
+		, c.RegDate
+		,	c.filename
+		, c.filepath
+		FROM
+		 `member` m, `character` c
+		WHERE
+		 m.UserType = c.UserType	AND m.id=#{id} AND m.deleteYn = 0;
+	</select>
+
 	<update id="updateUser" parameterType="UserDTO">
 		UPDATE Member
 		SET
@@ -76,7 +93,7 @@
 		id = #{id}
 	</update>
 
-	<update id="deleteUser" parameterType="String" >
+	<update id="deleteUser" parameterType="String">
 		update Member
 		set
 		deleteYn = 1,
@@ -105,23 +122,23 @@
 		order by b.TestDate
 	</select>
 
-	<select id= "findId" resultType="UserDTO">
-		select 
+	<select id="findId" resultType="UserDTO">
+		select
 		<include refid="userColumns" />
 		from Member
-		where Email=#{email} 
+		where Email=#{email}
 		and deleteYn = 0
 	</select>
 
-	<select id= "findPw" resultType="UserDTO">
-		select 
+	<select id="findPw" resultType="UserDTO">
+		select
 		<include refid="userColumns" />
 		from Member
-		where PwHint=#{pwHint} 
+		where PwHint=#{pwHint}
 		and deleteYn = 0
 	</select>
-	
-		<select id="selectUserList"	resultType="UserDTO">
+
+	<select id="selectUserList" resultType="UserDTO">
 		select
 		<include refid="userColumns" />
 		from Member

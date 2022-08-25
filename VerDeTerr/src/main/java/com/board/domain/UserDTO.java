@@ -1,6 +1,11 @@
 package com.board.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.board.service.CharacterService;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDTO {
-
+	
 	public String getId() {
 		return id;
 	}
@@ -140,12 +145,23 @@ public class UserDTO {
 
 	/** 삭제일자 */
 	private LocalDateTime deleteDate;
+	
+	/** 캐릭터 */
+	private CharacterDTO userCharacter;
+	
+	public CharacterDTO getUserCharacter() {
+		return userCharacter;
+	}
+
+	public void setUserCharacter(CharacterDTO userCharacter) {
+		this.userCharacter = userCharacter;
+	}
 
 	@Override
 	public String toString() {
 		return "UserDTO [id=" + id + ", pw=" + pw + ", pwHint=" + pwHint + ", email=" + email + ", userType=" + userType
-				+ ", nickname=" + nickname + ", age=" + age + ", gender=" + gender + ", managerYn=" + managerYn
-				+ ", regDate=" + regDate + ", deleteYn=" + deleteYn + ", deleteDate=" + deleteDate + "]";
+				+ ", CharacterDTO=" + userCharacter + ", nickname=" + nickname + ", age=" + age + ", gender=" + gender
+				+ ", managerYn=" + managerYn + ", regDate=" + regDate + ", deleteYn=" + deleteYn + ", deleteDate=" + deleteDate + "]";
 	}
 
 

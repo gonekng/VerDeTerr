@@ -34,7 +34,7 @@
 					<textarea th:field="*{content}" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
 				</div>
 				
-				<div class="form-group">
+				<div class="form-group" th:if="${session.user.isManagerYn()}==true">
 				<label for="noticeYn" class="col-sm-2 control-label">공지글 여부</label>
 				<input type="checkbox" th:value="*{noticeYn}" id="NoticeYn" name="NoticeYn"
 						th:checked="*{noticeYn}" />
@@ -45,7 +45,8 @@
 			</div>
 
 			<div class="btn_wrap text-center" style="margin-right: 30%;">
-				<button onclick="history.back();" class="btn btn-secondary waves-effect waves-light">뒤로가기</button>
+			<br>
+				<a th:href="@{/board/list(type=${type})}" class="btn btn-secondary waves-effect waves-light">뒤로가기</a>
 				<button type="submit" class="btn btn-primary waves-effect waves-light">저장하기</button>
 			</div>
 		</form>
