@@ -147,17 +147,17 @@
          $.get(uri, function (response) {
             var commentsHtml = "";
 
-            $(response.commentList).each(function (idx, comment) {
-               commentsHtml += `
-               <li>
-                  <span class="name">${comment.writer}</span>
-                  <span class="desc">${comment.content}</span>
-                  <span class="time">${moment(comment.insertTime).format('YYYY-MM-DD HH:mm:ss')}</span>
-                  <button type="button" onclick="updateComment(${comment.idx})" class="btn btn-xs btn-circle">수정</button>
-                  <button type="button" onclick="deleteComment(${comment.idx})" class="btn btn-xs btn-circle">삭제</button>
-               </li>
-            `;
-            });
+				$(response.commentList).each(function (idx, comment) {
+					commentsHtml += `
+					<li>
+						<span class="desc">${comment.content}</span>
+						<span class="time">|${moment(comment.insertTime).format('YYYY-MM-DD HH:mm:ss')}</span>
+						<span class="name">|${comment.writer}</span>
+						<button type="button" onclick="updateComment(${comment.idx})" class="btn btn-xs btn-circle">수정</button>
+						<button type="button" onclick="deleteComment(${comment.idx})" class="btn btn-xs btn-circle">삭제</button>
+					</li>
+				`;
+				});
 
             $(".notice-list").html(commentsHtml);
 
@@ -166,14 +166,31 @@
       /*[- end of function -]*/
 
 
-      function insertComment(boardIdx) {
-
-         var content = document.getElementById("content");
-         if (isEmpty(content.value) == true) {
-            content.setAttribute("placeholder", "댓글을 입력해 주세요.");
-            content.focus();
-            return false;
-         }
+		function insertComment(boardIdx) {
+			let user=[[${session.user}]];
+			console.log("user:::"+user);
+			console.log("user:::"+JSON.stringify(user));
+			let content = document.getElementById("content");
+			
+			
+			
+			if(user==null || user=='' || user==undefined)
+			{		console.log("null여기로들어옴?");
+			
+				alert("댓글은 로그인후 작성하실수 있습니다");
+			}
+			
+			 if(user.userType==null)
+				{
+				 	alert("댓글은 심리테스트를 진행하신 후에 작성하실수 있습니다");
+				} 
+			
+			
+			if (isEmpty(content.value) == true) {
+				content.setAttribute("placeholder", "댓글을 입력해 주세요.");
+				content.focus();
+				return false;
+			}
 
          var uri = /*[[ @{/comments} ]]*/;
          var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
@@ -243,28 +260,28 @@
             return false;
          }
 
-         var uri = [[ @{/comments/} ]]+ idx;
-      var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "DELETE"};
+		var uri = [[ @{/comments/} ]]+ idx;
+		var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "DELETE"};
 
-      $.ajax({
-         url: uri,
-         type: "DELETE",
-         headers: headers,
-         dataType: "json",
-         success: function (response) {
-            if (response.result == false) {
-               alert("댓글 삭제에 실패하였습니다.");
-               return false;
-            }
-            alert("댓글 삭제 완료하였습니다.")
-            printCommentList();
-         },
-         error: function (xhr, status, error) {
-            alert("에러가 발생하였습니다.");
-            return false;
-         }
-      });
-   }
+		      $.ajax({
+		         url: uri,
+		         type: "DELETE",
+		         headers: headers,
+		         dataType: "json",
+		         success: function (response) {
+		            if (response.result == false) {
+		               alert("댓글 삭제에 실패하였습니다.");
+		               return false;
+		            }
+		            alert("댓글 삭제 완료하였습니다.")
+		            printCommentList();
+		         },
+		         error: function (xhr, status, error) {
+		            alert("에러가 발생하였습니다.");
+		            return false;
+		         }
+		      });
+		   }
 
    </script>
 </th:block>

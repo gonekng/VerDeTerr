@@ -1,9 +1,7 @@
-<<<<<<< HEAD
-=======
+
 import time
 start = time.time()
 
->>>>>>> 4ee3f0685b54795838deabc442d363522d50eec5
 import pymysql.cursors
 import pandas as pd
 import pickle
