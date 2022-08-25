@@ -19,7 +19,8 @@
 		<li th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}"
 			th:class="${pageNo == params.currentPageNo} ? 'active'">
 			<a href="javascript:void(0)" th:text="${pageNo}"
-				th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>
+				 th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>
+				 &nbsp
 		</li>
 		<li th:if="*{hasNextPage == true}"
 			th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.lastPage + 1)} ]])">
