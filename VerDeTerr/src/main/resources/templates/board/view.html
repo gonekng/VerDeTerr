@@ -249,13 +249,12 @@
 		}
 
 		function deleteComment(idx) {
-			
+
 			if (!confirm('댓글을 삭제하시겠어요?')) {
 				return false;
 			}
 
-			var uri = [[ @{/comments/
-		} ]]+ idx;
+			var uri = [[ @{/comments/} ]]+ idx;
 		var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "DELETE"};
 
 		$.ajax({
