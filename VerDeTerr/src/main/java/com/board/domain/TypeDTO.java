@@ -14,6 +14,10 @@ public class TypeDTO {
 	private String category;
 
 	private String feature;
+	
+	private String feature2;
+	
+	private String inCompany;
 
 	private String job;
 	
@@ -45,6 +49,22 @@ public class TypeDTO {
 		this.feature = feature;
 	}
 
+	public String getFeature2() {
+		return feature2;
+	}
+
+	public void setFeature2(String feature2) {
+		this.feature2 = feature2;
+	}
+
+	public String getInCompany() {
+		return inCompany;
+	}
+
+	public void setInCompany(String inCompany) {
+		this.inCompany = inCompany;
+	}
+
 	public String getJob() {
 		return job;
 	}
@@ -71,9 +91,13 @@ public class TypeDTO {
 
 	@Override
 	public String toString() {
-		return "TypeDTO [userType=" + userType + ", category=" + category + ", feature=" + feature + ", job=" + job
-				+ ", goodMatch=" + goodMatch + ", badMatch=" + badMatch + "]";
+		return "TypeDTO [userType=" + userType + ", category=" + category + ", feature=" + feature + ", feature2="
+				+ feature2 + ", inCompany=" + inCompany + ", job=" + job + ", goodMatch=" + goodMatch + ", badMatch="
+				+ badMatch + ", getUserType()=" + getUserType() + ", getCategory()=" + getCategory() + ", getFeature()="
+				+ getFeature() + ", getFeature2()=" + getFeature2() + ", getInCompany()=" + getInCompany()
+				+ ", getJob()=" + getJob() + ", getGoodMatch()=" + getGoodMatch() + ", getBadMatch()=" + getBadMatch()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
-	
 
 }

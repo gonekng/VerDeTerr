@@ -21,17 +21,31 @@
 						<div class="table-responsive clearfix">
 							<table style="margin: auto; text-align: left;" class="text-white-75 mb-5">
 
-								<tbody>
-									<tr th:if="${session.user.getUserCharacter()}!=null" bgcolor="white">
-										<td class="text-center"><img th:src="@{|/assets/img/mbti/${session.user.getUserCharacter().getUserType()}.png|}" width=30%></td>
+								<tbody th:if="${session.user.getUserCharacter()}!=null">
+									<tr>
+										<td class="text-center"><a th:text="${#strings.replace(typeInfo.feature, '유형', '')}"></a></td>
 									</tr>
 									<tr>
-										<td class="text-center"><br><a th:text="${#strings.replace(typeInfo.feature, '유형', '')}"></a></td>
+										<td class="text-center"><h4 th:text="|${session.user.getUserCharacter().getName()} (${session.user.getUserCharacter().getTitle()})|"></h4></td>
 									</tr>
-									<tr th:if="${session.user.getUserCharacter()}!=null">
-										<td class="text-center"><h4 th:text="|${session.user.getUserCharacter().getName()} (${session.user.getUserCharacter().getTitle()})|"></h4>	</td>
+									<tr>
+										<td class="text-center"><br><img th:src="@{|/assets/img/mbti/${session.user.getUserCharacter().getUserType()}.png|}" width=15%></td>
 									</tr>
-									<tr th:unless="${not #lists.isEmpty( surveyList )}">
+									<tr>
+										<td class="text-center"><br><h5 class="text-white-75 font-weight-bold">✨ 일상 속의 당신은 :</h5></td>
+									</tr>
+									<tr>
+										<td class="text-center"><a th:utext="${#strings.replace(typeInfo.feature2, '/', '&lt;br /&gt;')}"></a></td>
+									</tr>
+									<tr>
+										<td class="text-center"><br><h5 class="text-white-75 font-weight-bold">✨ 취준할 때 당신은 :</h5></td>
+									</tr>
+									<tr>
+										<td class="text-center"><a th:utext="${#strings.replace(typeInfo.inCompany, '/', '&lt;br /&gt;')}"></a></td>
+									</tr>
+								</tbody>
+								<tbody th:unless="${not #lists.isEmpty( surveyList )}">
+									<tr>
 										<td colspan="5">조회된 결과가 없습니다.</td>
 									</tr>
 								</tbody>

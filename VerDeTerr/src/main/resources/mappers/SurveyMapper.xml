@@ -107,6 +107,8 @@
 		  UserType
 		, Category
 		, Feature
+		, Feature2
+		, InCompany
 		, Job
 		, GoodMatch
 		, BadMatch
