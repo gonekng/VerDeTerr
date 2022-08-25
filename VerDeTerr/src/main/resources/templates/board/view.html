@@ -147,9 +147,9 @@
 				$(response.commentList).each(function (idx, comment) {
 					commentsHtml += `
 					<li>
-						<span class="name">${comment.writer}</span>
 						<span class="desc">${comment.content}</span>
-						<span class="time">${moment(comment.insertTime).format('YYYY-MM-DD HH:mm:ss')}</span>
+						<span class="time">|${moment(comment.insertTime).format('YYYY-MM-DD HH:mm:ss')}</span>
+						<span class="name">|${comment.writer}</span>
 						<button type="button" onclick="updateComment(${comment.idx})" class="btn btn-xs btn-circle">수정</button>
 						<button type="button" onclick="deleteComment(${comment.idx})" class="btn btn-xs btn-circle">삭제</button>
 					</li>
@@ -164,8 +164,25 @@
 
 
 		function insertComment(boardIdx) {
-
-			var content = document.getElementById("content");
+			let user=[[${session.user}]];
+			console.log("user:::"+user);
+			console.log("user:::"+JSON.stringify(user));
+			let content = document.getElementById("content");
+			
+			
+			
+			if(user==null || user=='' || user==undefined)
+			{		console.log("null여기로들어옴?");
+			
+				alert("댓글은 로그인후 작성하실수 있습니다");
+			}
+			
+			 if(user.userType==null)
+				{
+				 	alert("댓글은 심리테스트를 진행하신 후에 작성하실수 있습니다");
+				} 
+			
+			
 			if (isEmpty(content.value) == true) {
 				content.setAttribute("placeholder", "댓글을 입력해 주세요.");
 				content.focus();
@@ -232,7 +249,7 @@
 		}
 
 		function deleteComment(idx) {
-
+			
 			if (!confirm('댓글을 삭제하시겠어요?')) {
 				return false;
 			}
