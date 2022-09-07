@@ -17,4 +17,4 @@
 
 ###### IDE
 
-<img src="https://img.shields.io/badge/sts4 4_4.15.3-83B81A?style=flat-square&logo=Color="/>
+<img src="https://img.shields.io/badge/sts4 _4.15.3-83B81A?style=flat-square&logo=Color="/>
