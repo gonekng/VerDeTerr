@@ -21,7 +21,8 @@
 
 ### 🕹 사용기능
 
-### 프론트엔드
 
-<img src="https://img.shields.io/badge/jQuery 3.6.0-0769AD?style=flat-square&logo=jQuery&logoColor=white">
+###### 프론트엔드
+
+<img src="https://img.shields.io/badge/jQuery 3.6.0-0769AD?style=flat-square&logo=jQuery&logoColor=white">,<img src="https://img.shields.io/badge/Thymeleaf 3.0.15-005F0F?style=flat-square&logo=Thymeleaf&logoColor=white">
 
