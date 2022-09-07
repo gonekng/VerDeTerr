@@ -43,16 +43,16 @@
 <br>
 
 ## Details
-<img width="70%" src="README\architecture.PNG"/>
+<img width="70%" src="architecture.PNG"/>
 
 <br>
 
-<img width="70%" src="README\ERD.PNG"/>
+<img width="70%" src="ERD.PNG"/>
 
 <br>
 
-<img width="70%" src="README\flow1.PNG"/>
+<img width="70%" src="flow1.PNG"/>
 
 <br>
 
-<img width="70%" src="README\flow2.PNG"/>
+<img width="70%" src="flow2.PNG"/>
