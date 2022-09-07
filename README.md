@@ -24,5 +24,5 @@
 
 ###### 프론트엔드
 
-<img src="https://img.shields.io/badge/jQuery 3.6.0-0769AD?style=flat-square&logo=jQuery&logoColor=white">,<img src="https://img.shields.io/badge/Thymeleaf 3.0.15-005F0F?style=flat-square&logo=Thymeleaf&logoColor=white">,<img src="https://img.shields.io/badge/Bootstrap  5.1.3-7952B3?style=flat-square&logo=Bootstrap&logoColor=white">
+<img src="https://img.shields.io/badge/jQuery 3.6.0-0769AD?style=flat-square&logo=jQuery&logoColor=white">,<img src="https://img.shields.io/badge/Thymeleaf 3.0.15-005F0F?style=flat-square&logo=Thymeleaf&logoColor=white">,<img src="https://img.shields.io/badge/Bootstrap  5.1.3-7952B3?style=flat-square&logo=Bootstrap&logoColor=white">,<img src="https://img.shields.io/badge/MediaQuery-F7901E?style=flat-square&logo=Color="/>
 
