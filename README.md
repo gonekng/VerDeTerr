@@ -13,4 +13,4 @@
 
 ###### JDK
 
-<img src="https://img.shields.io/badge/JDK 11.0.15-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/JDK 11.0.15-007396?style=flat-square&logo=java&logoColor=white">
