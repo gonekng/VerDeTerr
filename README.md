@@ -28,4 +28,4 @@
 
 ###### 백엔드
 
-<img src="https://img.shields.io/badge/Spring boot 2.7.2-6DB33F?style=flat-square&logo=Spring Boot&logoColor=white"/>,<img src="https://img.shields.io/badge/Spring Security 5.7.2-6DB33F?style=flat-square&logo=Spring Security&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring boot 2.7.2-6DB33F?style=flat-square&logo=Spring Boot&logoColor=white"/>,<img src="https://img.shields.io/badge/Spring Security 5.7.2-6DB33F?style=flat-square&logo=Spring Security&logoColor=white"/>,<img src="https://img.shields.io/badge/Junit 5.8.2-25A162?style=flat-square&logo=JUnit5&logoColor=white"/>
