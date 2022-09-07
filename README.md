@@ -18,3 +18,10 @@
 ###### IDE
 
 <img src="https://img.shields.io/badge/sts4 _4.15.3-83B81A?style=flat-square&logo=Color="/>
+
+### 🕹 사용기능
+
+### 프론트엔드
+
+<img src="https://img.shields.io/badge/jQuery 3.6.0-0769AD?style=flat-square&logo=jQuery&logoColor=white">
+
