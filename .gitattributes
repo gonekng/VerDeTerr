@@ -1,0 +1,7 @@
+VerDeTerr filter=lfs diff=lfs merge=lfs -text
+VerDeTerr-0.0.1-SNAPSHOT.jar filter=lfs diff=lfs merge=lfs -text
+architecture.PNG filter=lfs diff=lfs merge=lfs -text
+flow1.PNG filter=lfs diff=lfs merge=lfs -text
+flow2.PNG filter=lfs diff=lfs merge=lfs -text
+ERD.PNG filter=lfs diff=lfs merge=lfs -text
+README.md filter=lfs diff=lfs merge=lfs -text
