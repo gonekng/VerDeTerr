@@ -32,7 +32,7 @@
 				</div>
 			</div>
 			<div class="col-lg-5 col-md-3" style="text-align: center;">
-				<img th:src="${session.user.getUserCharacter().getFilepath()}" width=90%>
+				<img th:if="${session.getUserCharacter()}!=null" th:src="${session.user.getUserCharacter().getFilepath()}" width=90%>
 			</div>
 		</div>
 
